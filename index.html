@@ -1,0 +1,2363 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZanstLab</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    :root {
+      --bg:#07171b;
+      --card:#0c2227;
+      --card2:#102b31;
+      --primary:#19d3c5;
+      --text:#f2ffff;
+      --muted:#91abad;
+      --border:rgba(25,211,197,.16);
+      --danger:#ff5f6d;
+    }
+
+    * {
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:Arial,sans-serif;
+    }
+
+    body {
+      background:var(--bg);
+      color:var(--text);
+      min-height:100vh;
+    }
+
+    button,input,textarea,select {
+      font:inherit;
+    }
+
+    button {
+      cursor:pointer;
+    }
+
+    header {
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:rgba(7,23,27,.96);
+      backdrop-filter:blur(15px);
+      border-bottom:1px solid var(--border);
+    }
+
+    .header-inner {
+      max-width:1200px;
+      margin:auto;
+      padding:14px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .logo {
+      color:var(--primary);
+      font-size:25px;
+      font-weight:800;
+      text-decoration:none;
+      white-space:nowrap;
+    }
+
+    .nav {
+      display:flex;
+      gap:5px;
+      align-items:center;
+    }
+
+    .nav button {
+      border:0;
+      background:transparent;
+      color:var(--muted);
+      padding:10px 12px;
+      border-radius:10px;
+      white-space:nowrap;
+    }
+
+    .nav button:hover,
+    .nav button.active {
+      background:rgba(25,211,197,.12);
+      color:var(--primary);
+    }
+
+    .menu-btn {
+      display:none;
+      border:1px solid var(--border);
+      background:var(--card);
+      color:var(--primary);
+      padding:9px 12px;
+      border-radius:10px;
+      font-size:20px;
+    }
+
+    main {
+      max-width:1200px;
+      margin:auto;
+      padding:30px 20px 70px;
+    }
+
+    .page {
+      display:none;
+    }
+
+    .page.active {
+      display:block;
+    }
+
+    .hero {
+      padding:60px 25px;
+      text-align:center;
+      border:1px solid var(--border);
+      border-radius:25px;
+      background:
+        radial-gradient(circle at top right,rgba(25,211,197,.15),transparent 38%),
+        var(--card);
+      margin-bottom:30px;
+    }
+
+    .hero h1 {
+      color:var(--primary);
+      font-size:clamp(40px,8vw,68px);
+      margin-bottom:14px;
+    }
+
+    .hero p {
+      color:var(--muted);
+      line-height:1.9;
+      max-width:700px;
+      margin:auto;
+    }
+
+    .section-title {
+      margin:25px 0 15px;
+    }
+
+    .section-title h2 {
+      font-size:25px;
+    }
+
+    .grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+      gap:16px;
+    }
+
+    .card {
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:20px;
+      transition:.2s;
+      overflow:hidden;
+    }
+
+    .card:hover {
+      transform:translateY(-3px);
+      border-color:rgba(25,211,197,.4);
+    }
+
+    .clickable {
+      cursor:pointer;
+    }
+
+    .icon {
+      font-size:35px;
+      margin-bottom:12px;
+    }
+
+    .card h3 {
+      margin-bottom:8px;
+    }
+
+    .card p {
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    .card-media {
+      width:100%;
+      max-height:300px;
+      object-fit:cover;
+      border-radius:12px;
+      margin-bottom:15px;
+      display:block;
+      background:#000;
+    }
+
+    .card-video {
+      width:100%;
+      max-height:350px;
+      border-radius:12px;
+      margin-bottom:15px;
+      display:block;
+      background:#000;
+    }
+
+    .video-link {
+      display:inline-block;
+      margin-top:10px;
+      color:var(--primary);
+      text-decoration:none;
+    }
+
+    .video-link:hover {
+      text-decoration:underline;
+    }
+
+    .admin-box {
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:20px;
+      padding:25px;
+    }
+
+    .admin-actions {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:15px;
+      margin-top:20px;
+    }
+
+    .admin-action {
+      border:1px solid var(--border);
+      background:var(--card2);
+      color:white;
+      padding:25px 15px;
+      border-radius:15px;
+      font-size:16px;
+    }
+
+    .admin-action:hover {
+      border-color:var(--primary);
+      color:var(--primary);
+    }
+
+    .admin-list {
+      margin-top:25px;
+    }
+
+    .admin-item {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:15px;
+      padding:15px;
+      margin-bottom:10px;
+      background:var(--card2);
+      border:1px solid var(--border);
+      border-radius:12px;
+    }
+
+    .admin-item-info {
+      flex:1;
+    }
+
+    .admin-item-info small {
+      display:block;
+      color:var(--muted);
+      margin-top:5px;
+    }
+
+    .admin-buttons {
+      display:flex;
+      gap:7px;
+    }
+
+    .small-btn {
+      border:1px solid var(--border);
+      background:transparent;
+      color:white;
+      border-radius:8px;
+      padding:8px 10px;
+    }
+
+    .small-btn.edit:hover {
+      color:var(--primary);
+      border-color:var(--primary);
+    }
+
+    .small-btn.delete:hover {
+      color:var(--danger);
+      border-color:var(--danger);
+    }
+
+    .modal {
+      position:fixed;
+      inset:0;
+      z-index:100;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      background:rgba(0,0,0,.75);
+      backdrop-filter:blur(8px);
+    }
+
+    .modal.show {
+      display:flex;
+    }
+
+    .modal-box {
+      width:100%;
+      max-width:520px;
+      max-height:90vh;
+      overflow:auto;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:22px;
+      padding:25px;
+    }
+
+    .modal-box h2 {
+      color:var(--primary);
+      margin-bottom:20px;
+    }
+
+    .field {
+      margin-bottom:15px;
+    }
+
+    .field label {
+      display:block;
+      color:var(--muted);
+      margin-bottom:7px;
+    }
+
+    .field input,
+    .field textarea,
+    .field select {
+      width:100%;
+      padding:13px;
+      border-radius:11px;
+      border:1px solid var(--border);
+      background:var(--bg);
+      color:white;
+      outline:none;
+    }
+
+    .field textarea {
+      min-height:110px;
+      resize:vertical;
+    }
+
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      border-color:var(--primary);
+    }
+
+    .btn {
+      width:100%;
+      padding:13px;
+      border:0;
+      border-radius:11px;
+      background:var(--primary);
+      color:#001716;
+      font-weight:bold;
+      margin-top:5px;
+    }
+
+    .btn.secondary {
+      background:var(--card2);
+      color:white;
+      border:1px solid var(--border);
+    }
+
+    .message {
+      margin-top:12px;
+      line-height:1.7;
+      color:var(--danger);
+    }
+
+    .success {
+      color:var(--primary);
+    }
+
+    .hidden {
+      display:none !important;
+    }
+
+    .about {
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:20px;
+      padding:30px;
+      line-height:2;
+      color:var(--muted);
+    }
+
+    footer {
+      text-align:center;
+      color:var(--muted);
+      padding:30px 20px;
+      border-top:1px solid var(--border);
+    }
+
+    @media(max-width:850px) {
+
+      .menu-btn {
+        display:block;
+      }
+
+      .header-inner {
+        position:relative;
+      }
+
+      .nav {
+        display:none;
+        position:absolute;
+        top:64px;
+        right:15px;
+        left:15px;
+        padding:10px;
+        background:var(--card);
+        border:1px solid var(--border);
+        border-radius:15px;
+        flex-direction:column;
+        align-items:stretch;
+      }
+
+      .nav.open {
+        display:flex;
+      }
+
+      .nav button {
+        width:100%;
+        text-align:right;
+      }
+
+      .admin-item {
+        flex-direction:column;
+        align-items:stretch;
+      }
+
+      .admin-buttons {
+        justify-content:flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+
+  <div class="header-inner">
+
+    <a href="#" class="logo"
+       onclick="showPage('home');return false;">
+      ZanstLab
+    </a>
+
+    <button class="menu-btn"
+            onclick="toggleMenu()">
+      ☰
+    </button>
+
+    <nav class="nav" id="mainNav">
+
+      <button onclick="showPage('home')">
+        🏠 سەرەکی
+      </button>
+
+      <button onclick="showPage('trends')">
+        🔥 ترێند
+      </button>
+
+      <button onclick="showPage('films')">
+        🎬 فیلم
+      </button>
+
+      <button onclick="showPage('books')">
+        📚 کتێب
+      </button>
+
+      <button onclick="showPage('apps')">
+        📱 ئەپ
+      </button>
+
+      <button onclick="showPage('services')">
+        🛠️ خزمەتگوزاری
+      </button>
+
+      <button onclick="showPage('about')">
+        ℹ️ دەربارەی ZanstLab
+      </button>
+
+      <button onclick="openAccount()">
+        👤 ئەکاونت
+      </button>
+
+      <button onclick="openAdminLogin()">
+        🔐 Admin
+      </button>
+
+    </nav>
+
+  </div>
+
+</header>
+
+<main>
+
+  <section id="homePage" class="page active">
+
+    <div class="hero">
+
+      <h1 id="heroTitle">
+        ZanstLab
+      </h1>
+
+      <p id="heroDescription">
+        شوێنێکی نوێ بۆ زانیاری، تەکنەلۆجیا،
+        ئەپ، کتێب، فیلم و خزمەتگوزارییە جیاوازەکان.
+      </p>
+
+    </div>
+
+    <div class="section-title">
+      <h2>بەشەکان</h2>
+    </div>
+
+    <div class="grid">
+
+      <div class="card clickable"
+           onclick="showPage('trends')">
+        <div class="icon">🔥</div>
+        <h3>ترێند</h3>
+        <p>نوێترین بابەت و ناوەڕۆک.</p>
+      </div>
+
+      <div class="card clickable"
+           onclick="showPage('films')">
+        <div class="icon">🎬</div>
+        <h3>فیلم</h3>
+        <p>فیلم و زانیارییەکانی.</p>
+      </div>
+
+      <div class="card clickable"
+           onclick="showPage('books')">
+        <div class="icon">📚</div>
+        <h3>کتێب</h3>
+        <p>کتێب و زانیاریی نووسەرەکان.</p>
+      </div>
+
+      <div class="card clickable"
+           onclick="showPage('apps')">
+        <div class="icon">📱</div>
+        <h3>ئەپ</h3>
+        <p>ئەپ و ڕێنمایی بەکارهێنان.</p>
+      </div>
+
+      <div class="card clickable"
+           onclick="showPage('services')">
+        <div class="icon">🛠️</div>
+        <h3>خزمەتگوزاری</h3>
+        <p>خزمەتگوزارییەکانی ZanstLab.</p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <section id="trendsPage" class="page">
+    <div class="section-title">
+      <h2>🔥 ترێند</h2>
+    </div>
+    <div class="grid" id="trendsList"></div>
+  </section>
+
+  <section id="filmsPage" class="page">
+    <div class="section-title">
+      <h2>🎬 فیلم</h2>
+    </div>
+    <div class="grid" id="filmsList"></div>
+  </section>
+
+  <section id="booksPage" class="page">
+    <div class="section-title">
+      <h2>📚 کتێب</h2>
+    </div>
+    <div class="grid" id="booksList"></div>
+  </section>
+
+  <section id="appsPage" class="page">
+    <div class="section-title">
+      <h2>📱 ئەپ</h2>
+    </div>
+    <div class="grid" id="appsList"></div>
+  </section>
+
+  <section id="servicesPage" class="page">
+    <div class="section-title">
+      <h2>🛠️ خزمەتگوزاری</h2>
+    </div>
+    <div class="grid" id="servicesList"></div>
+  </section>
+
+  <section id="aboutPage" class="page">
+
+    <div class="section-title">
+      <h2>ℹ️ دەربارەی ZanstLab</h2>
+    </div>
+
+    <div class="about">
+
+      <h2 style="color:var(--primary);margin-bottom:15px;">
+        ZanstLab
+      </h2>
+
+      <p id="aboutDescription">
+        ZanstLab پلاتفۆرمێکە بۆ زانیاری،
+        تەکنەلۆجیا، ئەپ، کتێب، فیلم و ناوەڕۆکی نوێ.
+      </p>
+
+    </div>
+
+  </section>
+
+  <section id="adminPage" class="page">
+
+    <div class="admin-box">
+
+      <h2 style="color:var(--primary);">
+        🔐 Admin Panel
+      </h2>
+
+      <p style="color:var(--muted);margin-top:10px;">
+        بەخێربێیت بۆ بەشی بەڕێوەبردنی ZanstLab.
+      </p>
+
+      <div class="admin-actions">
+
+        <button class="admin-action"
+                onclick="openContentEditor('trends')">
+          🔥<br><br>
+          زیادکردنی ترێند
+        </button>
+
+        <button class="admin-action"
+                onclick="openContentEditor('films')">
+          🎬<br><br>
+          زیادکردنی فیلم
+        </button>
+
+        <button class="admin-action"
+                onclick="openContentEditor('books')">
+          📚<br><br>
+          زیادکردنی کتێب
+        </button>
+
+        <button class="admin-action"
+                onclick="openContentEditor('apps')">
+          📱<br><br>
+          زیادکردنی ئەپ
+        </button>
+
+        <button class="admin-action"
+                onclick="openContentEditor('services')">
+          🛠️<br><br>
+          زیادکردنی خزمەتگوزاری
+        </button>
+
+        <button class="admin-action"
+                onclick="openCategoryEditor()">
+          ➕<br><br>
+          بەشی نوێ
+        </button>
+
+        <button class="admin-action"
+                onclick="openSettingsEditor()">
+          ⚙️<br><br>
+          ڕێکخستنەکانی سایت
+        </button>
+
+        <button class="admin-action"
+                onclick="logoutAdmin()">
+          🚪<br><br>
+          چوونەدەرەوە
+        </button>
+
+      </div>
+
+      <div class="admin-list"
+           id="adminContentList">
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+<div class="modal" id="adminModal">
+
+  <div class="modal-box">
+
+    <h2>🔐 چوونەژوورەوەی Admin</h2>
+
+    <div class="field">
+
+      <label>Email</label>
+
+      <input
+        id="adminEmail"
+        type="email"
+        autocomplete="username">
+
+    </div>
+
+    <div class="field">
+
+      <label>Password</label>
+
+      <input
+        id="adminPassword"
+        type="password"
+        autocomplete="current-password">
+
+    </div>
+
+    <button class="btn"
+            onclick="loginAdmin()">
+      چوونەژوورەوە
+    </button>
+
+    <button class="btn secondary"
+            onclick="closeAdminLogin()">
+      داخستن
+    </button>
+
+    <div class="message"
+         id="loginMessage">
+    </div>
+
+  </div>
+
+</div>
+
+<div class="modal" id="accountModal">
+
+  <div class="modal-box">
+
+    <h2>👤 ئەکاونت</h2>
+
+    <div id="accountLoggedOut">
+
+      <div class="field">
+        <label>Email</label>
+        <input id="accountEmail"
+               type="email">
+      </div>
+
+      <div class="field">
+        <label>Password</label>
+        <input id="accountPassword"
+               type="password">
+      </div>
+
+      <button class="btn"
+              onclick="loginAccount()">
+        Login
+      </button>
+
+      <button class="btn secondary"
+              onclick="signupAccount()">
+        دروستکردنی ئەکاونت
+      </button>
+
+    </div>
+
+    <div id="accountLoggedIn"
+         class="hidden">
+
+      <p id="accountInfo"
+         style="color:var(--muted);line-height:1.8;">
+      </p>
+
+      <button class="btn"
+              onclick="logoutAccount()">
+        چوونەدەرەوە
+      </button>
+
+    </div>
+
+    <div class="message"
+         id="accountMessage">
+    </div>
+
+    <button class="btn secondary"
+            onclick="closeAccount()">
+      داخستن
+    </button>
+
+  </div>
+
+</div>
+
+<div class="modal" id="contentModal">
+
+  <div class="modal-box">
+
+    <h2 id="contentModalTitle">
+      زیادکردنی ناوەڕۆک
+    </h2>
+
+    <input type="hidden"
+           id="contentId">
+
+    <input type="hidden"
+           id="contentCategory">
+
+    <div class="field">
+
+      <label>ناونیشان</label>
+
+      <input id="contentTitle"
+             type="text">
+
+    </div>
+
+    <div class="field">
+
+      <label>وەسف</label>
+
+      <textarea id="contentDescription"></textarea>
+
+    </div>
+
+    <div class="field">
+
+      <label>Image URL</label>
+
+      <input id="contentImage"
+             type="url"
+             placeholder="https://example.com/image.jpg">
+    </div>
+
+    <div class="field">
+
+      <label>Video URL</label>
+
+      <input id="contentVideo"
+             type="url"
+             placeholder="https://example.com/video.mp4 یان YouTube URL">
+    </div>
+
+    <div class="field">
+
+      <label>External URL</label>
+
+      <input id="contentExternal"
+             type="url">
+    </div>
+
+    <div class="field">
+
+      <label>نووسەر</label>
+
+      <input id="contentAuthor"
+             type="text">
+    </div>
+
+    <div class="field">
+
+      <label>ساڵ</label>
+
+      <input id="contentYear"
+             type="text">
+    </div>
+
+    <button class="btn"
+            onclick="saveContent()">
+      پاشەکەوتکردن
+    </button>
+
+    <button class="btn secondary"
+            onclick="closeContentEditor()">
+      داخستن
+    </button>
+
+    <div class="message"
+         id="contentMessage">
+    </div>
+
+  </div>
+
+</div>
+
+<div class="modal" id="categoryModal">
+
+  <div class="modal-box">
+
+    <h2>➕ بەشی نوێ</h2>
+
+    <input type="hidden"
+           id="categoryId">
+
+    <div class="field">
+
+      <label>ناوی بەش</label>
+
+      <input id="categoryName"
+             type="text">
+    </div>
+
+    <div class="field">
+
+      <label>Slug</label>
+
+      <input id="categorySlug"
+             type="text"
+             placeholder="example">
+    </div>
+
+    <div class="field">
+
+      <label>ئایکۆن</label>
+
+      <input id="categoryIcon"
+             type="text"
+             placeholder="📁">
+    </div>
+
+    <div class="field">
+
+      <label>وەسف</label>
+
+      <textarea id="categoryDescription"></textarea>
+    </div>
+
+    <button class="btn"
+            onclick="saveCategory()">
+      پاشەکەوتکردن
+    </button>
+
+    <button class="btn secondary"
+            onclick="closeCategoryEditor()">
+      داخستن
+    </button>
+
+    <div class="message"
+         id="categoryMessage">
+    </div>
+
+  </div>
+
+</div>
+
+<div class="modal" id="settingsModal">
+
+  <div class="modal-box">
+
+    <h2>⚙️ ڕێکخستنەکانی سایت</h2>
+
+    <div class="field">
+
+      <label>ناوی سایت</label>
+
+      <input id="siteName"
+             type="text">
+
+    </div>
+
+    <div class="field">
+
+      <label>سڵۆگان</label>
+
+      <input id="siteSlogan"
+             type="text">
+
+    </div>
+
+    <div class="field">
+
+      <label>وەسفی سایت</label>
+
+      <textarea id="siteDescription"></textarea>
+
+    </div>
+
+    <div class="field">
+
+      <label>Logo URL</label>
+
+      <input id="siteLogo"
+             type="url">
+
+    </div>
+
+    <button class="btn"
+            onclick="saveSettings()">
+      پاشەکەوتکردن
+    </button>
+
+    <button class="btn secondary"
+            onclick="closeSettingsEditor()">
+      داخستن
+    </button>
+
+    <div class="message"
+         id="settingsMessage">
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+  © 2026 ZanstLab
+</footer>
+
+<script>
+
+const SUPABASE_URL =
+  "https://iqsyujyltwwafolesfzg.supabase.co";
+
+const SUPABASE_ANON_KEY =
+  "sb_publishable_T8zZoBxDz8JATgyDjTFbog_7KrII67Z";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+
+let currentAdmin = null;
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function toggleMenu() {
+
+  document
+    .getElementById("mainNav")
+    .classList.toggle("open");
+}
+
+function showPage(page) {
+
+  document
+    .querySelectorAll(".page")
+    .forEach(el =>
+      el.classList.remove("active")
+    );
+
+  const target =
+    document.getElementById(page + "Page");
+
+  if (target) {
+    target.classList.add("active");
+  }
+
+  document
+    .getElementById("mainNav")
+    .classList.remove("open");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+  if (
+    ["trends","films","books",
+     "apps","services"].includes(page)
+  ) {
+    loadCategoryContent(page);
+  }
+}
+
+/* =========================
+   ADMIN LOGIN
+========================= */
+
+function openAdminLogin() {
+
+  document
+    .getElementById("adminModal")
+    .classList.add("show");
+
+  document
+    .getElementById("loginMessage")
+    .textContent = "";
+
+  document
+    .getElementById("adminEmail")
+    .focus();
+}
+
+function closeAdminLogin() {
+
+  document
+    .getElementById("adminModal")
+    .classList.remove("show");
+}
+
+async function loginAdmin() {
+
+  const email =
+    document
+      .getElementById("adminEmail")
+      .value
+      .trim();
+
+  const password =
+    document
+      .getElementById("adminPassword")
+      .value;
+
+  const message =
+    document.getElementById("loginMessage");
+
+  message.classList.remove("success");
+  message.textContent = "";
+
+  if (!email || !password) {
+
+    message.textContent =
+      "تکایە Email و Password بنووسە.";
+
+    return;
+  }
+
+  const { data, error } =
+    await supabaseClient.auth
+      .signInWithPassword({
+        email,
+        password
+      });
+
+  if (error) {
+
+    console.error(error);
+
+    message.textContent =
+      "Email یان Password هەڵەیە.";
+
+    return;
+  }
+
+  const user = data.user;
+
+  if (!user) {
+
+    message.textContent =
+      "کێشەیەک ڕوویدا.";
+
+    return;
+  }
+
+  const {
+    data: adminUser,
+    error: adminError
+  } =
+    await supabaseClient
+      .from("Admins")
+      .select('id, "Email"')
+      .eq("id", user.id)
+      .maybeSingle();
+
+  if (adminError) {
+
+    console.error(adminError);
+
+    message.textContent =
+      "کێشە لە پشکنینی Admin ڕوویدا.";
+
+    return;
+  }
+
+  if (!adminUser) {
+
+    await supabaseClient.auth.signOut();
+
+    message.textContent =
+      "ئەم ئەکاونتە دەسەڵاتی Admin ـی نییە.";
+
+    return;
+  }
+
+  currentAdmin = user;
+
+  closeAdminLogin();
+
+  showPage("admin");
+
+  await loadAdminContent();
+
+}
+
+async function logoutAdmin() {
+
+  await supabaseClient.auth.signOut();
+
+  currentAdmin = null;
+
+  showPage("home");
+}
+
+/* =========================
+   CONTENT EDITOR
+========================= */
+
+async function openContentEditor(category) {
+
+  if (!currentAdmin) {
+
+    openAdminLogin();
+
+    return;
+  }
+
+  document
+    .getElementById("contentModal")
+    .classList.add("show");
+
+  document
+    .getElementById("contentId")
+    .value = "";
+
+  document
+    .getElementById("contentCategory")
+    .value = category;
+
+  document
+    .getElementById("contentModalTitle")
+    .textContent =
+      "زیادکردنی " +
+      categoryName(category);
+
+  clearContentForm();
+
+}
+
+function categoryName(slug) {
+
+  const names = {
+
+    trends:"ترێند",
+
+    films:"فیلم",
+
+    books:"کتێب",
+
+    apps:"ئەپ",
+
+    services:"خزمەتگوزاری"
+
+  };
+
+  return names[slug] || slug;
+}
+
+function clearContentForm() {
+
+  document.getElementById("contentTitle").value = "";
+  document.getElementById("contentDescription").value = "";
+  document.getElementById("contentImage").value = "";
+  document.getElementById("contentVideo").value = "";
+  document.getElementById("contentExternal").value = "";
+  document.getElementById("contentAuthor").value = "";
+  document.getElementById("contentYear").value = "";
+
+  const message =
+    document.getElementById("contentMessage");
+
+  message.classList.remove("success");
+  message.textContent = "";
+}
+
+function closeContentEditor() {
+
+  document
+    .getElementById("contentModal")
+    .classList.remove("show");
+}
+
+async function saveContent() {
+
+  if (!currentAdmin) {
+
+    openAdminLogin();
+
+    return;
+  }
+
+  const category =
+    document
+      .getElementById("contentCategory")
+      .value;
+
+  const title =
+    document
+      .getElementById("contentTitle")
+      .value
+      .trim();
+
+  const description =
+    document
+      .getElementById("contentDescription")
+      .value
+      .trim();
+
+  const image_url =
+    document
+      .getElementById("contentImage")
+      .value
+      .trim();
+
+  const video_url =
+    document
+      .getElementById("contentVideo")
+      .value
+      .trim();
+
+  const external_url =
+    document
+      .getElementById("contentExternal")
+      .value
+      .trim();
+
+  const author =
+    document
+      .getElementById("contentAuthor")
+      .value
+      .trim();
+
+  const year =
+    document
+      .getElementById("contentYear")
+      .value
+      .trim();
+
+  const message =
+    document.getElementById("contentMessage");
+
+  message.classList.remove("success");
+  message.textContent = "";
+
+  if (!title) {
+
+    message.textContent =
+      "تکایە ناونیشان بنووسە.";
+
+    return;
+  }
+
+  const {
+    data: categoryRow,
+    error: categoryError
+  } =
+    await supabaseClient
+      .from("Categories")
+      .select("id")
+      .eq("slug", category)
+      .maybeSingle();
+
+  if (categoryError || !categoryRow) {
+
+    console.error(categoryError);
+
+    message.textContent =
+      "بەشی ناوەڕۆک نەدۆزرایەوە.";
+
+    return;
+  }
+
+  const {
+    error
+  } =
+    await supabaseClient
+      .from("Content")
+      .insert({
+
+        category_id:categoryRow.id,
+
+        title,
+
+        description,
+
+        image_url,
+
+        video_url,
+
+        external_url,
+
+        author,
+
+        year,
+
+        is_published:true
+
+      });
+
+  if (error) {
+
+    console.error(error);
+
+    message.textContent =
+      "کێشە لە پاشەکەوتکردنی ناوەڕۆک.";
+
+    return;
+  }
+
+  message.classList.add("success");
+
+  message.textContent =
+    "ناوەڕۆک بە سەرکەوتوویی زیادکرا. ✅";
+
+  clearContentForm();
+
+  await loadAdminContent();
+
+  await loadCategoryContent(category);
+
+}
+
+async function loadAdminContent() {
+
+  if (!currentAdmin) return;
+
+  const list =
+    document.getElementById("adminContentList");
+
+  list.innerHTML =
+    "<p style='color:var(--muted)'>بارکردن...</p>";
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("Content")
+      .select(`
+        id,
+        title,
+        description,
+        image_url,
+        video_url,
+        external_url,
+        created_at,
+        Categories (
+          name,
+          slug,
+          icon
+        )
+      `)
+      .order("created_at", {
+        ascending:false
+      });
+
+  if (error) {
+
+    console.error(error);
+
+    list.innerHTML =
+      "<p style='color:var(--danger)'>کێشە لە بارکردنی ناوەڕۆک.</p>";
+
+    return;
+  }
+
+  if (!data || !data.length) {
+
+    list.innerHTML =
+      "<p style='color:var(--muted)'>هێشتا هیچ ناوەڕۆکێک زیاد نەکراوە.</p>";
+
+    return;
+  }
+
+  list.innerHTML = data.map(item => `
+
+    <div class="admin-item">
+
+      <div class="admin-item-info">
+
+        <strong>
+          ${escapeHtml(item.title)}
+        </strong>
+
+        <small>
+          ${item.Categories?.icon || "📁"}
+          ${escapeHtml(item.Categories?.name || "")}
+        </small>
+
+      </div>
+
+      <div class="admin-buttons">
+
+        <button
+          class="small-btn delete"
+          onclick="deleteContent('${item.id}')">
+          🗑️ سڕینەوە
+        </button>
+
+      </div>
+
+    </div>
+
+  `).join("");
+}
+
+async function deleteContent(id) {
+
+  if (!currentAdmin) {
+
+    openAdminLogin();
+
+    return;
+  }
+
+  if (!confirm("دڵنیایت لە سڕینەوەی ئەم ناوەڕۆکە؟")) {
+    return;
+  }
+
+  const { error } =
+    await supabaseClient
+      .from("Content")
+      .delete()
+      .eq("id", id);
+
+  if (error) {
+
+    alert(
+      "سڕینەوە سەرکەوتوو نەبوو."
+    );
+
+    console.error(error);
+
+    return;
+  }
+
+  await loadAdminContent();
+
+}
+
+/* =========================
+   CATEGORY EDITOR
+========================= */
+
+function openCategoryEditor() {
+
+  if (!currentAdmin) {
+
+    openAdminLogin();
+
+    return;
+  }
+
+  document
+    .getElementById("categoryModal")
+    .classList.add("show");
+
+  document
+    .getElementById("categoryId")
+    .value = "";
+
+  document
+    .getElementById("categoryName")
+    .value = "";
+
+  document
+    .getElementById("categorySlug")
+    .value = "";
+
+  document
+    .getElementById("categoryIcon")
+    .value = "📁";
+
+  document
+    .getElementById("categoryDescription")
+    .value = "";
+
+  const message =
+    document.getElementById("categoryMessage");
+
+  message.classList.remove("success");
+  message.textContent = "";
+}
+
+function closeCategoryEditor() {
+
+  document
+    .getElementById("categoryModal")
+    .classList.remove("show");
+}
+
+async function saveCategory() {
+
+  if (!currentAdmin) {
+
+    openAdminLogin();
+
+    return;
+  }
+
+  const name =
+    document
+      .getElementById("categoryName")
+      .value
+      .trim();
+
+  const slug =
+    document
+      .getElementById("categorySlug")
+      .value
+      .trim();
+
+  const icon =
+    document
+      .getElementById("categoryIcon")
+      .value
+      .trim() || "📁";
+
+  const description =
+    document
+      .getElementById("categoryDescription")
+      .value
+      .trim();
+
+  const message =
+    document
+      .getElementById("categoryMessage");
+
+  message.classList.remove("success");
+  message.textContent = "";
+
+  if (!name || !slug) {
+
+    message.textContent =
+      "ناوی بەش و Slug پێویستن.";
+
+    return;
+  }
+
+  const {
+    error
+  } =
+    await supabaseClient
+      .from("Categories")
+      .insert({
+
+        name,
+        slug,
+        icon,
+        description
+
+      });
+
+  if (error) {
+
+    console.error(error);
+
+    message.textContent =
+      "نەتوانرا بەشەکە زیاد بکرێت.";
+
+    return;
+  }
+
+  message.classList.add("success");
+
+  message.textContent =
+    "بەشەکە زیادکرا. ✅";
+
+}
+
+/* =========================
+   SETTINGS
+========================= */
+
+async function openSettingsEditor() {
+
+  if (!currentAdmin) {
+
+    openAdminLogin();
+
+    return;
+  }
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("Site_Settings")
+      .select("*")
+      .eq("id",1)
+      .maybeSingle();
+
+  if (error) {
+
+    console.error(error);
+
+    alert("کێشە لە خوێندنەوەی Settings.");
+
+    return;
+  }
+
+  document
+    .getElementById("settingsModal")
+    .classList.add("show");
+
+  if (data) {
+
+    document.getElementById("siteName").value =
+      data.site_name || "";
+
+    document.getElementById("siteSlogan").value =
+      data.slogan || "";
+
+    document.getElementById("siteDescription").value =
+      data.description || "";
+
+    document.getElementById("siteLogo").value =
+      data.logo_url || "";
+
+  }
+
+}
+
+function closeSettingsEditor() {
+
+  document
+    .getElementById("settingsModal")
+    .classList.remove("show");
+}
+
+async function saveSettings() {
+
+  if (!currentAdmin) {
+
+    openAdminLogin();
+
+    return;
+  }
+
+  const site_name =
+    document
+      .getElementById("siteName")
+      .value
+      .trim();
+
+  const slogan =
+    document
+      .getElementById("siteSlogan")
+      .value
+      .trim();
+
+  const description =
+    document
+      .getElementById("siteDescription")
+      .value
+      .trim();
+
+  const logo_url =
+    document
+      .getElementById("siteLogo")
+      .value
+      .trim();
+
+  const {
+    error
+  } =
+    await supabaseClient
+      .from("Site_Settings")
+      .upsert({
+
+        id:1,
+
+        site_name,
+
+        slogan,
+
+        description,
+
+        logo_url,
+
+        updated_at:new Date().toISOString()
+
+      });
+
+  const message =
+    document.getElementById("settingsMessage");
+
+  message.classList.remove("success");
+
+  if (error) {
+
+    console.error(error);
+
+    message.textContent =
+      "نەتوانرا Settings پاشەکەوت بکرێت.";
+
+    return;
+  }
+
+  message.classList.add("success");
+
+  message.textContent =
+    "Settings پاشەکەوت کرا. ✅";
+
+  await loadSiteSettings();
+
+}
+
+/* =========================
+   VIDEO HELPERS
+========================= */
+
+function getYouTubeEmbedUrl(url) {
+
+  if (!url) return null;
+
+  try {
+
+    const parsed =
+      new URL(url);
+
+    let videoId = null;
+
+    if (
+      parsed.hostname.includes("youtube.com")
+    ) {
+
+      if (parsed.pathname === "/watch") {
+
+        videoId =
+          parsed.searchParams.get("v");
+
+      } else if (
+        parsed.pathname.startsWith("/shorts/")
+      ) {
+
+        videoId =
+          parsed.pathname.split("/")[2];
+
+      } else if (
+        parsed.pathname.startsWith("/embed/")
+      ) {
+
+        videoId =
+          parsed.pathname.split("/")[2];
+
+      }
+
+    }
+
+    if (
+      parsed.hostname === "youtu.be"
+    ) {
+
+      videoId =
+        parsed.pathname.substring(1);
+
+    }
+
+    if (!videoId) {
+      return null;
+    }
+
+    return
+      "https://www.youtube.com/embed/" +
+      encodeURIComponent(videoId);
+
+  } catch (error) {
+
+    return null;
+  }
+}
+
+function renderVideo(url) {
+
+  if (!url) return "";
+
+  const youtube =
+    getYouTubeEmbedUrl(url);
+
+  if (youtube) {
+
+    return `
+      <iframe
+        class="card-video"
+        src="${escapeAttribute(youtube)}"
+        title="Video"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+    `;
+
+  }
+
+  return `
+    <video
+      class="card-video"
+      controls
+      preload="metadata"
+      playsinline>
+      <source
+        src="${escapeAttribute(url)}">
+      لە براوزەرەکەتدا ڤیدیۆکە پشتگیری ناکرێت.
+    </video>
+  `;
+}
+
+/* =========================
+   PUBLIC CONTENT
+========================= */
+
+async function loadCategoryContent(slug) {
+
+  const listId =
+    slug + "List";
+
+  const list =
+    document.getElementById(listId);
+
+  if (!list) return;
+
+  list.innerHTML =
+    "<p style='color:var(--muted)'>بارکردن...</p>";
+
+  const {
+    data:categoryRow,
+    error:categoryError
+  } =
+    await supabaseClient
+      .from("Categories")
+      .select("id,name,icon")
+      .eq("slug",slug)
+      .maybeSingle();
+
+  if (categoryError || !categoryRow) {
+
+    console.error(categoryError);
+
+    list.innerHTML =
+      "<p style='color:var(--muted)'>هیچ ناوەڕۆکێک نییە.</p>";
+
+    return;
+  }
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("Content")
+      .select("*")
+      .eq("category_id",categoryRow.id)
+      .eq("is_published",true)
+      .order("sort_order")
+      .order("created_at", {
+        ascending:false
+      });
+
+  if (error) {
+
+    console.error(error);
+
+    list.innerHTML =
+      "<p style='color:var(--danger)'>کێشە لە بارکردنی ناوەڕۆک.</p>";
+
+    return;
+  }
+
+  if (!data || !data.length) {
+
+    list.innerHTML =
+      `<div class="card">
+        <div class="icon">${categoryRow.icon || "📁"}</div>
+        <h3>هێشتا ناوەڕۆک نییە</h3>
+        <p>لە Admin Panel ـەوە دەتوانیت ناوەڕۆک زیاد بکەیت.</p>
+      </div>`;
+
+    return;
+  }
+
+  list.innerHTML = data.map(item => {
+
+    const imageHtml =
+      item.image_url
+      ?
+      `<img
+        class="card-media"
+        src="${escapeAttribute(item.image_url)}"
+        alt="${escapeAttribute(item.title)}"
+        loading="lazy"
+        onerror="this.style.display='none';">`
+      :
+      "";
+
+    const videoHtml =
+      item.video_url
+      ?
+      renderVideo(item.video_url)
+      :
+      "";
+
+    const externalHtml =
+      item.external_url
+      ?
+      `<a
+        href="${escapeAttribute(item.external_url)}"
+        target="_blank"
+        rel="noopener noreferrer"
+        style="display:inline-block;margin-top:12px;color:var(--primary);text-decoration:none;">
+        بینین →
+      </a>`
+      :
+      "";
+
+    return `
+
+      <div class="card">
+
+        ${imageHtml}
+
+        ${videoHtml}
+
+        <h3>
+          ${escapeHtml(item.title)}
+        </h3>
+
+        ${
+          item.description
+          ?
+          `<p>${escapeHtml(item.description)}</p>`
+          :
+          ""
+        }
+
+        ${
+          item.author
+          ?
+          `<p style="margin-top:8px;">
+            ✍️ ${escapeHtml(item.author)}
+          </p>`
+          :
+          ""
+        }
+
+        ${
+          item.year
+          ?
+          `<p>📅 ${escapeHtml(item.year)}</p>`
+          :
+          ""
+        }
+
+        ${externalHtml}
+
+      </div>
+
+    `;
+
+  }).join("");
+
+}
+
+/* =========================
+   SITE SETTINGS
+========================= */
+
+async function loadSiteSettings() {
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("Site_Settings")
+      .select("*")
+      .eq("id",1)
+      .maybeSingle();
+
+  if (error || !data) {
+    return;
+  }
+
+  if (data.site_name) {
+
+    document
+      .getElementById("heroTitle")
+      .textContent =
+        data.site_name;
+
+    document.title =
+      data.site_name;
+
+    document
+      .querySelector(".logo")
+      .textContent =
+        data.site_name;
+  }
+
+  if (data.description) {
+
+    document
+      .getElementById("heroDescription")
+      .textContent =
+        data.description;
+
+    document
+      .getElementById("aboutDescription")
+      .textContent =
+        data.description;
+  }
+
+}
+
+/* =========================
+   ACCOUNT
+========================= */
+
+async function openAccount() {
+
+  document
+    .getElementById("accountModal")
+    .classList.add("show");
+
+  document
+    .getElementById("accountMessage")
+    .textContent = "";
+
+  await refreshAccountState();
+}
+
+function closeAccount() {
+
+  document
+    .getElementById("accountModal")
+    .classList.remove("show");
+}
+
+async function refreshAccountState() {
+
+  const {
+    data
+  } =
+    await supabaseClient.auth.getUser();
+
+  const user =
+    data?.user;
+
+  const loggedOut =
+    document.getElementById("accountLoggedOut");
+
+  const loggedIn =
+    document.getElementById("accountLoggedIn");
+
+  const info =
+    document.getElementById("accountInfo");
+
+  if (user) {
+
+    loggedOut.classList.add("hidden");
+
+    loggedIn.classList.remove("hidden");
+
+    info.textContent =
+      "بەخێربێیت 👋🏻 " +
+      user.email;
+
+  } else {
+
+    loggedOut.classList.remove("hidden");
+
+    loggedIn.classList.add("hidden");
+
+  }
+
+}
+
+async function loginAccount() {
+
+  const email =
+    document
+      .getElementById("accountEmail")
+      .value
+      .trim();
+
+  const password =
+    document
+      .getElementById("accountPassword")
+      .value;
+
+  const message =
+    document
+      .getElementById("accountMessage");
+
+  message.classList.remove("success");
+  message.textContent = "";
+
+  const {
+    error
+  } =
+    await supabaseClient.auth
+      .signInWithPassword({
+        email,
+        password
+      });
+
+  if (error) {
+
+    message.textContent =
+      "Email یان Password هەڵەیە.";
+
+    return;
+  }
+
+  message.classList.add("success");
+
+  message.textContent =
+    "بە سەرکەوتوویی چوویتە ژوورەوە. ✅";
+
+  await refreshAccountState();
+
+}
+
+async function signupAccount() {
+
+  const email =
+    document
+      .getElementById("accountEmail")
+      .value
+      .trim();
+
+  const password =
+    document
+      .getElementById("accountPassword")
+      .value;
+
+  const message =
+    document
+      .getElementById("accountMessage");
+
+  message.classList.remove("success");
+  message.textContent = "";
+
+  if (!email || !password) {
+
+    message.textContent =
+      "Email و Password پێویستن.";
+
+    return;
+  }
+
+  const {
+    error
+  } =
+    await supabaseClient.auth
+      .signUp({
+        email,
+        password
+      });
+
+  if (error) {
+
+    message.textContent =
+      error.message;
+
+    return;
+  }
+
+  message.classList.add("success");
+
+  message.textContent =
+    "ئەکاونتەکە دروستکرا. ✅";
+
+}
+
+async function logoutAccount() {
+
+  await supabaseClient.auth.signOut();
+
+  currentAdmin = null;
+
+  await refreshAccountState();
+
+}
+
+/* =========================
+   HELPERS
+========================= */
+
+function escapeHtml(value) {
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+function escapeAttribute(value) {
+
+  return escapeHtml(value);
+}
+
+/* =========================
+   START
+========================= */
+
+loadSiteSettings();
+
+loadCategoryContent("trends");
+loadCategoryContent("films");
+loadCategoryContent("books");
+loadCategoryContent("apps");
+loadCategoryContent("services");
+
+supabaseClient.auth.onAuthStateChange(
+  async (event, session) => {
+
+    if (!session) {
+      currentAdmin = null;
+      return;
+    }
+
+    /*
+      تەنها Auth ـەکە بەس نییە؛
+      Admin بودن بە UID لە Admins پشکنین دەکرێت.
+    */
+
+    try {
+
+      const user = session.user;
+
+      const {
+        data: adminUser
+      } =
+        await supabaseClient
+          .from("Admins")
+          .select('id, "Email"')
+          .eq("id", user.id)
+          .maybeSingle();
+
+      if (adminUser) {
+        currentAdmin = user;
+      }
+
+    } catch (error) {
+
+      console.error(error);
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+</html>
