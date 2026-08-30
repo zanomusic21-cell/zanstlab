@@ -1,22 +1,14 @@
 <!DOCTYPE html>
 <html lang="ku" dir="rtl">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>ZanstLab</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
-/* =========================================================
-   ROOT
-========================================================= */
 
 :root{
 --bg:#07171b;
@@ -28,11 +20,6 @@ content="width=device-width,initial-scale=1.0">
 --border:rgba(25,211,197,.16);
 --danger:#ff5f6d;
 }
-
-
-/* =========================================================
-   RESET
-========================================================= */
 
 *{
 box-sizing:border-box;
@@ -47,21 +34,13 @@ color:var(--text);
 min-height:100vh;
 }
 
-button,
-input,
-textarea,
-select{
+button,input,textarea,select{
 font:inherit;
 }
 
 button{
 cursor:pointer;
 }
-
-
-/* =========================================================
-   HEADER
-========================================================= */
 
 header{
 position:sticky;
@@ -132,11 +111,6 @@ border-radius:10px;
 font-size:20px;
 }
 
-
-/* =========================================================
-   MAIN
-========================================================= */
-
 main{
 max-width:1200px;
 margin:auto;
@@ -151,22 +125,13 @@ display:none;
 display:block;
 }
 
-
-/* =========================================================
-   HERO
-========================================================= */
-
 .hero{
 padding:60px 25px;
 text-align:center;
 border:1px solid var(--border);
 border-radius:25px;
 background:
-radial-gradient(
-circle at top right,
-rgba(25,211,197,.15),
-transparent 38%
-),
+radial-gradient(circle at top right,rgba(25,211,197,.15),transparent 38%),
 var(--card);
 margin-bottom:30px;
 }
@@ -199,11 +164,6 @@ max-width:750px;
 margin:auto;
 }
 
-
-/* =========================================================
-   SECTION
-========================================================= */
-
 .section-title{
 margin:25px 0 15px;
 display:flex;
@@ -216,22 +176,11 @@ gap:15px;
 font-size:25px;
 }
 
-
-/* =========================================================
-   GRID
-========================================================= */
-
 .grid{
 display:grid;
-grid-template-columns:
-repeat(auto-fill,minmax(220px,1fr));
+grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
 gap:16px;
 }
-
-
-/* =========================================================
-   CARD
-========================================================= */
 
 .card{
 background:var(--card);
@@ -288,11 +237,6 @@ color:var(--primary);
 text-decoration:none;
 }
 
-
-/* =========================================================
-   ABOUT
-========================================================= */
-
 .about{
 background:var(--card);
 border:1px solid var(--border);
@@ -301,11 +245,6 @@ padding:30px;
 line-height:2;
 color:var(--muted);
 }
-
-
-/* =========================================================
-   ADMIN
-========================================================= */
 
 .admin-box{
 background:var(--card);
@@ -316,8 +255,7 @@ padding:25px;
 
 .admin-actions{
 display:grid;
-grid-template-columns:
-repeat(auto-fit,minmax(180px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
 gap:15px;
 margin-top:20px;
 }
@@ -393,10 +331,10 @@ color:var(--danger);
 border-color:var(--danger);
 }
 
-
-/* =========================================================
-   MODAL
-========================================================= */
+.small-btn.view:hover{
+color:var(--primary);
+border-color:var(--primary);
+}
 
 .modal{
 position:fixed;
@@ -429,11 +367,6 @@ padding:25px;
 color:var(--primary);
 margin-bottom:20px;
 }
-
-
-/* =========================================================
-   FORM
-========================================================= */
 
 .field{
 margin-bottom:15px;
@@ -490,11 +423,6 @@ background:var(--danger);
 color:white;
 }
 
-
-/* =========================================================
-   GENERAL
-========================================================= */
-
 .message{
 margin-top:12px;
 line-height:1.7;
@@ -518,11 +446,6 @@ border:1px solid var(--border);
 border-radius:18px;
 }
 
-.loading{
-color:var(--muted);
-padding:20px;
-}
-
 .category-home-card{
 text-align:center;
 }
@@ -538,157 +461,139 @@ padding:30px 20px;
 border-top:1px solid var(--border);
 }
 
+.loading{
+color:var(--muted);
+padding:20px;
+}
 
-/* =========================================================
-   FONT NAME
-========================================================= */
 
-.font-name-box{
+/* =========================================
+   FONT NAME GENERATOR
+========================================= */
+
+.font-generator{
 background:
 radial-gradient(
 circle at top right,
 rgba(25,211,197,.10),
-transparent 35%
+transparent 40%
 ),
 var(--card);
-
 border:1px solid var(--border);
 border-radius:22px;
-padding:25px;
+padding:22px;
 margin-bottom:25px;
 }
 
-.font-name-box h2{
+.font-generator-title{
+font-size:22px;
 color:var(--primary);
-margin-bottom:10px;
+margin-bottom:8px;
 }
 
-.font-name-box p{
+.font-generator-subtitle{
 color:var(--muted);
 line-height:1.8;
-margin-bottom:20px;
+margin-bottom:18px;
 }
 
-.font-name-input{
+.font-generator-input{
 width:100%;
-padding:16px;
+padding:16px 18px;
+border-radius:14px;
+border:1px solid var(--border);
 background:var(--bg);
 color:white;
-border:1px solid var(--border);
-border-radius:13px;
 outline:none;
-font-size:18px;
+font-size:20px;
 direction:ltr;
 text-align:left;
 }
 
-.font-name-input:focus{
+.font-generator-input:focus{
 border-color:var(--primary);
-box-shadow:
-0 0 0 3px rgba(25,211,197,.08);
-}
-
-.font-search{
-margin-top:12px;
+box-shadow:0 0 0 3px rgba(25,211,197,.08);
 }
 
 .font-results{
 display:grid;
-grid-template-columns:
-repeat(auto-fill,minmax(280px,1fr));
-gap:15px;
+gap:12px;
 margin-top:20px;
 }
 
-.font-card{
-background:var(--card2);
-border:1px solid var(--border);
-border-radius:18px;
-padding:18px;
-overflow:hidden;
-}
-
-.font-card:hover{
-border-color:rgba(25,211,197,.45);
-}
-
-.font-card-top{
+.font-result{
 display:flex;
 align-items:center;
-justify-content:space-between;
-gap:10px;
-margin-bottom:12px;
+gap:12px;
+background:var(--card2);
+border:1px solid var(--border);
+border-radius:15px;
+padding:13px;
+direction:ltr;
 }
 
-.font-card-name{
-color:var(--primary);
-font-weight:bold;
-font-size:15px;
-direction:ltr;
-text-align:left;
-}
-
-.font-preview{
-font-size:32px;
-line-height:1.35;
-min-height:55px;
-direction:ltr;
-text-align:left;
+.font-result-text{
+flex:1;
+font-size:23px;
+line-height:1.5;
 word-break:break-word;
-margin-bottom:15px;
-color:white;
+color:var(--text);
+text-align:left;
 }
 
-.font-copy-row{
-display:flex;
-gap:8px;
+.font-result-info{
+width:120px;
+font-size:12px;
+color:var(--muted);
+text-align:right;
+direction:rtl;
 }
 
 .font-copy{
-flex:1;
 border:1px solid var(--border);
-background:transparent;
-color:white;
-padding:10px;
+background:rgba(25,211,197,.08);
+color:var(--primary);
 border-radius:10px;
+padding:9px 12px;
+white-space:nowrap;
+font-size:14px;
 }
 
 .font-copy:hover{
-color:var(--primary);
+background:rgba(25,211,197,.18);
 border-color:var(--primary);
 }
 
-.font-google{
-border:1px solid var(--border);
+.font-copy.copied{
 background:var(--primary);
 color:#001716;
-padding:10px 12px;
-border-radius:10px;
-text-decoration:none;
-font-weight:bold;
-white-space:nowrap;
 }
 
-.font-empty{
-padding:35px;
-text-align:center;
-color:var(--muted);
-background:var(--card);
-border:1px solid var(--border);
-border-radius:18px;
-grid-column:1/-1;
+@media(max-width:650px){
+
+.font-result{
+align-items:stretch;
+flex-wrap:wrap;
 }
 
-.font-count{
-margin-top:12px;
-color:var(--muted);
-font-size:13px;
+.font-result-text{
+width:100%;
+font-size:21px;
+}
+
+.font-result-info{
+width:auto;
+flex:1;
+}
+
+.font-copy{
+align-self:center;
+}
+
 }
 
 
-/* =========================================================
-   RESPONSIVE
-========================================================= */
+/* ========================================= */
 
 @media(max-width:850px){
 
@@ -738,97 +643,46 @@ justify-content:flex-start;
 padding:40px 20px;
 }
 
-.font-results{
-grid-template-columns:1fr;
-}
-
 }
 
 </style>
-
 </head>
 
-
 <body>
-
 
 <header>
 
 <div class="header-inner">
 
-<a href="#"
-class="logo"
-onclick="showPage('home');return false;">
+<a href="#" class="logo" onclick="showPage('home');return false;">
 
-<img id="logoImage"
-alt="ZanstLab">
+<img id="logoImage" alt="ZanstLab">
 
-<span id="logoText">
-ZanstLab
-</span>
+<span id="logoText">ZanstLab</span>
 
 </a>
 
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
 
-<button
-class="menu-btn"
-onclick="toggleMenu()">
+<nav class="nav" id="mainNav">
 
-☰
-
-</button>
-
-
-<nav
-class="nav"
-id="mainNav">
-
-
-<button
-onclick="showPage('home')">
-
+<button onclick="showPage('home')">
 🏠 سەرەکی
-
 </button>
-
 
 <div id="dynamicNav"></div>
 
-
-<!-- FONT NAME -->
-
-<button
-id="fontNameNavButton"
-onclick="showPage('font-name')">
-
-🔤 Font Name
-
-</button>
-
-
-<button
-onclick="showPage('about')">
-
+<button onclick="showPage('about')">
 ℹ️ دەربارەی ZanstLab
-
 </button>
 
-
-<button
-onclick="openAccount()">
-
+<button onclick="openAccount()">
 👤 ئەکاونت
-
 </button>
 
-
-<button
-onclick="openAdminLogin()">
-
+<button onclick="openAdminLogin()">
 🔐 Admin
-
 </button>
-
 
 </nav>
 
@@ -837,214 +691,51 @@ onclick="openAdminLogin()">
 </header>
 
 
-
 <main>
 
 
-<!-- =====================================================
-     HOME
-====================================================== -->
-
-<section
-id="homePage"
-class="page active">
-
+<section id="homePage" class="page active">
 
 <div class="hero">
 
-<img
-id="heroLogo"
+<img id="heroLogo"
 class="hero-logo"
 alt="ZanstLab">
 
+<h1 id="heroTitle">ZanstLab</h1>
 
-<h1 id="heroTitle">
-ZanstLab
-</h1>
-
-
-<h3 id="heroSlogan">
-</h3>
-
+<h3 id="heroSlogan"></h3>
 
 <p id="heroDescription">
-
-شوێنێکی نوێ بۆ زانیاری،
-تەکنەلۆجیا، ئەپ، کتێب،
-فیلم و خزمەتگوزارییە جیاوازەکان.
-
+شوێنێکی نوێ بۆ زانیاری، تەکنەلۆجیا، ئەپ، کتێب، فیلم و خزمەتگوزارییە جیاوازەکان.
 </p>
 
 </div>
-
 
 <div class="section-title">
-
-<h2>
-بەشەکان
-</h2>
-
+<h2>بەشەکان</h2>
 </div>
 
-
-<div
-class="grid"
-id="homeCategories">
-
-</div>
-
-
-<!-- FONT NAME HOME CARD -->
-
-<div
-class="card category-home-card clickable"
-onclick="showPage('font-name')"
-style="margin-top:16px;">
-
-<div class="icon">
-🔤
-</div>
-
-<h3>
-Font Name
-</h3>
-
-<p>
-ناوی خۆت بنووسە و لە نێوان
-چەندین شێوازی فۆنتدا هەڵبژێرە.
-</p>
-
-</div>
-
+<div class="grid" id="homeCategories"></div>
 
 </section>
 
 
-
-<!-- =====================================================
-     FONT NAME PAGE
-====================================================== -->
-
-<section
-id="font-namePage"
-class="page">
-
+<section id="aboutPage" class="page">
 
 <div class="section-title">
-
-<h2>
-🔤 Font Name
-</h2>
-
+<h2>ℹ️ دەربارەی ZanstLab</h2>
 </div>
-
-
-<div class="font-name-box">
-
-<h2>
-ناوی خۆت بنووسە
-</h2>
-
-
-<p>
-
-ناوەکەت لە خانەی خوارەوە بنووسە؛
-پاشان هەمان ناو بە فۆنتە جیاوازەکان
-دەبینیت و دەتوانیت فۆنتی دڵخوازت Copy بکەیت.
-
-</p>
-
-
-<div class="field">
-
-<label>
-ناوی دەق
-</label>
-
-<input
-id="fontNameInput"
-class="font-name-input"
-type="text"
-value="ZanstLab"
-placeholder="Write your name..."
-autocomplete="off"
-oninput="renderFontResults()">
-
-</div>
-
-
-<div class="field font-search">
-
-<label>
-گەڕان بەدوای فۆنت
-</label>
-
-<input
-id="fontSearchInput"
-class="font-name-input"
-type="text"
-placeholder="Search font..."
-autocomplete="off"
-oninput="renderFontResults()">
-
-</div>
-
-
-<div
-class="font-count"
-id="fontCount">
-
-</div>
-
-</div>
-
-
-<div
-id="fontResults"
-class="font-results">
-
-</div>
-
-
-</section>
-
-
-
-<!-- =====================================================
-     ABOUT
-====================================================== -->
-
-<section
-id="aboutPage"
-class="page">
-
-
-<div class="section-title">
-
-<h2>
-ℹ️ دەربارەی ZanstLab
-</h2>
-
-</div>
-
 
 <div class="about">
 
-<h2
-id="aboutTitle"
+<h2 id="aboutTitle"
 style="color:var(--primary);margin-bottom:15px;">
-
 ZanstLab
-
 </h2>
 
-
 <p id="aboutDescription">
-
-ZanstLab پلاتفۆرمێکە بۆ زانیاری،
-تەکنەلۆجیا، ئەپ، کتێب، فیلم
-و ناوەڕۆکی نوێ.
-
+ZanstLab پلاتفۆرمێکە بۆ زانیاری، تەکنەلۆجیا، ئەپ، کتێب، فیلم و ناوەڕۆکی نوێ.
 </p>
 
 </div>
@@ -1052,115 +743,68 @@ ZanstLab پلاتفۆرمێکە بۆ زانیاری،
 </section>
 
 
-
-<!-- =====================================================
-     ADMIN
-====================================================== -->
-
-<section
-id="adminPage"
-class="page">
-
+<section id="adminPage" class="page">
 
 <div class="admin-box">
 
-
 <h2 style="color:var(--primary);">
-
 🔐 Admin Panel
-
 </h2>
 
-
-<p
-style="color:var(--muted);margin-top:10px;">
-
-بەخێربێیت بۆ بەشی
-بەڕێوەبردنی ZanstLab.
-
+<p style="color:var(--muted);margin-top:10px;">
+بەخێربێیت بۆ بەشی بەڕێوەبردنی ZanstLab.
 </p>
 
 
 <div class="admin-actions">
 
-
-<button
-class="admin-action"
+<button class="admin-action"
 onclick="openContentEditor()">
-
 ➕<br><br>
 زیادکردنی ناوەڕۆک
-
 </button>
 
-
-<button
-class="admin-action"
+<button class="admin-action"
 onclick="openCategoryEditor()">
-
 📁<br><br>
 دروستکردنی بەش
-
 </button>
 
-
-<button
-class="admin-action"
+<button class="admin-action"
 onclick="openSettingsEditor()">
-
 ⚙️<br><br>
 ڕێکخستنەکانی سایت
-
 </button>
 
-
-<button
-class="admin-action"
+<button class="admin-action"
 onclick="refreshEverything()">
-
 🔄<br><br>
 نوێکردنەوە
-
 </button>
 
-
-<button
-class="admin-action"
+<button class="admin-action"
 onclick="logoutAdmin()">
-
 🚪<br><br>
 چوونەدەرەوە
-
 </button>
-
 
 </div>
 
 
 <div class="admin-list">
 
-
 <div class="admin-section-title">
-
 📁 بەشەکان
-
 </div>
 
-
-<div id="adminCategoriesList">
-</div>
+<div id="adminCategoriesList"></div>
 
 
 <div class="admin-section-title">
-
 📝 هەموو ناوەڕۆکەکان
-
 </div>
 
-
-<div id="adminContentList">
-</div>
-
+<div id="adminContentList"></div>
 
 </div>
 
@@ -1169,33 +813,20 @@ onclick="logoutAdmin()">
 </section>
 
 
-
 </main>
 
 
+<!-- ADMIN LOGIN -->
 
-<!-- =====================================================
-     ADMIN LOGIN
-====================================================== -->
-
-<div
-class="modal"
-id="adminModal">
-
+<div class="modal" id="adminModal">
 
 <div class="modal-box">
 
-
-<h2>
-🔐 چوونەژوورەوەی Admin
-</h2>
-
+<h2>🔐 چوونەژوورەوەی Admin</h2>
 
 <div class="field">
 
-<label>
-Email
-</label>
+<label>Email</label>
 
 <input
 id="adminEmail"
@@ -1204,12 +835,9 @@ autocomplete="username">
 
 </div>
 
-
 <div class="field">
 
-<label>
-Password
-</label>
+<label>Password</label>
 
 <input
 id="adminPassword"
@@ -1218,537 +846,319 @@ autocomplete="current-password">
 
 </div>
 
-
-<button
-class="btn"
-onclick="loginAdmin()">
-
+<button class="btn" onclick="loginAdmin()">
 چوونەژوورەوە
-
 </button>
 
-
-<button
-class="btn secondary"
+<button class="btn secondary"
 onclick="closeAdminLogin()">
-
 داخستن
-
 </button>
 
-
-<div
-class="message"
-id="loginMessage">
-
-</div>
-
+<div class="message" id="loginMessage"></div>
 
 </div>
 
 </div>
 
 
+<!-- ACCOUNT -->
 
-<!-- =====================================================
-     ACCOUNT
-====================================================== -->
-
-<div
-class="modal"
-id="accountModal">
-
+<div class="modal" id="accountModal">
 
 <div class="modal-box">
 
-
-<h2>
-👤 ئەکاونت
-</h2>
-
+<h2>👤 ئەکاونت</h2>
 
 <div id="accountLoggedOut">
 
-
 <div class="field">
-
-<label>
-Email
-</label>
-
-<input
-id="accountEmail"
-type="email">
-
+<label>Email</label>
+<input id="accountEmail" type="email">
 </div>
 
-
 <div class="field">
-
-<label>
-Password
-</label>
-
-<input
-id="accountPassword"
-type="password">
-
+<label>Password</label>
+<input id="accountPassword" type="password">
 </div>
 
-
-<button
-class="btn"
-onclick="loginAccount()">
-
+<button class="btn" onclick="loginAccount()">
 Login
-
 </button>
 
-
-<button
-class="btn secondary"
+<button class="btn secondary"
 onclick="signupAccount()">
-
 دروستکردنی ئەکاونت
-
 </button>
-
 
 </div>
 
+<div id="accountLoggedIn" class="hidden">
 
-<div
-id="accountLoggedIn"
-class="hidden">
-
-
-<p
-id="accountInfo"
+<p id="accountInfo"
 style="color:var(--muted);line-height:1.8;">
-
 </p>
 
-
-<button
-class="btn"
+<button class="btn"
 onclick="logoutAccount()">
-
 چوونەدەرەوە
-
 </button>
 
-
 </div>
 
+<div class="message" id="accountMessage"></div>
 
-<div
-class="message"
-id="accountMessage">
-
-</div>
-
-
-<button
-class="btn secondary"
+<button class="btn secondary"
 onclick="closeAccount()">
-
 داخستن
-
 </button>
 
-
 </div>
 
 </div>
 
 
+<!-- CONTENT EDITOR -->
 
-<!-- =====================================================
-     CONTENT EDITOR
-====================================================== -->
-
-<div
-class="modal"
-id="contentModal">
-
+<div class="modal" id="contentModal">
 
 <div class="modal-box">
-
 
 <h2 id="contentModalTitle">
-
 ➕ زیادکردنی ناوەڕۆک
-
 </h2>
 
-
-<input
-type="hidden"
-id="contentId">
-
+<input type="hidden" id="contentId">
 
 <div class="field">
 
-<label>
-بەش
-</label>
+<label>بەش</label>
 
-<select
-id="contentCategory">
-</select>
+<select id="contentCategory"></select>
 
 </div>
 
-
 <div class="field">
 
-<label>
-ناونیشان
-</label>
+<label>ناونیشان</label>
 
-<input
-id="contentTitle"
-type="text">
+<input id="contentTitle" type="text">
 
 </div>
 
-
 <div class="field">
 
-<label>
-وەسف / ناوەڕۆک
-</label>
+<label>وەسف / ناوەڕۆک</label>
 
-<textarea
-id="contentDescription">
-</textarea>
+<textarea id="contentDescription"></textarea>
 
 </div>
 
-
 <div class="field">
 
-<label>
-Image URL
-</label>
+<label>Image URL</label>
 
-<input
-id="contentImage"
+<input id="contentImage"
 type="url"
 placeholder="https://...">
 
 </div>
 
-
 <div class="field">
 
-<label>
-Video URL
-</label>
+<label>Video URL</label>
 
-<input
-id="contentVideo"
+<input id="contentVideo"
 type="url"
 placeholder="https://...">
 
 </div>
 
-
 <div class="field">
 
-<label>
-External URL
-</label>
+<label>External URL</label>
 
-<input
-id="contentExternal"
+<input id="contentExternal"
 type="url"
 placeholder="https://...">
 
 </div>
 
-
 <div class="field">
 
-<label>
-نووسەر
-</label>
+<label>نووسەر</label>
 
-<input
-id="contentAuthor"
-type="text">
+<input id="contentAuthor" type="text">
 
 </div>
 
-
 <div class="field">
 
-<label>
-ساڵ
-</label>
+<label>ساڵ</label>
 
-<input
-id="contentYear"
-type="text">
+<input id="contentYear" type="text">
 
 </div>
 
-
-<button
-class="btn"
+<button class="btn"
 onclick="saveContent()">
-
 💾 پاشەکەوتکردن
-
 </button>
 
-
-<button
-class="btn secondary"
+<button class="btn secondary"
 onclick="closeContentEditor()">
-
 داخستن
-
 </button>
 
-
-<div
-class="message"
+<div class="message"
 id="contentMessage">
-
-</div>
-
-
 </div>
 
 </div>
 
+</div>
 
 
-<!-- =====================================================
-     CATEGORY EDITOR
-====================================================== -->
+<!-- CATEGORY EDITOR -->
 
-<div
-class="modal"
-id="categoryModal">
-
+<div class="modal" id="categoryModal">
 
 <div class="modal-box">
-
 
 <h2 id="categoryModalTitle">
-
 📁 دروستکردنی بەش
-
 </h2>
 
-
-<input
-type="hidden"
-id="categoryId">
-
+<input type="hidden" id="categoryId">
 
 <div class="field">
 
-<label>
-ناوی بەش
-</label>
+<label>ناوی بەش</label>
 
-<input
-id="categoryName"
+<input id="categoryName"
 type="text"
-placeholder="نموونە: موزیک">
+placeholder="نموونە: Font Name">
 
 </div>
 
-
 <div class="field">
 
-<label>
-Slug
-</label>
+<label>Slug</label>
 
-<input
-id="categorySlug"
+<input id="categorySlug"
 type="text"
-placeholder="music">
+placeholder="font-name">
 
 </div>
 
-
 <div class="field">
 
-<label>
-ئایکۆن
-</label>
+<label>ئایکۆن</label>
 
-<input
-id="categoryIcon"
+<input id="categoryIcon"
 type="text"
-placeholder="🎵">
+placeholder="🔤">
 
 </div>
-
 
 <div class="field">
 
-<label>
-وەسفی بەش
-</label>
+<label>وەسفی بەش</label>
 
-<textarea
-id="categoryDescription">
-</textarea>
+<textarea id="categoryDescription"></textarea>
 
 </div>
 
-
-<button
-class="btn"
+<button class="btn"
 onclick="saveCategory()">
-
 💾 پاشەکەوتکردن
-
 </button>
 
-
-<button
-class="btn secondary"
+<button class="btn secondary"
 onclick="closeCategoryEditor()">
-
 داخستن
-
 </button>
 
-
-<div
-class="message"
+<div class="message"
 id="categoryMessage">
-
-</div>
-
-
 </div>
 
 </div>
 
+</div>
 
 
-<!-- =====================================================
-     SETTINGS
-====================================================== -->
+<!-- SETTINGS -->
 
-<div
-class="modal"
-id="settingsModal">
-
+<div class="modal" id="settingsModal">
 
 <div class="modal-box">
 
-
-<h2>
-⚙️ ڕێکخستنەکانی سایت
-</h2>
-
+<h2>⚙️ ڕێکخستنەکانی سایت</h2>
 
 <div class="field">
 
-<label>
-ناوی سایت
-</label>
+<label>ناوی سایت</label>
 
-<input
-id="siteName"
-type="text">
+<input id="siteName" type="text">
 
 </div>
 
-
 <div class="field">
 
-<label>
-سڵۆگان
-</label>
+<label>سڵۆگان</label>
 
-<input
-id="siteSlogan"
-type="text">
+<input id="siteSlogan" type="text">
 
 </div>
 
-
 <div class="field">
 
-<label>
-وەسفی سایت
-</label>
+<label>وەسفی سایت</label>
 
-<textarea
-id="siteDescription">
-</textarea>
+<textarea id="siteDescription"></textarea>
 
 </div>
 
-
 <div class="field">
 
-<label>
-Logo URL
-</label>
+<label>Logo URL</label>
 
-<input
-id="siteLogo"
+<input id="siteLogo"
 type="url"
 placeholder="https://...">
 
 </div>
 
-
-<button
-class="btn"
+<button class="btn"
 onclick="saveSettings()">
-
 💾 پاشەکەوتکردن
-
 </button>
 
-
-<button
-class="btn secondary"
+<button class="btn secondary"
 onclick="closeSettingsEditor()">
-
 داخستن
-
 </button>
 
-
-<div
-class="message"
+<div class="message"
 id="settingsMessage">
-
-</div>
-
-
 </div>
 
 </div>
 
+</div>
 
 
 <footer>
-
 © 2026 ZanstLab
-
 </footer>
-
 
 
 <script>
 
-/* =========================================================
+/* =========================================
    SUPABASE
-========================================================= */
+========================================= */
 
 const SUPABASE_URL =
 "https://iqsyujyltwwafolesfzg.supabase.co";
@@ -1762,19 +1172,15 @@ SUPABASE_URL,
 SUPABASE_ANON_KEY
 );
 
-
 let currentAdmin = null;
-
 let categories = [];
-
 let editingContentId = null;
-
 let editingCategoryId = null;
 
 
-/* =========================================================
+/* =========================================
    HELPERS
-========================================================= */
+========================================= */
 
 function escapeHtml(value){
 
@@ -1787,13 +1193,9 @@ return String(value ?? "")
 
 }
 
-
 function escapeAttribute(value){
-
 return escapeHtml(value);
-
 }
-
 
 function slugify(value){
 
@@ -1806,10 +1208,18 @@ return String(value || "")
 
 }
 
+function closeAllModals(){
 
-/* =========================================================
+document
+.querySelectorAll(".modal")
+.forEach(m=>m.classList.remove("show"));
+
+}
+
+
+/* =========================================
    NAVIGATION
-========================================================= */
+========================================= */
 
 function toggleMenu(){
 
@@ -1824,64 +1234,34 @@ function showPage(page){
 
 document
 .querySelectorAll(".page")
-.forEach(el=>
-el.classList.remove("active")
-);
-
+.forEach(el=>el.classList.remove("active"));
 
 const target =
 document.getElementById(page+"Page");
 
-
 if(target){
-
 target.classList.add("active");
-
 }
-
 
 document
 .getElementById("mainNav")
 .classList.remove("open");
-
 
 window.scrollTo({
 top:0,
 behavior:"smooth"
 });
 
-
-if(page !== "admin" &&
-page !== "home" &&
-page !== "about" &&
-page !== "font-name"){
-
+if(page !== "admin"){
 loadCategoryContent(page);
-
-}
-
-
-if(page === "font-name"){
-
-setTimeout(()=>{
-renderFontResults();
-},50);
-
 }
 
 }
 
 
-function showDynamicCategory(slug){
-
-showPage(slug);
-
-}
-
-
-/* =========================================================
+/* =========================================
    CATEGORIES
-========================================================= */
+========================================= */
 
 async function loadCategories(){
 
@@ -1894,33 +1274,20 @@ await supabaseClient
 .select("*")
 .order("name",{ascending:true});
 
-
 if(error){
-
 console.error(error);
-
 return;
-
 }
 
-
-categories =
-data || [];
-
+categories = data || [];
 
 renderNavigation();
-
 renderHomeCategories();
-
 renderCategoryPages();
-
 populateContentCategorySelect();
 
-
 if(currentAdmin){
-
 renderAdminCategories();
-
 }
 
 }
@@ -1931,23 +1298,17 @@ function renderNavigation(){
 const nav =
 document.getElementById("dynamicNav");
 
-
 nav.innerHTML = "";
-
 
 categories.forEach(category=>{
 
 const button =
 document.createElement("button");
 
-
 button.textContent =
 `${category.icon || "📁"} ${category.name}`;
 
-
-button.onclick =
-()=>showDynamicCategory(category.slug);
-
+button.onclick=()=>showDynamicCategory(category.slug);
 
 nav.appendChild(button);
 
@@ -1961,9 +1322,7 @@ function renderHomeCategories(){
 const container =
 document.getElementById("homeCategories");
 
-
 if(!container) return;
-
 
 if(!categories.length){
 
@@ -1975,15 +1334,12 @@ container.innerHTML =
 `;
 
 return;
-
 }
-
 
 container.innerHTML =
 categories.map(category=>`
 
-<div
-class="card category-home-card clickable"
+<div class="card category-home-card clickable"
 onclick="showDynamicCategory('${escapeAttribute(category.slug)}')">
 
 <div class="icon">
@@ -1995,10 +1351,7 @@ ${escapeHtml(category.name)}
 </h3>
 
 <p>
-${escapeHtml(
-category.description ||
-"ناوەڕۆکی ئەم بەشە."
-)}
+${escapeHtml(category.description || "ناوەڕۆکی ئەم بەشە.")}
 </p>
 
 </div>
@@ -2013,27 +1366,20 @@ function renderCategoryPages(){
 const main =
 document.querySelector("main");
 
-
 categories.forEach(category=>{
 
 let page =
-document.getElementById(
-category.slug+"Page"
-);
-
+document.getElementById(category.slug+"Page");
 
 if(!page){
 
 page =
 document.createElement("section");
 
-
 page.id =
 category.slug+"Page";
 
-
 page.className="page";
-
 
 page.innerHTML=`
 
@@ -2046,13 +1392,11 @@ ${escapeHtml(category.name)}
 
 </div>
 
-<div
-class="grid"
+<div class="grid"
 id="${escapeAttribute(category.slug)}List">
 </div>
 
 `;
-
 
 main.appendChild(page);
 
@@ -2066,23 +1410,16 @@ main.appendChild(page);
 function populateContentCategorySelect(){
 
 const select =
-document.getElementById(
-"contentCategory"
-);
-
+document.getElementById("contentCategory");
 
 if(!select) return;
-
 
 select.innerHTML =
 categories.map(category=>`
 
-<option
-value="${escapeAttribute(category.id)}">
-
+<option value="${escapeAttribute(category.id)}">
 ${escapeHtml(category.icon || "📁")}
 ${escapeHtml(category.name)}
-
 </option>
 
 `).join("");
@@ -2090,35 +1427,495 @@ ${escapeHtml(category.name)}
 }
 
 
-/* =========================================================
+/* =========================================
+   FONT GENERATOR
+========================================= */
+
+function isFontNameCategory(category){
+
+if(!category) return false;
+
+const slug =
+String(category.slug || "").toLowerCase();
+
+const name =
+String(category.name || "").toLowerCase();
+
+return (
+slug === "font-name" ||
+slug === "fontname" ||
+name === "font name" ||
+name === "fontname"
+);
+
+}
+
+
+const fontStyles = [
+
+{
+name:"Bold",
+convert:unicodeMap(
+"𝐀𝐁𝐂𝐃𝐄𝐅𝐆𝐇𝐈𝐉𝐊𝐋𝐌𝐍𝐎𝐏𝐐𝐑𝐒𝐓𝐔𝐕𝐖𝐗𝐘𝐙",
+"𝐚𝐛𝐜𝐝𝐞𝐟𝐠𝐡𝐢𝐣𝐤𝐥𝐦𝐧𝐨𝐩𝐪𝐫𝐬𝐭𝐮𝐯𝐰𝐱𝐲𝐳",
+"𝟎𝟏𝟐𝟑𝟒𝟓𝟔𝟕𝟖𝟗"
+)
+},
+
+{
+name:"Italic",
+convert:unicodeMap(
+"𝐴𝐵𝐶𝐷𝐸𝐹𝐺𝐻𝐼𝐽𝐾𝐿𝑀𝑁𝑂𝑃𝑄𝑅𝑆𝑇𝑈𝑉𝑊𝑋𝑌𝑍",
+"𝑎𝑏𝑐𝑑𝑒𝑓𝑔𝒉𝑖𝑗𝑘𝑙𝑚𝑛𝑜𝑝𝑞𝑟𝑠𝑡𝑢𝑣𝑤𝑥𝑦𝑧",
+"0123456789"
+)
+},
+
+{
+name:"Bold Italic",
+convert:unicodeMap(
+"𝑨𝑩𝑪𝑫𝑬𝑭𝑮𝑯𝑰𝑱𝑲𝑳𝑴𝑵𝑶𝑷𝑸𝑹𝑺𝑻𝑼𝑽𝑾𝑿𝒀𝒁",
+"𝒂𝒃𝒄𝒅𝒆𝒇𝒈𝒉𝒊𝒋𝒌𝒍𝒎𝒏𝒐𝒑𝒒𝒓𝒔𝒕𝒖𝒗𝒘𝒙𝒚𝒛",
+"0123456789"
+)
+},
+
+{
+name:"Script",
+convert:unicodeMap(
+"𝒜ℬ𝒞𝒟ℰℱ𝒢ℋℐ𝒥𝒦ℒℳ𝒩𝒪𝒫𝒬ℛ𝒮𝒯𝒰𝒱𝒲𝒳𝒴𝒵",
+"𝒶𝒷𝒸𝒹ℯ𝒻ℊ𝒽𝒾𝒿𝓀𝓁𝓂𝓃ℴ𝓅𝓆𝓇𝓈𝓉𝓊𝓋𝓌𝓍𝓎𝓏",
+"0123456789"
+)
+},
+
+{
+name:"Bold Script",
+convert:unicodeMap(
+"𝓐𝓑𝓒𝓓𝓔𝓕𝓖𝓗𝓘𝓙𝓚𝓛𝓜𝓝𝓞𝓟𝓠𝓡𝓢𝓣𝓤𝓥𝓦𝓧𝓨𝓩",
+"𝓪𝓫𝓬𝓭𝓮𝓯𝓰𝓱𝓲𝓳𝓴𝓵𝓶𝓷𝓸𝓹𝓺𝓻𝓼𝓽𝓾𝓿𝔀𝔁𝔂𝔃",
+"0123456789"
+)
+},
+
+{
+name:"Fraktur",
+convert:unicodeMap(
+"𝔄𝔅ℭ𝔇𝔈𝔉𝔊ℌℑ𝔍𝔎𝔏𝔐𝔑𝔒𝔓𝔔ℜ𝔖𝔗𝔘𝔙𝔚𝔛𝔜ℨ",
+"𝔞𝔟𝔠𝔡𝔢𝔣𝔤𝔥𝔦𝔧𝔨𝔩𝔪𝔫𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷",
+"0123456789"
+)
+},
+
+{
+name:"Double Struck",
+convert:unicodeMap(
+"𝔸𝔹ℂ𝔻𝔼𝔽𝔾ℍ𝕀𝕁𝕂𝕃𝕄ℕ𝕆ℙℚℝ𝕊𝕋𝕌𝕍𝕎𝕏𝕐ℤ",
+"𝕒𝕓𝕔𝕕𝕖𝕗𝕘𝕙𝕚𝕛𝕜𝕝𝕞𝕟𝕠𝕡𝕢𝕣𝕤𝕥𝕦𝕧𝕨𝕩𝕪𝕫",
+"𝟘𝟙𝟚𝟛𝟜𝟝𝟞𝟟𝟠𝟡"
+)
+},
+
+{
+name:"Sans Serif",
+convert:unicodeMap(
+"𝖠𝖡𝖢𝖣𝖤𝖥𝖦𝖧𝖨𝖩𝖪𝖫𝖬𝖭𝖮𝖯𝖰𝖱𝖲𝖳𝖴𝖵𝖶𝖷𝖸𝖹",
+"𝖺𝖻𝖼𝖽𝖾𝖿𝗀𝗁𝗂𝗃𝗄𝗅𝗆𝗇𝗈𝗉𝗊𝗋𝗌𝗍𝗎𝗏𝗐𝗑𝗒𝗓",
+"0123456789"
+)
+},
+
+{
+name:"Sans Bold",
+convert:unicodeMap(
+"𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭",
+"𝗮𝗯𝗰𝗱𝗲𝗳𝗴𝗵𝗶𝗷𝗸𝗹𝗺𝗻𝗼𝗽𝗾𝗿𝘀𝘁𝘂𝘃𝘄𝘅𝘆𝘇",
+"𝟬𝟭𝟮𝟯𝟰𝟱𝟲𝟳𝟴𝟵"
+)
+},
+
+{
+name:"Sans Italic",
+convert:unicodeMap(
+"𝘈𝘉𝘊𝘋𝘌𝘍𝘎𝘏𝘐𝘑𝘒𝘓𝘔𝘕𝘖𝘗𝘘𝘙𝘚𝘛𝘜𝘝𝘞𝘟𝘠𝘡",
+"𝘢𝘣𝘤𝘥𝘦𝘧𝘨𝘩𝘪𝘫𝘬𝘭𝘮𝘯𝘰𝘱𝘲𝘳𝘴𝘵𝘶𝘷𝘸𝘹𝘺𝘻",
+"0123456789"
+)
+},
+
+{
+name:"Sans Bold Italic",
+convert:unicodeMap(
+"𝘼𝘽𝘾𝘿𝙀𝙁𝙂𝙃𝙄𝙅𝙆𝙇𝙈𝙉𝙊𝙋𝙌𝙍𝙎𝙏𝙐𝙑𝙒𝙓𝙔𝙕",
+"𝙖𝙗𝙘𝙙𝙚𝙛𝙜𝙝𝙞𝙟𝙠𝙡𝙢𝙣𝙤𝙥𝙦𝙧𝙨𝙩𝙪𝙫𝙬𝙭𝙮𝙯",
+"0123456789"
+)
+},
+
+{
+name:"Monospace",
+convert:unicodeMap(
+"𝙰𝙱𝙲𝙳𝙴𝙵𝙶𝙷𝙸𝙹𝙺𝙻𝙼𝙽𝙾𝙿𝚀𝚁𝚂𝚃𝚄𝚅𝚆𝚇𝚈𝚉",
+"𝚊𝚋𝚌𝚍𝚎𝚏𝚐𝚑𝚒𝚓𝚔𝚕𝚖𝚗𝚘𝚙𝚚𝚛𝚜𝚝𝚞𝚟𝚠𝚡𝚢𝚣",
+"𝟶𝟷𝟸𝟹𝟺𝟻𝟼𝟽𝟾𝟿"
+)
+},
+
+{
+name:"Small Caps",
+convert:function(text){
+
+const map={
+a:"ᴀ",b:"ʙ",c:"ᴄ",d:"ᴅ",e:"ᴇ",f:"ғ",
+g:"ɢ",h:"ʜ",i:"ɪ",j:"ᴊ",k:"ᴋ",l:"ʟ",
+m:"ᴍ",n:"ɴ",o:"ᴏ",p:"ᴘ",q:"ǫ",r:"ʀ",
+s:"s",t:"ᴛ",u:"ᴜ",v:"ᴠ",w:"ᴡ",x:"x",
+y:"ʏ",z:"ᴢ"
+};
+
+return [...text].map(ch=>{
+
+const low=ch.toLowerCase();
+
+return map[low] || ch;
+
+}).join("");
+
+}
+},
+
+{
+name:"Circled",
+convert:function(text){
+
+const upper="ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ";
+const lower="ⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤⓥⓦⓧⓨⓩ";
+const nums="⓪①②③④⑤⑥⑦⑧⑨";
+
+return [...text].map(ch=>{
+
+if(/[A-Z]/.test(ch)){
+return upper[ch.charCodeAt(0)-65];
+}
+
+if(/[a-z]/.test(ch)){
+return lower[ch.charCodeAt(0)-97];
+}
+
+if(/[0-9]/.test(ch)){
+return nums[ch];
+}
+
+return ch;
+
+}).join("");
+
+}
+},
+
+{
+name:"Full Width",
+convert:function(text){
+
+return [...text].map(ch=>{
+
+const code=ch.charCodeAt(0);
+
+if(code>=33 && code<=126){
+return String.fromCharCode(code+65248);
+}
+
+if(ch===" "){
+return "　";
+}
+
+return ch;
+
+}).join("");
+
+}
+},
+
+{
+name:"Strikethrough",
+convert:function(text){
+
+return [...text].map(ch=>{
+
+if(ch===" ") return ch;
+
+return ch+"\u0336";
+
+}).join("");
+
+}
+},
+
+{
+name:"Underline",
+convert:function(text){
+
+return [...text].map(ch=>{
+
+if(ch===" ") return ch;
+
+return ch+"\u0332";
+
+}).join("");
+
+}
+},
+
+{
+name:"Double Underline",
+convert:function(text){
+
+return [...text].map(ch=>{
+
+if(ch===" ") return ch;
+
+return ch+"\u0333";
+
+}).join("");
+
+}
+}
+
+];
+
+
+function unicodeMap(upper,lower,numbers){
+
+const normalUpper=
+"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+const normalLower=
+"abcdefghijklmnopqrstuvwxyz";
+
+const normalNumbers=
+"0123456789";
+
+return function(text){
+
+return [...text].map(ch=>{
+
+let index;
+
+if((index=normalUpper.indexOf(ch))!==-1){
+return upper[index] || ch;
+}
+
+if((index=normalLower.indexOf(ch))!==-1){
+return lower[index] || ch;
+}
+
+if((index=normalNumbers.indexOf(ch))!==-1){
+return numbers[index] || ch;
+}
+
+return ch;
+
+}).join("");
+
+};
+
+}
+
+
+function createFontGenerator(category){
+
+return `
+
+<div class="font-generator">
+
+<div class="font-generator-title">
+🔤 Font Name
+</div>
+
+<div class="font-generator-subtitle">
+ناوی خۆت یان هەر دەقێک بنووسە و لە خوارەوە بە شێوازی جیاواز پیشانت دەدات. هەر شێوازێک دەتوانیت Copy بکەیت.
+</div>
+
+<input
+id="fontGeneratorInput"
+class="font-generator-input"
+type="text"
+placeholder="نموونە: zanst"
+autocomplete="off"
+spellcheck="false"
+oninput="generateFontStyles()">
+
+<div
+id="fontResults"
+class="font-results">
+
+<div class="empty">
+لە سەرەوە دەقێک بنووسە ✨
+</div>
+
+</div>
+
+</div>
+
+<div class="section-title">
+
+<h2>
+${escapeHtml(category.icon || "🔤")}
+${escapeHtml(category.name)}
+</h2>
+
+</div>
+
+`;
+
+}
+
+
+function generateFontStyles(){
+
+const input =
+document.getElementById("fontGeneratorInput");
+
+const results =
+document.getElementById("fontResults");
+
+if(!input || !results) return;
+
+const text=input.value;
+
+if(!text){
+
+results.innerHTML=`
+
+<div class="empty">
+لە سەرەوە دەقێک بنووسە ✨
+</div>
+
+`;
+
+return;
+
+}
+
+results.innerHTML =
+fontStyles.map((style,index)=>{
+
+const output =
+style.convert(text);
+
+return `
+
+<div class="font-result">
+
+<div
+class="font-result-text"
+id="font-result-${index}">
+${escapeHtml(output)}
+</div>
+
+<div class="font-result-info">
+${escapeHtml(style.name)}
+</div>
+
+<button
+class="font-copy"
+onclick="copyFontStyle(this,${JSON.stringify(output)})">
+📋 Copy
+</button>
+
+</div>
+
+`;
+
+}).join("");
+
+}
+
+
+async function copyFontStyle(button,text){
+
+try{
+
+await navigator.clipboard.writeText(text);
+
+button.textContent="✅ Copied";
+button.classList.add("copied");
+
+setTimeout(()=>{
+
+button.textContent="📋 Copy";
+button.classList.remove("copied");
+
+},1200);
+
+}
+catch(error){
+
+const textarea =
+document.createElement("textarea");
+
+textarea.value=text;
+
+document.body.appendChild(textarea);
+
+textarea.select();
+
+document.execCommand("copy");
+
+textarea.remove();
+
+button.textContent="✅ Copied";
+button.classList.add("copied");
+
+setTimeout(()=>{
+
+button.textContent="📋 Copy";
+button.classList.remove("copied");
+
+},1200);
+
+}
+
+}
+
+
+/* =========================================
    PUBLIC CONTENT
-========================================================= */
+========================================= */
 
 async function loadCategoryContent(slug){
 
 const category =
-categories.find(c=>
-c.slug===slug
-);
-
+categories.find(c=>c.slug===slug);
 
 if(!category) return;
 
-
 const list =
-document.getElementById(
-slug+"List"
-);
-
+document.getElementById(slug+"List");
 
 if(!list) return;
 
 
-list.innerHTML =
-`<div class="loading">
-بارکردن...
-</div>`;
+/* FONT NAME SPECIAL PAGE */
 
+if(isFontNameCategory(category)){
+
+list.parentElement.innerHTML =
+createFontGenerator(category) +
+`
+<div
+class="grid"
+id="${escapeAttribute(category.slug)}List">
+</div>
+`;
+
+return;
+
+}
+
+
+list.innerHTML =
+`<div class="loading">بارکردن...</div>`;
 
 const {
 data,
@@ -2132,11 +1929,9 @@ await supabaseClient
 .order("sort_order",{ascending:true})
 .order("created_at",{ascending:false});
 
-
 if(error){
 
 console.error(error);
-
 
 list.innerHTML =
 `
@@ -2146,9 +1941,7 @@ list.innerHTML =
 `;
 
 return;
-
 }
-
 
 if(!data || !data.length){
 
@@ -2156,33 +1949,21 @@ list.innerHTML =
 `
 <div class="empty">
 
-<div
-style="font-size:40px;margin-bottom:10px">
-
-${escapeHtml(
-category.icon || "📁"
-)}
-
+<div style="font-size:40px;margin-bottom:10px">
+${escapeHtml(category.icon || "📁")}
 </div>
 
-<h3>
-هێشتا ناوەڕۆک نییە
-</h3>
+<h3>هێشتا ناوەڕۆک نییە</h3>
 
 <p style="margin-top:8px">
-
-لە Admin Panel ـەوە دەتوانیت
-ناوەڕۆک زیاد بکەیت.
-
+لە Admin Panel ـەوە دەتوانیت ناوەڕۆک زیاد بکەیت.
 </p>
 
 </div>
 `;
 
 return;
-
 }
-
 
 list.innerHTML =
 data.map(renderContentCard).join("");
@@ -2194,7 +1975,6 @@ function renderContentCard(item){
 
 let media = "";
 
-
 if(item.video_url){
 
 media =
@@ -2203,9 +1983,7 @@ media =
 class="card-video"
 controls
 preload="metadata"
-src="${escapeAttribute(
-item.video_url
-)}">
+src="${escapeAttribute(item.video_url)}">
 </video>
 `;
 
@@ -2216,18 +1994,13 @@ media =
 `
 <img
 class="card-media"
-src="${escapeAttribute(
-item.image_url
-)}"
-alt="${escapeAttribute(
-item.title
-)}"
+src="${escapeAttribute(item.image_url)}"
+alt="${escapeAttribute(item.title)}"
 loading="lazy"
 onerror="this.style.display='none'">
 `;
 
 }
-
 
 return `
 
@@ -2248,9 +2021,7 @@ ${escapeHtml(item.title)}
 ${
 item.description
 ?
-`<p>${escapeHtml(
-item.description
-)}</p>`
+`<p>${escapeHtml(item.description)}</p>`
 :
 ""
 }
@@ -2284,14 +2055,10 @@ item.external_url
 ?
 `
 <a
-href="${escapeAttribute(
-item.external_url
-)}"
+href="${escapeAttribute(item.external_url)}"
 target="_blank"
 rel="noopener noreferrer">
-
 بینین →
-
 </a>
 `
 :
@@ -2305,556 +2072,9 @@ rel="noopener noreferrer">
 }
 
 
-/* =========================================================
-   FONT NAME
-========================================================= */
-
-/*
-   Font list.
-
-   These are Google Fonts families.
-   They are loaded only when displayed.
-*/
-
-const FONT_LIST = [
-
-"Roboto",
-"Open Sans",
-"Lato",
-"Montserrat",
-"Poppins",
-"Inter",
-"Oswald",
-"Raleway",
-"Nunito",
-"Ubuntu",
-"Merriweather",
-"Playfair Display",
-"Source Sans 3",
-"Roboto Condensed",
-"Roboto Slab",
-"Roboto Mono",
-"Libre Baskerville",
-"DM Sans",
-"Manrope",
-"Outfit",
-"Plus Jakarta Sans",
-"Work Sans",
-"Fira Sans",
-"Fira Code",
-"Fira Mono",
-"Quicksand",
-"Mulish",
-"Barlow",
-"Barlow Condensed",
-"Cabin",
-"Comfortaa",
-"Josefin Sans",
-"Karla",
-"Rubik",
-"Titillium Web",
-"Archivo",
-"Archivo Black",
-"Anton",
-"Bebas Neue",
-"Oswald",
-"Righteous",
-"Pacifico",
-"Lobster",
-"Lobster Two",
-"Great Vibes",
-"Dancing Script",
-"Pacifico",
-"Caveat",
-"Permanent Marker",
-"Indie Flower",
-"Shadows Into Light",
-"Amatic SC",
-"Black Han Sans",
-"Exo 2",
-"Orbitron",
-"Rajdhani",
-"Audiowide",
-"Chakra Petch",
-"Space Grotesk",
-"Space Mono",
-"DM Mono",
-"IBM Plex Mono",
-"IBM Plex Sans",
-"IBM Plex Serif",
-"Source Code Pro",
-"JetBrains Mono",
-"Ubuntu Mono",
-"Courier Prime",
-"Lexend",
-"League Spartan",
-"Barlow Semi Condensed",
-"Signika",
-"Archivo Narrow",
-"PT Sans",
-"PT Serif",
-"Noto Sans",
-"Noto Serif",
-"Noto Sans Display",
-"Noto Serif Display",
-"Crimson Pro",
-"Libre Franklin",
-"Frank Ruhl Libre",
-"Spectral",
-"Source Serif 4",
-"Cardo",
-"Cormorant Garamond",
-"Cormorant",
-"Bitter",
-"Arvo",
-"Zilla Slab",
-"Slabo 27px",
-"Slabo 13px",
-"Cinzel",
-"Cinzel Decorative",
-"Unbounded",
-"Press Start 2P",
-"Silkscreen",
-"VT323",
-"Share Tech Mono",
-"Space Mono",
-"Michroma",
-"Syncopate",
-"Poiret One",
-"Josefin Slab",
-"Marcellus",
-"Alfa Slab One",
-"Fredoka",
-"Baloo 2",
-"Varela Round",
-"Nunito Sans",
-"Catamaran",
-"Prompt",
-"Chivo",
-"Overpass",
-"Overpass Mono",
-"Assistant",
-"Barlow Condensed",
-"Questrial",
-"Raleway Dots",
-"Monoton",
-"Fugaz One",
-"Comforter",
-"Comforter Brush",
-"Kaushan Script",
-"Satisfy",
-"Courgette",
-"Cookie",
-"Yellowtail",
-"Handlee",
-"Patrick Hand",
-"Gloria Hallelujah",
-"Rock Salt",
-"Nothing You Could Do",
-"Architects Daughter",
-"Covered By Your Grace",
-"Homemade Apple",
-"Mr Dafoe",
-"Allura",
-"Alex Brush",
-"Parisienne",
-"Sacramento",
-"Great Vibes",
-"Playball",
-"Rochester",
-"Rouge Script",
-"Yellowtail",
-"Source Sans Pro",
-"Open Sans Condensed",
-"Barlow",
-"Figtree",
-"Geologica",
-"Instrument Sans",
-"Instrument Serif",
-"Onest",
-"Red Hat Display",
-"Red Hat Text",
-"Public Sans",
-"Urbanist",
-"Albert Sans",
-"Be Vietnam Pro",
-"Plus Jakarta Sans",
-"Space Grotesk",
-"Syne",
-"Manrope",
-"General Sans",
-"DM Serif Display",
-"DM Serif Text",
-"Newsreader",
-"Libre Caslon Text",
-"Fraunces",
-"Young Serif",
-"News Cycle",
-"Archivo",
-"Lexend Deca",
-"League Gothic",
-"Staatliches",
-"Passion One",
-"Black Ops One",
-"Bungee",
-"Bungee Shade",
-"Graduate",
-"Russo One",
-"Teko",
-"Zen Dots",
-"Major Mono Display",
-"Nova Mono",
-"Share Tech",
-"Electrolize",
-"Quantico",
-"Exo",
-"Orbitron",
-"Oxanium"
-
-];
-
-
-/* Remove duplicates */
-
-const UNIQUE_FONTS =
-[...new Set(FONT_LIST)];
-
-
-/* Loaded fonts */
-
-const loadedFonts =
-new Set();
-
-
-function googleFontUrl(font){
-
-return (
-"https://fonts.googleapis.com/css2?family=" +
-encodeURIComponent(font).replace(/%20/g,"+") +
-":wght@300;400;500;600;700;800;900" +
-"&display=swap"
-);
-
-}
-
-
-function loadGoogleFont(font){
-
-if(loadedFonts.has(font)){
-return;
-}
-
-
-const id =
-"zanstlab-font-" +
-font
-.toLowerCase()
-.replace(/[^a-z0-9]+/g,"-");
-
-
-if(document.getElementById(id)){
-
-loadedFonts.add(font);
-
-return;
-
-}
-
-
-const link =
-document.createElement("link");
-
-
-link.id=id;
-
-link.rel="stylesheet";
-
-link.href =
-googleFontUrl(font);
-
-
-document.head.appendChild(link);
-
-loadedFonts.add(font);
-
-}
-
-
-/*
-   Create safe CSS class name.
-*/
-
-function fontClass(font){
-
-return "zanst-font-" +
-font
-.toLowerCase()
-.replace(/[^a-z0-9]+/g,"-");
-
-}
-
-
-/* =========================================================
-   FONT RESULTS
-========================================================= */
-
-function renderFontResults(){
-
-const results =
-document.getElementById(
-"fontResults"
-);
-
-
-const input =
-document.getElementById(
-"fontNameInput"
-);
-
-
-const search =
-document.getElementById(
-"fontSearchInput"
-);
-
-
-const count =
-document.getElementById(
-"fontCount"
-);
-
-
-if(!results) return;
-
-
-const text =
-input?.value.trim() ||
-"ZanstLab";
-
-
-const searchText =
-search?.value.trim().toLowerCase() ||
-"";
-
-
-const filtered =
-UNIQUE_FONTS.filter(font=>
-font.toLowerCase()
-.includes(searchText)
-);
-
-
-count.textContent =
-`${filtered.length} font available`;
-
-
-if(!filtered.length){
-
-results.innerHTML =
-`
-<div class="font-empty">
-
-هیچ فۆنتێک نەدۆزرایەوە.
-
-</div>
-`;
-
-return;
-
-}
-
-
-/*
-   Load fonts.
-*/
-
-filtered.forEach(font=>
-loadGoogleFont(font)
-);
-
-
-results.innerHTML =
-filtered.map(font=>{
-
-const cls =
-fontClass(font);
-
-
-const safeFont =
-escapeHtml(font);
-
-
-const safeText =
-escapeHtml(text);
-
-
-return `
-
-<div class="font-card">
-
-<div class="font-card-top">
-
-<div class="font-card-name">
-
-${safeFont}
-
-</div>
-
-</div>
-
-
-<div
-class="font-preview ${cls}"
-style="font-family:'${escapeAttribute(font)}',sans-serif;">
-
-${safeText}
-
-</div>
-
-
-<div class="font-copy-row">
-
-
-<button
-class="font-copy"
-onclick="copyFontName('${escapeAttribute(font)}')">
-
-📋 Copy Font
-
-</button>
-
-
-<a
-class="font-google"
-href="https://fonts.google.com/specimen/${encodeURIComponent(font)}"
-target="_blank"
-rel="noopener noreferrer">
-
-View
-
-</a>
-
-
-</div>
-
-</div>
-
-`;
-
-}).join("");
-
-}
-
-
-/* =========================================================
-   COPY FONT
-========================================================= */
-
-async function copyFontName(font){
-
-try{
-
-await navigator.clipboard.writeText(font);
-
-showCopyMessage(
-`📋 ${font} کۆپی کرا!`
-);
-
-}
-catch(error){
-
-const textarea =
-document.createElement("textarea");
-
-textarea.value=font;
-
-document.body.appendChild(textarea);
-
-textarea.select();
-
-document.execCommand("copy");
-
-textarea.remove();
-
-showCopyMessage(
-`📋 ${font} کۆپی کرا!`
-);
-
-}
-
-}
-
-
-function showCopyMessage(message){
-
-let box =
-document.getElementById(
-"fontCopyMessage"
-);
-
-
-if(!box){
-
-box =
-document.createElement("div");
-
-box.id =
-"fontCopyMessage";
-
-box.style.position="fixed";
-
-box.style.bottom="25px";
-
-box.style.right="25px";
-
-box.style.zIndex="99999";
-
-box.style.background=
-"var(--card2)";
-
-box.style.color=
-"var(--primary)";
-
-box.style.border=
-"1px solid var(--border)";
-
-box.style.padding=
-"13px 18px";
-
-box.style.borderRadius=
-"12px";
-
-box.style.boxShadow=
-"0 10px 30px rgba(0,0,0,.4)";
-
-document.body.appendChild(box);
-
-}
-
-
-box.textContent=message;
-
-box.style.display="block";
-
-
-clearTimeout(
-window.__fontCopyTimer
-);
-
-
-window.__fontCopyTimer =
-setTimeout(()=>{
-
-box.style.display="none";
-
-},1800);
-
-}
-
-
-/* =========================================================
+/* =========================================
    CONTENT EDITOR
-========================================================= */
+========================================= */
 
 function openContentEditor(content=null){
 
@@ -2866,92 +2086,52 @@ return;
 
 }
 
-
 const modal =
-document.getElementById(
-"contentModal"
-);
-
+document.getElementById("contentModal");
 
 modal.classList.add("show");
 
-
 const title =
-document.getElementById(
-"contentModalTitle"
-);
-
+document.getElementById("contentModalTitle");
 
 const idInput =
-document.getElementById(
-"contentId"
-);
+document.getElementById("contentId");
 
-
-document
-.getElementById("contentMessage")
+document.getElementById("contentMessage")
 .textContent="";
-
 
 if(content){
 
-editingContentId =
-content.id;
-
+editingContentId = content.id;
 
 idInput.value =
 content.id;
 
-
 title.textContent =
 "✏️ دەستکاریکردنی ناوەڕۆک";
 
-
-document
-.getElementById("contentCategory")
-.value =
+document.getElementById("contentCategory").value =
 content.category_id || "";
 
-
-document
-.getElementById("contentTitle")
-.value =
+document.getElementById("contentTitle").value =
 content.title || "";
 
-
-document
-.getElementById("contentDescription")
-.value =
+document.getElementById("contentDescription").value =
 content.description || "";
 
-
-document
-.getElementById("contentImage")
-.value =
+document.getElementById("contentImage").value =
 content.image_url || "";
 
-
-document
-.getElementById("contentVideo")
-.value =
+document.getElementById("contentVideo").value =
 content.video_url || "";
 
-
-document
-.getElementById("contentExternal")
-.value =
+document.getElementById("contentExternal").value =
 content.external_url || "";
 
-
-document
-.getElementById("contentAuthor")
-.value =
+document.getElementById("contentAuthor").value =
 content.author || "";
 
-
-document
-.getElementById("contentYear")
-.value =
+document.getElementById("contentYear").value =
 content.year || "";
 
 }
@@ -2964,12 +2144,8 @@ idInput.value="";
 title.textContent =
 "➕ زیادکردنی ناوەڕۆک";
 
-
-document
-.getElementById("contentCategory")
-.value =
+document.getElementById("contentCategory").value =
 categories[0]?.id || "";
-
 
 clearContentForm();
 
@@ -2980,39 +2156,13 @@ clearContentForm();
 
 function clearContentForm(){
 
-document.getElementById(
-"contentTitle"
-).value="";
-
-
-document.getElementById(
-"contentDescription"
-).value="";
-
-
-document.getElementById(
-"contentImage"
-).value="";
-
-
-document.getElementById(
-"contentVideo"
-).value="";
-
-
-document.getElementById(
-"contentExternal"
-).value="";
-
-
-document.getElementById(
-"contentAuthor"
-).value="";
-
-
-document.getElementById(
-"contentYear"
-).value="";
+document.getElementById("contentTitle").value="";
+document.getElementById("contentDescription").value="";
+document.getElementById("contentImage").value="";
+document.getElementById("contentVideo").value="";
+document.getElementById("contentExternal").value="";
+document.getElementById("contentAuthor").value="";
+document.getElementById("contentYear").value="";
 
 }
 
@@ -3036,67 +2186,35 @@ return;
 
 }
 
-
 const category_id =
-document.getElementById(
-"contentCategory"
-).value;
-
+document.getElementById("contentCategory").value;
 
 const title =
-document.getElementById(
-"contentTitle"
-).value.trim();
-
+document.getElementById("contentTitle").value.trim();
 
 const description =
-document.getElementById(
-"contentDescription"
-).value.trim();
-
+document.getElementById("contentDescription").value.trim();
 
 const image_url =
-document.getElementById(
-"contentImage"
-).value.trim();
-
+document.getElementById("contentImage").value.trim();
 
 const video_url =
-document.getElementById(
-"contentVideo"
-).value.trim();
-
+document.getElementById("contentVideo").value.trim();
 
 const external_url =
-document.getElementById(
-"contentExternal"
-).value.trim();
-
+document.getElementById("contentExternal").value.trim();
 
 const author =
-document.getElementById(
-"contentAuthor"
-).value.trim();
-
+document.getElementById("contentAuthor").value.trim();
 
 const year =
-document.getElementById(
-"contentYear"
-).value.trim();
-
+document.getElementById("contentYear").value.trim();
 
 const message =
-document.getElementById(
-"contentMessage"
-);
+document.getElementById("contentMessage");
 
-
-message.classList.remove(
-"success"
-);
-
+message.classList.remove("success");
 message.textContent="";
-
 
 if(!category_id){
 
@@ -3107,7 +2225,6 @@ return;
 
 }
 
-
 if(!title){
 
 message.textContent =
@@ -3117,32 +2234,21 @@ return;
 
 }
 
-
 const payload={
 
 category_id,
-
 title,
-
 description,
-
 image_url,
-
 video_url,
-
 external_url,
-
 author,
-
 year,
-
 is_published:true
 
 };
 
-
 let result;
-
 
 if(editingContentId){
 
@@ -3162,7 +2268,6 @@ await supabaseClient
 
 }
 
-
 if(result.error){
 
 console.error(result.error);
@@ -3174,10 +2279,7 @@ return;
 
 }
 
-
-message.classList.add(
-"success"
-);
+message.classList.add("success");
 
 message.textContent =
 editingContentId
@@ -3186,44 +2288,32 @@ editingContentId
 :
 "ناوەڕۆک بە سەرکەوتوویی زیادکرا. ✅";
 
-
 editingContentId=null;
 
-
 clearContentForm();
-
 
 await loadAdminContent();
 
 await refreshPublicPages();
 
-
 setTimeout(()=>{
-
 closeContentEditor();
-
 },700);
 
 }
 
 
-/* =========================================================
+/* =========================================
    DELETE CONTENT
-========================================================= */
+========================================= */
 
 async function deleteContent(id){
 
 if(!currentAdmin) return;
 
-
-if(!confirm(
-"دڵنیایت لە سڕینەوەی ئەم ناوەڕۆکە؟"
-)){
-
+if(!confirm("دڵنیایت لە سڕینەوەی ئەم ناوەڕۆکە؟")){
 return;
-
 }
-
 
 const {
 error
@@ -3233,47 +2323,35 @@ await supabaseClient
 .delete()
 .eq("id",id);
 
-
 if(error){
 
 console.error(error);
 
-alert(
-"سڕینەوە سەرکەوتوو نەبوو."
-);
+alert("سڕینەوە سەرکەوتوو نەبوو.");
 
 return;
 
 }
 
-
 await loadAdminContent();
-
 await refreshPublicPages();
 
 }
 
 
-/* =========================================================
+/* =========================================
    ADMIN CONTENT LIST
-========================================================= */
+========================================= */
 
 async function loadAdminContent(){
 
 const list =
-document.getElementById(
-"adminContentList"
-);
-
+document.getElementById("adminContentList");
 
 if(!list) return;
 
-
 list.innerHTML =
-`<div class="loading">
-بارکردن...
-</div>`;
-
+`<div class="loading">بارکردن...</div>`;
 
 const {
 data,
@@ -3289,15 +2367,11 @@ slug,
 icon
 )
 `)
-.order("created_at",{
-ascending:false
-});
-
+.order("created_at",{ascending:false});
 
 if(error){
 
 console.error(error);
-
 
 list.innerHTML =
 `
@@ -3307,9 +2381,7 @@ list.innerHTML =
 `;
 
 return;
-
 }
-
 
 if(!data || !data.length){
 
@@ -3321,9 +2393,7 @@ list.innerHTML =
 `;
 
 return;
-
 }
-
 
 list.innerHTML =
 data.map(item=>`
@@ -3333,25 +2403,14 @@ data.map(item=>`
 <div class="admin-item-info">
 
 <strong>
-
-${escapeHtml(
-item.title
-)}
-
+${escapeHtml(item.title)}
 </strong>
-
 
 <small>
 
-${escapeHtml(
-item.Categories?.icon ||
-"📁"
-)}
+${escapeHtml(item.Categories?.icon || "📁")}
 
-${escapeHtml(
-item.Categories?.name ||
-"بەشی نەناسراو"
-)}
+${escapeHtml(item.Categories?.name || "بەشی نەناسراو")}
 
 <br>
 
@@ -3383,24 +2442,18 @@ item.external_url
 
 </div>
 
-
 <div class="admin-buttons">
 
 <button
 class="small-btn edit"
 onclick='editContentById(${JSON.stringify(item.id)})'>
-
 ✏️ دەستکاری
-
 </button>
-
 
 <button
 class="small-btn delete"
 onclick='deleteContent(${JSON.stringify(item.id)})'>
-
 🗑️ سڕینەوە
-
 </button>
 
 </div>
@@ -3409,8 +2462,7 @@ onclick='deleteContent(${JSON.stringify(item.id)})'>
 
 `).join("");
 
-
-window.__allContent=data;
+window.__allContent = data;
 
 }
 
@@ -3421,19 +2473,16 @@ const item =
 (window.__allContent || [])
 .find(x=>x.id===id);
 
-
 if(item){
-
 openContentEditor(item);
-
 }
 
 }
 
 
-/* =========================================================
+/* =========================================
    CATEGORY EDITOR
-========================================================= */
+========================================= */
 
 function openCategoryEditor(category=null){
 
@@ -3445,56 +2494,34 @@ return;
 
 }
 
-
 document
 .getElementById("categoryModal")
 .classList.add("show");
 
-
-document
-.getElementById("categoryMessage")
+document.getElementById("categoryMessage")
 .textContent="";
-
 
 if(category){
 
-editingCategoryId=
-category.id;
+editingCategoryId=category.id;
 
-
-document
-.getElementById("categoryModalTitle")
+document.getElementById("categoryModalTitle")
 .textContent=
 "✏️ دەستکاریکردنی بەش";
 
-
-document
-.getElementById("categoryId")
-.value=
+document.getElementById("categoryId").value=
 category.id;
 
-
-document
-.getElementById("categoryName")
-.value=
+document.getElementById("categoryName").value=
 category.name || "";
 
-
-document
-.getElementById("categorySlug")
-.value=
+document.getElementById("categorySlug").value=
 category.slug || "";
 
-
-document
-.getElementById("categoryIcon")
-.value=
+document.getElementById("categoryIcon").value=
 category.icon || "📁";
 
-
-document
-.getElementById("categoryDescription")
-.value=
+document.getElementById("categoryDescription").value=
 category.description || "";
 
 }
@@ -3502,62 +2529,34 @@ else{
 
 editingCategoryId=null;
 
-
-document
-.getElementById("categoryModalTitle")
+document.getElementById("categoryModalTitle")
 .textContent=
 "📁 دروستکردنی بەش";
 
+document.getElementById("categoryId").value="";
 
-document
-.getElementById("categoryId")
-.value="";
+document.getElementById("categoryName").value="";
 
+document.getElementById("categorySlug").value="";
 
-document
-.getElementById("categoryName")
-.value="";
+document.getElementById("categoryIcon").value="📁";
 
-
-document
-.getElementById("categorySlug")
-.value="";
-
-
-document
-.getElementById("categoryIcon")
-.value="📁";
-
-
-document
-.getElementById("categoryDescription")
-.value="";
+document.getElementById("categoryDescription").value="";
 
 }
 
 }
 
 
-/* =========================================================
-   CATEGORY SLUG
-========================================================= */
-
 document
 .getElementById("categoryName")
-.addEventListener(
-"input",
-function(){
+.addEventListener("input",function(){
 
 const slugInput =
-document.getElementById(
-"categorySlug"
-);
+document.getElementById("categorySlug");
 
-
-if(
-!editingCategoryId &&
-!slugInput.dataset.changed
-){
+if(!editingCategoryId &&
+!slugInput.dataset.changed){
 
 slugInput.value =
 slugify(this.value);
@@ -3569,9 +2568,7 @@ slugify(this.value);
 
 document
 .getElementById("categorySlug")
-.addEventListener(
-"input",
-function(){
+.addEventListener("input",function(){
 
 this.dataset.changed="true";
 
@@ -3597,44 +2594,27 @@ return;
 
 }
 
-
 const name =
-document
-.getElementById("categoryName")
+document.getElementById("categoryName")
 .value.trim();
-
 
 const slug =
-document
-.getElementById("categorySlug")
+document.getElementById("categorySlug")
 .value.trim();
-
 
 const icon =
-document
-.getElementById("categoryIcon")
-.value.trim() ||
-"📁";
-
+document.getElementById("categoryIcon")
+.value.trim() || "📁";
 
 const description =
-document
-.getElementById("categoryDescription")
+document.getElementById("categoryDescription")
 .value.trim();
 
-
 const message =
-document.getElementById(
-"categoryMessage"
-);
+document.getElementById("categoryMessage");
 
-
-message.classList.remove(
-"success"
-);
-
+message.classList.remove("success");
 message.textContent="";
-
 
 if(!name || !slug){
 
@@ -3645,13 +2625,11 @@ return;
 
 }
 
-
 const duplicate =
 categories.find(c=>
 c.slug===slug &&
 c.id!==editingCategoryId
 );
-
 
 if(duplicate){
 
@@ -3662,22 +2640,14 @@ return;
 
 }
 
-
 const payload={
-
 name,
-
 slug,
-
 icon,
-
 description
-
 };
 
-
 let result;
-
 
 if(editingCategoryId){
 
@@ -3697,7 +2667,6 @@ await supabaseClient
 
 }
 
-
 if(result.error){
 
 console.error(result.error);
@@ -3709,11 +2678,7 @@ return;
 
 }
 
-
-message.classList.add(
-"success"
-);
-
+message.classList.add("success");
 
 message.textContent =
 editingCategoryId
@@ -3722,38 +2687,28 @@ editingCategoryId
 :
 "بەشەکە دروستکرا. ✅";
 
-
 editingCategoryId=null;
 
-
 await loadCategories();
-
 await loadAdminContent();
 
-
 setTimeout(()=>{
-
 closeCategoryEditor();
-
 },700);
 
 }
 
 
-/* =========================================================
+/* =========================================
    ADMIN CATEGORIES
-========================================================= */
+========================================= */
 
 function renderAdminCategories(){
 
 const list =
-document.getElementById(
-"adminCategoriesList"
-);
-
+document.getElementById("adminCategoriesList");
 
 if(!list) return;
-
 
 if(!categories.length){
 
@@ -3768,7 +2723,6 @@ return;
 
 }
 
-
 list.innerHTML =
 categories.map(category=>`
 
@@ -3777,56 +2731,31 @@ categories.map(category=>`
 <div class="admin-item-info">
 
 <strong>
-
-${escapeHtml(
-category.icon || "📁"
-)}
-
-${escapeHtml(
-category.name
-)}
-
+${escapeHtml(category.icon || "📁")}
+${escapeHtml(category.name)}
 </strong>
 
-
 <small>
-
-Slug:
-${escapeHtml(
-category.slug
-)}
-
+Slug: ${escapeHtml(category.slug)}
 <br>
-
-${escapeHtml(
-category.description || ""
-)}
-
+${escapeHtml(category.description || "")}
 </small>
 
 </div>
 
-
 <div class="admin-buttons">
-
 
 <button
 class="small-btn edit"
 onclick='editCategoryById(${JSON.stringify(category.id)})'>
-
 ✏️ دەستکاری
-
 </button>
-
 
 <button
 class="small-btn delete"
 onclick='deleteCategory(${JSON.stringify(category.id)})'>
-
 🗑️ سڕینەوە
-
 </button>
-
 
 </div>
 
@@ -3840,17 +2769,10 @@ onclick='deleteCategory(${JSON.stringify(category.id)})'>
 function editCategoryById(id){
 
 const category =
-categories.find(c=>
-c.id===id
-);
-
+categories.find(c=>c.id===id);
 
 if(category){
-
-openCategoryEditor(
-category
-);
-
+openCategoryEditor(category);
 }
 
 }
@@ -3860,26 +2782,17 @@ async function deleteCategory(id){
 
 if(!currentAdmin) return;
 
-
 const category =
-categories.find(c=>
-c.id===id
-);
-
+categories.find(c=>c.id===id);
 
 if(!category) return;
 
-
 if(!confirm(
 `دڵنیایت لە سڕینەوەی بەشی "${category.name}"؟
-ناوەڕۆکی ناو ئەم بەشەش دەکرێت
-پەیوەندییەکەی لەدەست بدات.`
+ناوەڕۆکی ناو ئەم بەشەش دەکرێت پەیوەندییەکەی لەدەست بدات.`
 )){
-
 return;
-
 }
-
 
 const {
 error
@@ -3888,7 +2801,6 @@ await supabaseClient
 .from("Categories")
 .delete()
 .eq("id",id);
-
 
 if(error){
 
@@ -3902,17 +2814,15 @@ return;
 
 }
 
-
 await loadCategories();
-
 await loadAdminContent();
 
 }
 
 
-/* =========================================================
+/* =========================================
    SETTINGS
-========================================================= */
+========================================= */
 
 async function openSettingsEditor(){
 
@@ -3924,7 +2834,6 @@ return;
 
 }
 
-
 const {
 data,
 error
@@ -3934,7 +2843,6 @@ await supabaseClient
 .select("*")
 .eq("id",1)
 .maybeSingle();
-
 
 if(error){
 
@@ -3948,40 +2856,25 @@ return;
 
 }
 
-
 document
 .getElementById("settingsModal")
 .classList.add("show");
 
-
-document
-.getElementById("settingsMessage")
+document.getElementById("settingsMessage")
 .textContent="";
-
 
 if(data){
 
-document.getElementById(
-"siteName"
-).value =
+document.getElementById("siteName").value =
 data.site_name || "";
 
-
-document.getElementById(
-"siteSlogan"
-).value =
+document.getElementById("siteSlogan").value =
 data.slogan || "";
 
-
-document.getElementById(
-"siteDescription"
-).value =
+document.getElementById("siteDescription").value =
 data.description || "";
 
-
-document.getElementById(
-"siteLogo"
-).value =
+document.getElementById("siteLogo").value =
 data.logo_url || "";
 
 }
@@ -4008,36 +2901,24 @@ return;
 
 }
 
-
 const site_name =
-document.getElementById(
-"siteName"
-).value.trim();
-
+document.getElementById("siteName")
+.value.trim();
 
 const slogan =
-document.getElementById(
-"siteSlogan"
-).value.trim();
-
+document.getElementById("siteSlogan")
+.value.trim();
 
 const description =
-document.getElementById(
-"siteDescription"
-).value.trim();
-
+document.getElementById("siteDescription")
+.value.trim();
 
 const logo_url =
-document.getElementById(
-"siteLogo"
-).value.trim();
-
+document.getElementById("siteLogo")
+.value.trim();
 
 const message =
-document.getElementById(
-"settingsMessage"
-);
-
+document.getElementById("settingsMessage");
 
 const {
 error
@@ -4047,20 +2928,13 @@ await supabaseClient
 .upsert({
 
 id:1,
-
 site_name,
-
 slogan,
-
 description,
-
 logo_url,
-
-updated_at:
-new Date().toISOString()
+updated_at:new Date().toISOString()
 
 });
-
 
 if(error){
 
@@ -4073,24 +2947,19 @@ return;
 
 }
 
-
-message.classList.add(
-"success"
-);
-
+message.classList.add("success");
 
 message.textContent =
 "Settings بە سەرکەوتوویی پاشەکەوت کرا. ✅";
-
 
 await loadSiteSettings();
 
 }
 
 
-/* =========================================================
-   SITE SETTINGS
-========================================================= */
+/* =========================================
+   SITE SETTINGS DISPLAY
+========================================= */
 
 async function loadSiteSettings(){
 
@@ -4104,98 +2973,64 @@ await supabaseClient
 .eq("id",1)
 .maybeSingle();
 
-
 if(error || !data){
-
 return;
-
 }
-
 
 if(data.site_name){
 
-document.getElementById(
-"heroTitle"
-).textContent=
-data.site_name;
+document.getElementById("heroTitle")
+.textContent=data.site_name;
 
+document.getElementById("logoText")
+.textContent=data.site_name;
 
-document.getElementById(
-"logoText"
-).textContent=
-data.site_name;
+document.getElementById("aboutTitle")
+.textContent=data.site_name;
 
-
-document.getElementById(
-"aboutTitle"
-).textContent=
-data.site_name;
-
-
-document.title=
-data.site_name;
+document.title=data.site_name;
 
 }
-
 
 if(data.slogan){
 
-document.getElementById(
-"heroSlogan"
-).textContent=
-data.slogan;
+document.getElementById("heroSlogan")
+.textContent=data.slogan;
 
 }
-
 
 if(data.description){
 
-document.getElementById(
-"heroDescription"
-).textContent=
-data.description;
+document.getElementById("heroDescription")
+.textContent=data.description;
 
-
-document.getElementById(
-"aboutDescription"
-).textContent=
-data.description;
+document.getElementById("aboutDescription")
+.textContent=data.description;
 
 }
-
 
 if(data.logo_url){
 
 const logo =
-document.getElementById(
-"logoImage"
-);
-
+document.getElementById("logoImage");
 
 logo.src=data.logo_url;
-
 logo.style.display="block";
 
-
 const heroLogo =
-document.getElementById(
-"heroLogo"
-);
-
+document.getElementById("heroLogo");
 
 heroLogo.src=data.logo_url;
-
-heroLogo.style.display=
-"inline-block";
+heroLogo.style.display="inline-block";
 
 }
 
 }
 
 
-/* =========================================================
+/* =========================================
    ADMIN LOGIN
-========================================================= */
+========================================= */
 
 function openAdminLogin(){
 
@@ -4203,11 +3038,9 @@ document
 .getElementById("adminModal")
 .classList.add("show");
 
-
 document
 .getElementById("loginMessage")
 .textContent="";
-
 
 document
 .getElementById("adminEmail")
@@ -4232,21 +3065,15 @@ document
 .getElementById("adminEmail")
 .value.trim();
 
-
 const password =
 document
 .getElementById("adminPassword")
 .value;
 
-
 const message =
-document.getElementById(
-"loginMessage"
-);
-
+document.getElementById("loginMessage");
 
 message.textContent="";
-
 
 if(!email || !password){
 
@@ -4257,20 +3084,15 @@ return;
 
 }
 
-
 const {
 data,
 error
 } =
 await supabaseClient.auth
 .signInWithPassword({
-
 email,
-
 password
-
 });
-
 
 if(error){
 
@@ -4283,10 +3105,8 @@ return;
 
 }
 
-
 const user =
 data?.user;
-
 
 if(!user){
 
@@ -4297,7 +3117,6 @@ return;
 
 }
 
-
 const {
 data:adminUser,
 error:adminError
@@ -4307,7 +3126,6 @@ await supabaseClient
 .select('id,"Email"')
 .eq("id",user.id)
 .maybeSingle();
-
 
 if(adminError){
 
@@ -4320,7 +3138,6 @@ return;
 
 }
 
-
 if(!adminUser){
 
 await supabaseClient.auth.signOut();
@@ -4332,26 +3149,21 @@ return;
 
 }
 
-
 currentAdmin=user;
-
 
 closeAdminLogin();
 
-
 showPage("admin");
 
-
 await loadCategories();
-
 await loadAdminContent();
 
 }
 
 
-/* =========================================================
-   ADMIN LOGOUT
-========================================================= */
+/* =========================================
+   LOGOUT ADMIN
+========================================= */
 
 async function logoutAdmin(){
 
@@ -4364,16 +3176,15 @@ showPage("home");
 }
 
 
-/* =========================================================
+/* =========================================
    ACCOUNT
-========================================================= */
+========================================= */
 
 async function openAccount(){
 
 document
 .getElementById("accountModal")
 .classList.add("show");
-
 
 await refreshAccountState();
 
@@ -4394,56 +3205,35 @@ async function refreshAccountState(){
 const {
 data
 } =
-await supabaseClient.auth
-.getUser();
-
+await supabaseClient.auth.getUser();
 
 const user =
 data?.user;
 
-
 const loggedOut =
-document.getElementById(
-"accountLoggedOut"
-);
-
+document.getElementById("accountLoggedOut");
 
 const loggedIn =
-document.getElementById(
-"accountLoggedIn"
-);
-
+document.getElementById("accountLoggedIn");
 
 const info =
-document.getElementById(
-"accountInfo"
-);
-
+document.getElementById("accountInfo");
 
 if(user){
 
-loggedOut.classList.add(
-"hidden"
-);
+loggedOut.classList.add("hidden");
 
-loggedIn.classList.remove(
-"hidden"
-);
+loggedIn.classList.remove("hidden");
 
 info.textContent =
-"بەخێربێیت 👋🏻 " +
-user.email;
+"بەخێربێیت 👋🏻 " + user.email;
 
 }
 else{
 
-loggedOut.classList.remove(
-"hidden"
-);
+loggedOut.classList.remove("hidden");
 
-loggedIn.classList.add(
-"hidden"
-);
+loggedIn.classList.add("hidden");
 
 }
 
@@ -4457,31 +3247,22 @@ document
 .getElementById("accountEmail")
 .value.trim();
 
-
 const password =
 document
 .getElementById("accountPassword")
 .value;
 
-
 const message =
-document.getElementById(
-"accountMessage"
-);
-
+document.getElementById("accountMessage");
 
 const {
 error
 } =
 await supabaseClient.auth
 .signInWithPassword({
-
 email,
-
 password
-
 });
-
 
 if(error){
 
@@ -4492,15 +3273,10 @@ return;
 
 }
 
-
-message.classList.add(
-"success"
-);
-
+message.classList.add("success");
 
 message.textContent =
 "بە سەرکەوتوویی چوویتە ژوورەوە. ✅";
-
 
 await refreshAccountState();
 
@@ -4514,18 +3290,13 @@ document
 .getElementById("accountEmail")
 .value.trim();
 
-
 const password =
 document
 .getElementById("accountPassword")
 .value;
 
-
 const message =
-document.getElementById(
-"accountMessage"
-);
-
+document.getElementById("accountMessage");
 
 if(!email || !password){
 
@@ -4536,19 +3307,14 @@ return;
 
 }
 
-
 const {
 error
 } =
 await supabaseClient.auth
 .signUp({
-
 email,
-
 password
-
 });
-
 
 if(error){
 
@@ -4559,11 +3325,7 @@ return;
 
 }
 
-
-message.classList.add(
-"success"
-);
-
+message.classList.add("success");
 
 message.textContent =
 "ئەکاونتەکە دروستکرا. ✅";
@@ -4582,21 +3344,17 @@ await refreshAccountState();
 }
 
 
-/* =========================================================
+/* =========================================
    REFRESH
-========================================================= */
+========================================= */
 
 async function refreshPublicPages(){
 
 await loadCategories();
 
+for(const category of categories){
 
-for(const category
-of categories){
-
-await loadCategoryContent(
-category.slug
-);
+await loadCategoryContent(category.slug);
 
 }
 
@@ -4611,25 +3369,29 @@ await loadCategories();
 
 await loadAdminContent();
 
+for(const category of categories){
 
-for(const category
-of categories){
+await loadCategoryContent(category.slug);
 
-await loadCategoryContent(
-category.slug
-);
+}
 
 }
 
 
-renderFontResults();
+/* =========================================
+   DYNAMIC CATEGORY
+========================================= */
+
+function showDynamicCategory(slug){
+
+showPage(slug);
 
 }
 
 
-/* =========================================================
+/* =========================================
    AUTH STATE
-========================================================= */
+========================================= */
 
 supabaseClient.auth.onAuthStateChange(
 async(event,session)=>{
@@ -4646,9 +3408,9 @@ return;
 );
 
 
-/* =========================================================
+/* =========================================
    START
-========================================================= */
+========================================= */
 
 (async function(){
 
@@ -4656,26 +3418,15 @@ await loadSiteSettings();
 
 await loadCategories();
 
+for(const category of categories){
 
-for(const category
-of categories){
-
-await loadCategoryContent(
-category.slug
-);
+await loadCategoryContent(category.slug);
 
 }
-
-
-/* Font page */
-
-renderFontResults();
 
 })();
 
 </script>
 
-
 </body>
-
 </html>
