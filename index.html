@@ -1,747 +1,508 @@
 <!DOCTYPE html>
 <html lang="ku" dir="rtl">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>ZanstLab</title>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <style>
-
-    :root {
-      --bg: #07171b;
-      --card: #0c2227;
-      --card2: #102b31;
-      --primary: #19d3c5;
-      --primary-dark: #0fa69b;
-      --text: #f2ffff;
-      --muted: #91abad;
-      --border: rgba(25,211,197,.16);
-      --danger: #ff5f6d;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Tahoma, sans-serif;
-    }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    button,
-    input {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-
-    /* =========================
-       HEADER
-       ========================= */
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-
-      background: rgba(7,23,27,.96);
-
-      border-bottom: 1px solid var(--border);
-
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-    }
-
-    .header {
-      max-width: 1200px;
-      margin: auto;
-
-      min-height: 68px;
-
-      padding: 10px 16px;
-
-      display: flex;
-      align-items: center;
-
-      gap: 14px;
-    }
-
-
-    /* =========================
-       MENU BUTTON
-       ========================= */
-
-    #menuBtn {
-      width: 48px;
-      height: 48px;
-
-      border: 1px solid var(--border);
-
-      border-radius: 13px;
-
-      background: var(--card);
-
-      display: flex;
-      flex-direction: column;
-
-      align-items: center;
-      justify-content: center;
-
-      gap: 5px;
-
-      flex-shrink: 0;
-    }
-
-    #menuBtn:hover {
-      border-color: var(--primary);
-    }
-
-    #menuBtn span {
-      display: block;
-
-      width: 24px;
-      height: 3px;
-
-      background: var(--primary);
-
-      border-radius: 20px;
-    }
-
-
-    /* =========================
-       LOGO
-       ========================= */
-
-    .logo {
-      color: var(--primary);
-
-      font-size: 25px;
-
-      font-weight: 900;
-
-      text-decoration: none;
-
-      cursor: pointer;
-
-      margin-right: auto;
-    }
-
-
-    /* =========================
-       DESKTOP NAV
-       ========================= */
-
-    .desktop-nav {
-      display: flex;
-
-      gap: 5px;
-    }
-
-    .desktop-nav button {
-      border: 0;
-
-      background: transparent;
-
-      color: var(--muted);
-
-      padding: 10px 12px;
-
-      border-radius: 10px;
-    }
-
-    .desktop-nav button:hover {
-      color: var(--primary);
-
-      background: rgba(25,211,197,.08);
-    }
-
-
-    /* =========================
-       SIDE MENU
-       ========================= */
-
-    #menuOverlay {
-      position: fixed;
-
-      inset: 0;
-
-      background: rgba(0,0,0,.65);
-
-      z-index: 2000;
-
-      display: none;
-    }
-
-    #menuOverlay.open {
-      display: block;
-    }
-
-
-    #sideMenu {
-      position: fixed;
-
-      top: 0;
-      left: 0;
-
-      width: min(330px, 86vw);
-
-      height: 100vh;
-
-      background: #071c21;
-
-      border-right: 1px solid var(--border);
-
-      z-index: 3000;
-
-      transform: translateX(-100%);
-
-      transition: transform .28s ease;
-
-      padding: 18px;
-
-      overflow-y: auto;
-    }
-
-    #sideMenu.open {
-      transform: translateX(0);
-    }
-
-
-    .menu-header {
-      height: 55px;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: space-between;
-
-      border-bottom: 1px solid var(--border);
-
-      margin-bottom: 15px;
-    }
-
-    .menu-title {
-      color: var(--primary);
-
-      font-size: 23px;
-
-      font-weight: 900;
-    }
-
-    #closeMenu {
-      width: 42px;
-      height: 42px;
-
-      border-radius: 11px;
-
-      border: 1px solid var(--border);
-
-      background: var(--card);
-
-      color: var(--text);
-
-      font-size: 18px;
-    }
-
-    #closeMenu:hover {
-      color: var(--primary);
-
-      border-color: var(--primary);
-    }
-
-
-    .menu-link {
-      width: 100%;
-
-      min-height: 52px;
-
-      margin-bottom: 7px;
-
-      padding: 12px 14px;
-
-      border-radius: 13px;
-
-      border: 1px solid transparent;
-
-      background: transparent;
-
-      color: var(--text);
-
-      display: flex;
-
-      align-items: center;
-
-      gap: 13px;
-
-      text-align: right;
-    }
-
-    .menu-link:hover {
-      background: rgba(25,211,197,.09);
-
-      border-color: var(--border);
-
-      color: var(--primary);
-    }
-
-    .menu-icon {
-      width: 28px;
-
-      text-align: center;
-
-      font-size: 20px;
-    }
-
-    .menu-separator {
-      height: 1px;
-
-      background: var(--border);
-
-      margin: 14px 0;
-    }
-
-
-    /* =========================
-       MAIN
-       ========================= */
-
-    main {
-      max-width: 1200px;
-
-      margin: auto;
-
-      padding: 28px 18px 70px;
-    }
-
-    .page {
-      display: none;
-    }
-
-    .page.active {
-      display: block;
-    }
-
-
-    /* =========================
-       HERO
-       ========================= */
-
-    .hero {
-      padding: 55px 22px;
-
-      text-align: center;
-
-      background:
-        radial-gradient(
-          circle at top right,
-          rgba(25,211,197,.14),
-          transparent 40%
-        ),
-        var(--card);
-
-      border: 1px solid var(--border);
-
-      border-radius: 25px;
-
-      margin-bottom: 30px;
-    }
-
-    .hero h1 {
-      color: var(--primary);
-
-      font-size: clamp(38px, 8vw, 65px);
-
-      margin-bottom: 15px;
-    }
-
-    .hero p {
-      color: var(--muted);
-
-      max-width: 700px;
-
-      margin: auto;
-
-      line-height: 2;
-    }
-
-
-    /* =========================
-       TITLES
-       ========================= */
-
-    .section-title {
-      margin: 30px 0 16px;
-    }
-
-    .section-title h2 {
-      color: var(--text);
-    }
-
-
-    /* =========================
-       GRID
-       ========================= */
-
-    .grid {
-      display: grid;
-
-      grid-template-columns:
-        repeat(auto-fill, minmax(220px, 1fr));
-
-      gap: 16px;
-    }
-
-    .card {
-      background: var(--card);
-
-      border: 1px solid var(--border);
-
-      border-radius: 18px;
-
-      padding: 20px;
-
-      transition: .2s;
-    }
-
-    .card:hover {
-      transform: translateY(-3px);
-
-      border-color: rgba(25,211,197,.4);
-    }
-
-    .card-icon {
-      font-size: 34px;
-
-      margin-bottom: 12px;
-    }
-
-    .card h3 {
-      margin-bottom: 8px;
-    }
-
-    .card p {
-      color: var(--muted);
-
-      line-height: 1.8;
-    }
-
-
-    /* =========================
-       SETTINGS
-       ========================= */
-
-    .settings {
-      max-width: 650px;
-
-      margin: auto;
-
-      display: grid;
-
-      gap: 12px;
-    }
-
-    .setting {
-      width: 100%;
-
-      padding: 18px;
-
-      border-radius: 15px;
-
-      border: 1px solid var(--border);
-
-      background: var(--card);
-
-      color: var(--text);
-
-      display: flex;
-
-      justify-content: space-between;
-
-      align-items: center;
-
-      text-align: right;
-    }
-
-    .setting:hover {
-      border-color: var(--primary);
-    }
-
-
-    /* =========================
-       ADMIN
-       ========================= */
-
-    .admin-box {
-      background: var(--card);
-
-      border: 1px solid var(--border);
-
-      border-radius: 20px;
-
-      padding: 25px;
-    }
-
-    .admin-box h2 {
-      color: var(--primary);
-    }
-
-    .admin-actions {
-      display: grid;
-
-      grid-template-columns:
-        repeat(auto-fit, minmax(180px, 1fr));
-
-      gap: 15px;
-
-      margin-top: 22px;
-    }
-
-    .admin-action {
-      padding: 25px 15px;
-
-      border-radius: 15px;
-
-      border: 1px solid var(--border);
-
-      background: var(--card2);
-
-      color: var(--text);
-
-      transition: .2s;
-    }
-
-    .admin-action:hover {
-      border-color: var(--primary);
-
-      color: var(--primary);
-    }
-
-
-    /* =========================
-       MODAL
-       ========================= */
-
-    #loginModal {
-      position: fixed;
-
-      inset: 0;
-
-      z-index: 5000;
-
-      background: rgba(0,0,0,.72);
-
-      backdrop-filter: blur(8px);
-
-      display: none;
-
-      align-items: center;
-
-      justify-content: center;
-
-      padding: 20px;
-    }
-
-    #loginModal.open {
-      display: flex;
-    }
-
-    .modal-box {
-      width: 100%;
-
-      max-width: 430px;
-
-      background: var(--card);
-
-      border: 1px solid var(--border);
-
-      border-radius: 22px;
-
-      padding: 25px;
-    }
-
-    .modal-box h2 {
-      color: var(--primary);
-
-      margin-bottom: 20px;
-    }
-
-    .field {
-      margin-bottom: 15px;
-    }
-
-    .field label {
-      display: block;
-
-      color: var(--muted);
-
-      margin-bottom: 7px;
-    }
-
-    .field input {
-      width: 100%;
-
-      padding: 13px;
-
-      border-radius: 11px;
-
-      border: 1px solid var(--border);
-
-      background: var(--bg);
-
-      color: white;
-
-      outline: none;
-    }
-
-    .field input:focus {
-      border-color: var(--primary);
-    }
-
-    .login-btn {
-      width: 100%;
-
-      padding: 13px;
-
-      border: 0;
-
-      border-radius: 11px;
-
-      background: var(--primary);
-
-      color: #001716;
-
-      font-weight: bold;
-    }
-
-    .cancel-btn {
-      width: 100%;
-
-      padding: 13px;
-
-      margin-top: 10px;
-
-      border-radius: 11px;
-
-      border: 1px solid var(--border);
-
-      background: transparent;
-
-      color: var(--muted);
-    }
-
-    .login-message {
-      margin-top: 12px;
-
-      color: var(--danger);
-
-      line-height: 1.7;
-    }
-
-
-    /* =========================
-       FOOTER
-       ========================= */
-
-    footer {
-      text-align: center;
-
-      color: var(--muted);
-
-      padding: 30px 15px;
-
-      border-top: 1px solid var(--border);
-    }
-
-
-    /* =========================
-       MOBILE
-       ========================= */
-
-    @media (max-width: 700px) {
-
-      .desktop-nav {
-        display: none;
-      }
-
-      .header {
-        direction: ltr;
-      }
-
-      .logo {
-        direction: rtl;
-      }
-
-      .grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-    }
-
-    @media (max-width: 390px) {
-
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-    }
-
-  </style>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZanstLab</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root{
+  --bg:#07171b;
+  --card:#0c2227;
+  --card2:#102b31;
+  --primary:#19d3c5;
+  --text:#f2ffff;
+  --muted:#91abad;
+  --border:rgba(25,211,197,.16);
+  --danger:#ff5f6d;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,Tahoma,sans-serif;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+
+button{
+  font:inherit;
+  cursor:pointer;
+}
+
+
+/* HEADER */
+
+header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:rgba(7,23,27,.96);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(15px);
+}
+
+.header{
+  max-width:1200px;
+  min-height:68px;
+  margin:auto;
+  padding:10px 16px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+
+/* MENU BUTTON */
+
+.menu-button{
+  width:48px;
+  height:48px;
+  border:1px solid var(--border);
+  border-radius:13px;
+  background:var(--card);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  flex-shrink:0;
+}
+
+.menu-button span{
+  width:24px;
+  height:3px;
+  background:var(--primary);
+  border-radius:10px;
+}
+
+
+/* LOGO */
+
+.logo{
+  color:var(--primary);
+  font-size:25px;
+  font-weight:900;
+  text-decoration:none;
+  margin-right:auto;
+}
+
+
+/* DESKTOP NAV */
+
+.desktop-nav{
+  display:flex;
+  gap:5px;
+}
+
+.desktop-nav button{
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  padding:10px 12px;
+  border-radius:10px;
+}
+
+.desktop-nav button:hover{
+  color:var(--primary);
+  background:rgba(25,211,197,.08);
+}
+
+
+/* SIDE MENU */
+
+.menu-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  z-index:2000;
+  display:none;
+}
+
+.menu-overlay.active{
+  display:block;
+}
+
+.side-menu{
+  position:fixed;
+  top:0;
+  left:0;
+  width:min(330px,86vw);
+  height:100vh;
+  background:#071c21;
+  border-right:1px solid var(--border);
+  z-index:3000;
+  transform:translateX(-100%);
+  transition:.3s ease;
+  padding:18px;
+  overflow-y:auto;
+}
+
+.side-menu.active{
+  transform:translateX(0);
+}
+
+.menu-header{
+  height:55px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--border);
+  margin-bottom:15px;
+}
+
+.menu-title{
+  color:var(--primary);
+  font-size:23px;
+  font-weight:900;
+}
+
+.close-menu{
+  width:42px;
+  height:42px;
+  border-radius:11px;
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--text);
+}
+
+.menu-item{
+  width:100%;
+  min-height:52px;
+  margin-bottom:7px;
+  padding:12px 14px;
+  border-radius:13px;
+  border:1px solid transparent;
+  background:transparent;
+  color:var(--text);
+  display:flex;
+  align-items:center;
+  gap:13px;
+  text-align:right;
+}
+
+.menu-item:hover{
+  background:rgba(25,211,197,.09);
+  border-color:var(--border);
+  color:var(--primary);
+}
+
+.menu-icon{
+  width:28px;
+  text-align:center;
+  font-size:20px;
+}
+
+.separator{
+  height:1px;
+  background:var(--border);
+  margin:14px 0;
+}
+
+
+/* MAIN */
+
+main{
+  max-width:1200px;
+  margin:auto;
+  padding:28px 18px 70px;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+
+/* HERO */
+
+.hero{
+  padding:55px 22px;
+  text-align:center;
+  background:
+    radial-gradient(circle at top right,rgba(25,211,197,.14),transparent 40%),
+    var(--card);
+  border:1px solid var(--border);
+  border-radius:25px;
+  margin-bottom:30px;
+}
+
+.hero h1{
+  color:var(--primary);
+  font-size:clamp(38px,8vw,65px);
+  margin-bottom:15px;
+}
+
+.hero p{
+  color:var(--muted);
+  max-width:700px;
+  margin:auto;
+  line-height:2;
+}
+
+
+/* TITLES */
+
+.section-title{
+  margin:30px 0 16px;
+}
+
+.section-title h2{
+  color:var(--text);
+}
+
+
+/* CARDS */
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:16px;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:20px;
+  transition:.2s;
+}
+
+.card:hover{
+  transform:translateY(-3px);
+  border-color:rgba(25,211,197,.4);
+}
+
+.card-icon{
+  font-size:34px;
+  margin-bottom:12px;
+}
+
+.card h3{
+  margin-bottom:8px;
+}
+
+.card p{
+  color:var(--muted);
+  line-height:1.8;
+}
+
+
+/* SETTINGS */
+
+.settings{
+  max-width:650px;
+  margin:auto;
+  display:grid;
+  gap:12px;
+}
+
+.setting{
+  width:100%;
+  padding:18px;
+  border-radius:15px;
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--text);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  text-align:right;
+}
+
+.setting:hover{
+  border-color:var(--primary);
+}
+
+
+/* ADMIN */
+
+.admin-box{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:25px;
+}
+
+.admin-box h2{
+  color:var(--primary);
+}
+
+.admin-actions{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:15px;
+  margin-top:22px;
+}
+
+.admin-action{
+  padding:25px 15px;
+  border-radius:15px;
+  border:1px solid var(--border);
+  background:var(--card2);
+  color:var(--text);
+}
+
+.admin-action:hover{
+  border-color:var(--primary);
+  color:var(--primary);
+}
+
+
+/* LOGIN */
+
+.login-modal{
+  position:fixed;
+  inset:0;
+  z-index:5000;
+  background:rgba(0,0,0,.75);
+  backdrop-filter:blur(8px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.login-modal.active{
+  display:flex;
+}
+
+.login-box{
+  width:100%;
+  max-width:430px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:25px;
+}
+
+.login-box h2{
+  color:var(--primary);
+  margin-bottom:20px;
+}
+
+.field{
+  margin-bottom:15px;
+}
+
+.field label{
+  display:block;
+  color:var(--muted);
+  margin-bottom:7px;
+}
+
+.field input{
+  width:100%;
+  padding:13px;
+  border-radius:11px;
+  border:1px solid var(--border);
+  background:var(--bg);
+  color:white;
+  outline:none;
+}
+
+.login-button{
+  width:100%;
+  padding:13px;
+  border:0;
+  border-radius:11px;
+  background:var(--primary);
+  color:#001716;
+  font-weight:bold;
+}
+
+.cancel-button{
+  width:100%;
+  padding:13px;
+  margin-top:10px;
+  border-radius:11px;
+  border:1px solid var(--border);
+  background:transparent;
+  color:var(--muted);
+}
+
+.login-message{
+  margin-top:12px;
+  color:var(--danger);
+  line-height:1.7;
+}
+
+
+/* FOOTER */
+
+footer{
+  text-align:center;
+  color:var(--muted);
+  padding:30px 15px;
+  border-top:1px solid var(--border);
+}
+
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+  .desktop-nav{
+    display:none;
+  }
+
+  .grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+}
+
+@media(max-width:390px){
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+}
+
+</style>
 </head>
 
 
 <body>
 
 
-<!-- =========================
-     HEADER
-     ========================= -->
+<!-- HEADER -->
 
 <header>
 
   <div class="header">
 
-
-    <!-- MENU -->
-
     <button
-      id="menuBtn"
+      class="menu-button"
+      id="menuButton"
       type="button"
-      aria-label="Open menu"
+      aria-label="Menu"
     >
-
       <span></span>
       <span></span>
       <span></span>
-
     </button>
 
-
-    <!-- LOGO -->
 
     <a
       href="#"
       class="logo"
-      onclick="showPage('home'); return false;"
+      onclick="showPage('home');return false;"
     >
       ZanstLab
     </a>
 
-
-    <!-- DESKTOP NAV -->
 
     <nav class="desktop-nav">
 
@@ -771,25 +532,25 @@
 
     </nav>
 
-
   </div>
 
 </header>
 
 
-<!-- =========================
-     OVERLAY
-     ========================= -->
+<!-- OVERLAY -->
 
-<div id="menuOverlay"></div>
+<div
+  class="menu-overlay"
+  id="menuOverlay"
+></div>
 
 
-<!-- =========================
-     SIDE MENU
-     ========================= -->
+<!-- SIDE MENU -->
 
-<aside id="sideMenu">
-
+<aside
+  class="side-menu"
+  id="sideMenu"
+>
 
   <div class="menu-header">
 
@@ -798,6 +559,7 @@
     </div>
 
     <button
+      class="close-menu"
       id="closeMenu"
       type="button"
     >
@@ -808,562 +570,401 @@
 
 
   <button
-    class="menu-link"
-    onclick="menuNavigate('home')"
+    class="menu-item"
+    onclick="menuGo('home')"
   >
-
-    <span class="menu-icon">
-      🏠
-    </span>
-
-    <span>
-      سەرەکی
-    </span>
-
+    <span class="menu-icon">🏠</span>
+    <span>سەرەکی</span>
   </button>
 
 
   <button
-    class="menu-link"
-    onclick="menuNavigate('trends')"
+    class="menu-item"
+    onclick="menuGo('trends')"
   >
-
-    <span class="menu-icon">
-      🔥
-    </span>
-
-    <span>
-      ترێند
-    </span>
-
+    <span class="menu-icon">🔥</span>
+    <span>ترێند</span>
   </button>
 
 
   <button
-    class="menu-link"
-    onclick="menuNavigate('films')"
+    class="menu-item"
+    onclick="menuGo('films')"
   >
-
-    <span class="menu-icon">
-      🎬
-    </span>
-
-    <span>
-      فیلمەکان
-    </span>
-
+    <span class="menu-icon">🎬</span>
+    <span>فیلمەکان</span>
   </button>
 
 
   <button
-    class="menu-link"
-    onclick="menuNavigate('books')"
+    class="menu-item"
+    onclick="menuGo('books')"
   >
-
-    <span class="menu-icon">
-      📚
-    </span>
-
-    <span>
-      کتێبەکان
-    </span>
-
+    <span class="menu-icon">📚</span>
+    <span>کتێبەکان</span>
   </button>
 
 
   <button
-    class="menu-link"
-    onclick="menuNavigate('apps')"
+    class="menu-item"
+    onclick="menuGo('apps')"
   >
-
-    <span class="menu-icon">
-      📱
-    </span>
-
-    <span>
-      ئەپەکان
-    </span>
-
+    <span class="menu-icon">📱</span>
+    <span>ئەپەکان</span>
   </button>
 
 
   <button
-    class="menu-link"
-    onclick="menuNavigate('services')"
+    class="menu-item"
+    onclick="menuGo('services')"
   >
-
-    <span class="menu-icon">
-      🛠️
-    </span>
-
-    <span>
-      خزمەتگوزاری
-    </span>
-
+    <span class="menu-icon">🛠️</span>
+    <span>خزمەتگوزاری</span>
   </button>
 
 
-  <div class="menu-separator"></div>
+  <div class="separator"></div>
 
 
   <button
-    class="menu-link"
-    onclick="menuNavigate('settings')"
+    class="menu-item"
+    onclick="menuGo('settings')"
   >
-
-    <span class="menu-icon">
-      ⚙️
-    </span>
-
-    <span>
-      ڕێکخستنەکان
-    </span>
-
+    <span class="menu-icon">⚙️</span>
+    <span>ڕێکخستنەکان</span>
   </button>
 
 
   <button
-    class="menu-link"
+    class="menu-item"
     onclick="openLogin()"
   >
-
-    <span class="menu-icon">
-      🔐
-    </span>
-
-    <span>
-      Admin Panel
-    </span>
-
+    <span class="menu-icon">🔐</span>
+    <span>Admin Panel</span>
   </button>
-
 
 </aside>
 
 
-<!-- =========================
-     MAIN
-     ========================= -->
+<!-- MAIN -->
 
 <main>
 
 
-  <!-- HOME -->
+<!-- HOME -->
 
-  <section
-    id="homePage"
-    class="page active"
-  >
+<section
+  id="homePage"
+  class="page active"
+>
 
-    <div class="hero">
+  <div class="hero">
 
-      <h1>
-        ZanstLab
-      </h1>
+    <h1>
+      ZanstLab
+    </h1>
 
-      <p>
-        شوێنێکی نوێ بۆ زانیاری،
-        تەکنەلۆجیا، ئەپ، کتێب،
-        فیلم و خزمەتگوزارییە جیاوازەکان.
-      </p>
+    <p>
+      شوێنێکی نوێ بۆ زانیاری،
+      تەکنەلۆجیا، ئەپ، کتێب،
+      فیلم و خزمەتگوزارییە جیاوازەکان.
+    </p>
 
-    </div>
-
-
-    <div class="section-title">
-
-      <h2>
-        بەشەکان
-      </h2>
-
-    </div>
+  </div>
 
 
-    <div class="grid">
+  <div class="section-title">
+    <h2>بەشەکان</h2>
+  </div>
 
 
-      <div
-        class="card"
-        onclick="showPage('trends')"
-      >
+  <div class="grid">
 
-        <div class="card-icon">
-          🔥
-        </div>
-
-        <h3>
-          ترێند
-        </h3>
-
-        <p>
-          نوێترین بابەت و ناوەڕۆک.
-        </p>
-
-      </div>
-
-
-      <div
-        class="card"
-        onclick="showPage('films')"
-      >
-
-        <div class="card-icon">
-          🎬
-        </div>
-
-        <h3>
-          فیلم
-        </h3>
-
-        <p>
-          ناوی فیلم و زانیارییەکانی.
-        </p>
-
-      </div>
-
-
-      <div
-        class="card"
-        onclick="showPage('books')"
-      >
-
-        <div class="card-icon">
-          📚
-        </div>
-
-        <h3>
-          کتێب
-        </h3>
-
-        <p>
-          کتێب و زانیاریی نووسەرەکان.
-        </p>
-
-      </div>
-
-
-      <div
-        class="card"
-        onclick="showPage('apps')"
-      >
-
-        <div class="card-icon">
-          📱
-        </div>
-
-        <h3>
-          ئەپ
-        </h3>
-
-        <p>
-          ئەپ و ڕێنمایی بەکارهێنان.
-        </p>
-
-      </div>
-
-
-      <div
-        class="card"
-        onclick="showPage('services')"
-      >
-
-        <div class="card-icon">
-          🛠️
-        </div>
-
-        <h3>
-          خزمەتگوزاری
-        </h3>
-
-        <p>
-          خزمەتگوزارییەکانی ZanstLab.
-        </p>
-
-      </div>
-
-
-    </div>
-
-  </section>
-
-
-  <!-- TRENDS -->
-
-  <section
-    id="trendsPage"
-    class="page"
-  >
-
-    <div class="section-title">
-
-      <h2>
-        🔥 ترێند
-      </h2>
-
-    </div>
 
     <div
-      class="grid"
-      id="trendsList"
-    ></div>
-
-  </section>
-
-
-  <!-- FILMS -->
-
-  <section
-    id="filmsPage"
-    class="page"
-  >
-
-    <div class="section-title">
-
-      <h2>
-        🎬 فیلمەکان
-      </h2>
-
+      class="card"
+      onclick="showPage('trends')"
+    >
+      <div class="card-icon">🔥</div>
+      <h3>ترێند</h3>
+      <p>نوێترین بابەت و ناوەڕۆک.</p>
     </div>
+
 
     <div
-      class="grid"
-      id="filmsList"
-    ></div>
-
-  </section>
-
-
-  <!-- BOOKS -->
-
-  <section
-    id="booksPage"
-    class="page"
-  >
-
-    <div class="section-title">
-
-      <h2>
-        📚 کتێبەکان
-      </h2>
-
+      class="card"
+      onclick="showPage('films')"
+    >
+      <div class="card-icon">🎬</div>
+      <h3>فیلم</h3>
+      <p>ناوی فیلم و زانیارییەکانی.</p>
     </div>
+
 
     <div
-      class="grid"
-      id="booksList"
-    ></div>
-
-  </section>
-
-
-  <!-- APPS -->
-
-  <section
-    id="appsPage"
-    class="page"
-  >
-
-    <div class="section-title">
-
-      <h2>
-        📱 ئەپەکان
-      </h2>
-
+      class="card"
+      onclick="showPage('books')"
+    >
+      <div class="card-icon">📚</div>
+      <h3>کتێب</h3>
+      <p>کتێب و زانیاریی نووسەرەکان.</p>
     </div>
+
 
     <div
-      class="grid"
-      id="appsList"
-    ></div>
-
-  </section>
-
-
-  <!-- SERVICES -->
-
-  <section
-    id="servicesPage"
-    class="page"
-  >
-
-    <div class="section-title">
-
-      <h2>
-        🛠️ خزمەتگوزارییەکان
-      </h2>
-
+      class="card"
+      onclick="showPage('apps')"
+    >
+      <div class="card-icon">📱</div>
+      <h3>ئەپ</h3>
+      <p>ئەپ و ڕێنمایی بەکارهێنان.</p>
     </div>
+
 
     <div
-      class="grid"
-      id="servicesList"
-    ></div>
-
-  </section>
-
-
-  <!-- SETTINGS -->
-
-  <section
-    id="settingsPage"
-    class="page"
-  >
-
-    <div class="section-title">
-
-      <h2>
-        ⚙️ ڕێکخستنەکان
-      </h2>
-
+      class="card"
+      onclick="showPage('services')"
+    >
+      <div class="card-icon">🛠️</div>
+      <h3>خزمەتگوزاری</h3>
+      <p>خزمەتگوزارییەکانی ZanstLab.</p>
     </div>
 
 
-    <div class="settings">
+  </div>
+
+</section>
 
 
-      <button
-        class="setting"
-        onclick="openLogin()"
-      >
+<!-- TRENDS -->
 
-        <span>
-          🔐 Admin Panel
-        </span>
+<section
+  id="trendsPage"
+  class="page"
+>
 
-        <span>
-          ‹
-        </span>
+  <div class="section-title">
+    <h2>🔥 ترێند</h2>
+  </div>
 
+  <div
+    class="grid"
+    id="trendsList"
+  ></div>
+
+</section>
+
+
+<!-- FILMS -->
+
+<section
+  id="filmsPage"
+  class="page"
+>
+
+  <div class="section-title">
+    <h2>🎬 فیلمەکان</h2>
+  </div>
+
+  <div
+    class="grid"
+    id="filmsList"
+  ></div>
+
+</section>
+
+
+<!-- BOOKS -->
+
+<section
+  id="booksPage"
+  class="page"
+>
+
+  <div class="section-title">
+    <h2>📚 کتێبەکان</h2>
+  </div>
+
+  <div
+    class="grid"
+    id="booksList"
+  ></div>
+
+</section>
+
+
+<!-- APPS -->
+
+<section
+  id="appsPage"
+  class="page"
+>
+
+  <div class="section-title">
+    <h2>📱 ئەپەکان</h2>
+  </div>
+
+  <div
+    class="grid"
+    id="appsList"
+  ></div>
+
+</section>
+
+
+<!-- SERVICES -->
+
+<section
+  id="servicesPage"
+  class="page"
+>
+
+  <div class="section-title">
+    <h2>🛠️ خزمەتگوزارییەکان</h2>
+  </div>
+
+  <div
+    class="grid"
+    id="servicesList"
+  ></div>
+
+</section>
+
+
+<!-- SETTINGS -->
+
+<section
+  id="settingsPage"
+  class="page"
+>
+
+  <div class="section-title">
+    <h2>⚙️ ڕێکخستنەکان</h2>
+  </div>
+
+
+  <div class="settings">
+
+    <button
+      class="setting"
+      onclick="openLogin()"
+    >
+      <span>🔐 Admin Panel</span>
+      <span>‹</span>
+    </button>
+
+
+    <button
+      class="setting"
+      onclick="showAbout()"
+    >
+      <span>ℹ️ دەربارەی ZanstLab</span>
+      <span>‹</span>
+    </button>
+
+
+    <button
+      class="setting"
+      onclick="showContact()"
+    >
+      <span>📞 پەیوەندی</span>
+      <span>‹</span>
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- ADMIN -->
+
+<section
+  id="adminPage"
+  class="page"
+>
+
+  <div class="admin-box">
+
+    <h2>
+      🔐 Admin Panel
+    </h2>
+
+    <p
+      style="
+        color:var(--muted);
+        margin-top:10px;
+        line-height:1.8;
+      "
+    >
+      بەخێربێیت بۆ بەشی بەڕێوەبردنی ZanstLab.
+    </p>
+
+
+    <div class="admin-actions">
+
+
+      <button class="admin-action">
+        🎬
+        <br><br>
+        زیادکردنی فیلم
+      </button>
+
+
+      <button class="admin-action">
+        📚
+        <br><br>
+        زیادکردنی کتێب
+      </button>
+
+
+      <button class="admin-action">
+        📱
+        <br><br>
+        زیادکردنی ئەپ
+      </button>
+
+
+      <button class="admin-action">
+        🛠️
+        <br><br>
+        زیادکردنی خزمەتگوزاری
+      </button>
+
+
+      <button class="admin-action">
+        ➕
+        <br><br>
+        زیادکردنی بەشی نوێ
       </button>
 
 
       <button
-        class="setting"
-        onclick="showAbout()"
+        class="admin-action"
+        onclick="logoutAdmin()"
       >
-
-        <span>
-          ℹ️ دەربارەی ZanstLab
-        </span>
-
-        <span>
-          ‹
-        </span>
-
-      </button>
-
-
-      <button
-        class="setting"
-        onclick="showContact()"
-      >
-
-        <span>
-          📞 پەیوەندی
-        </span>
-
-        <span>
-          ‹
-        </span>
-
+        🚪
+        <br><br>
+        چوونەدەرەوە
       </button>
 
 
     </div>
 
-  </section>
+  </div>
 
-
-  <!-- ADMIN -->
-
-  <section
-    id="adminPage"
-    class="page"
-  >
-
-    <div class="admin-box">
-
-      <h2>
-        🔐 Admin Panel
-      </h2>
-
-      <p
-        style="
-          color:var(--muted);
-          margin-top:10px;
-          line-height:1.8;
-        "
-      >
-        بەخێربێیت بۆ بەشی بەڕێوەبردنی ZanstLab.
-      </p>
-
-
-      <div class="admin-actions">
-
-
-        <button class="admin-action">
-          🎬
-          <br><br>
-          زیادکردنی فیلم
-        </button>
-
-
-        <button class="admin-action">
-          📚
-          <br><br>
-          زیادکردنی کتێب
-        </button>
-
-
-        <button class="admin-action">
-          📱
-          <br><br>
-          زیادکردنی ئەپ
-        </button>
-
-
-        <button class="admin-action">
-          🛠️
-          <br><br>
-          زیادکردنی خزمەتگوزاری
-        </button>
-
-
-        <button class="admin-action">
-          ➕
-          <br><br>
-          زیادکردنی بەشی نوێ
-        </button>
-
-
-        <button
-          class="admin-action"
-          onclick="logoutAdmin()"
-        >
-          🚪
-          <br><br>
-          چوونەدەرەوە
-        </button>
-
-
-      </div>
-
-    </div>
-
-  </section>
-
+</section>
 
 </main>
 
 
-<!-- =========================
-     LOGIN MODAL
-     ========================= -->
+<!-- LOGIN -->
 
-<div id="loginModal">
+<div
+  class="login-modal"
+  id="loginModal"
+>
 
-
-  <div class="modal-box">
+  <div class="login-box">
 
     <h2>
       🔐 چوونەژوورەوەی Admin
@@ -1380,7 +981,6 @@
         id="adminEmail"
         type="email"
         placeholder="admin@example.com"
-        autocomplete="username"
       >
 
     </div>
@@ -1396,14 +996,13 @@
         id="adminPassword"
         type="password"
         placeholder="••••••••"
-        autocomplete="current-password"
       >
 
     </div>
 
 
     <button
-      class="login-btn"
+      class="login-button"
       onclick="loginAdmin()"
     >
       چوونەژوورەوە
@@ -1411,7 +1010,7 @@
 
 
     <button
-      class="cancel-btn"
+      class="cancel-button"
       onclick="closeLogin()"
     >
       داخستن
@@ -1428,10 +1027,6 @@
 </div>
 
 
-<!-- =========================
-     FOOTER
-     ========================= -->
-
 <footer>
   © 2026 ZanstLab
 </footer>
@@ -1439,22 +1034,15 @@
 
 <script>
 
-
 /* =========================
    SUPABASE
    ========================= */
 
-/*
-  گرنگ:
-  ئەمانە بە زانیاریی ڕاستەقینەی
-  Supabase ـەکەت بگۆڕە.
-*/
-
 const SUPABASE_URL =
-  "YOUR_SUPABASE_URL";
+  "https://iqsyujyltwwafolesfzg.supabase.co";
 
 const SUPABASE_ANON_KEY =
-  "YOUR_SUPABASE_ANON_KEY";
+  "sb_publishable_T8zZoBxDz8JATgyDjTFbog_7KrII67Z";
 
 
 const supabaseClient =
@@ -1468,78 +1056,58 @@ const supabaseClient =
    MENU
    ========================= */
 
-const menuBtn =
-  document.getElementById(
-    "menuBtn"
-  );
-
-const closeMenuBtn =
-  document.getElementById(
-    "closeMenu"
-  );
+const menuButton =
+  document.getElementById("menuButton");
 
 const sideMenu =
-  document.getElementById(
-    "sideMenu"
-  );
+  document.getElementById("sideMenu");
 
 const menuOverlay =
-  document.getElementById(
-    "menuOverlay"
-  );
+  document.getElementById("menuOverlay");
+
+const closeMenu =
+  document.getElementById("closeMenu");
 
 
-function openMenu() {
+function openMenu(){
 
-  sideMenu.classList.add(
-    "open"
-  );
+  sideMenu.classList.add("active");
 
-  menuOverlay.classList.add(
-    "open"
-  );
+  menuOverlay.classList.add("active");
 
 }
 
 
-function closeMenu() {
+function closeSideMenu(){
 
-  sideMenu.classList.remove(
-    "open"
-  );
+  sideMenu.classList.remove("active");
 
-  menuOverlay.classList.remove(
-    "open"
-  );
+  menuOverlay.classList.remove("active");
 
 }
 
 
-menuBtn.onclick =
-  function () {
-    openMenu();
-  };
+menuButton.addEventListener(
+  "click",
+  openMenu
+);
 
 
-closeMenuBtn.onclick =
-  function () {
-    closeMenu();
-  };
+closeMenu.addEventListener(
+  "click",
+  closeSideMenu
+);
 
 
-menuOverlay.onclick =
-  function () {
-    closeMenu();
-  };
+menuOverlay.addEventListener(
+  "click",
+  closeSideMenu
+);
 
 
-/* =========================
-   MENU NAVIGATION
-   ========================= */
+function menuGo(page){
 
-function menuNavigate(page) {
-
-  closeMenu();
+  closeSideMenu();
 
   showPage(page);
 
@@ -1550,7 +1118,7 @@ function menuNavigate(page) {
    PAGE NAVIGATION
    ========================= */
 
-function hidePages() {
+function showPage(page){
 
   const pages = [
     "homePage",
@@ -1565,81 +1133,62 @@ function hidePages() {
 
 
   pages.forEach(
-    function (id) {
+    function(id){
 
-      const page =
+      const element =
         document.getElementById(id);
 
-      if (page) {
-        page.classList.remove(
-          "active"
-        );
+      if(element){
+        element.classList.remove("active");
       }
 
     }
   );
 
-}
 
-
-function showPage(page) {
-
-  hidePages();
-
-
-  const target =
+  const selected =
     document.getElementById(
       page + "Page"
     );
 
 
-  if (target) {
-
-    target.classList.add(
-      "active"
-    );
-
+  if(selected){
+    selected.classList.add("active");
   }
 
 
   window.scrollTo({
-    top: 0,
-    behavior: "smooth"
+    top:0,
+    behavior:"smooth"
   });
 
 }
 
 
 /* =========================
-   LOGIN MODAL
+   LOGIN
    ========================= */
 
-function openLogin() {
+function openLogin(){
 
-  closeMenu();
-
-  document
-    .getElementById(
-      "loginModal"
-    )
-    .classList.add("open");
+  closeSideMenu();
 
   document
-    .getElementById(
-      "loginMessage"
-    )
-    .textContent = "";
+    .getElementById("loginModal")
+    .classList.add("active");
+
+  document
+    .getElementById("loginMessage")
+    .textContent="";
 
 }
 
 
-function closeLogin() {
+function closeLogin(){
 
   document
-    .getElementById(
-      "loginModal"
-    )
-    .classList.remove("open");
+    .getElementById("loginModal")
+    .classList.remove("active");
 
 }
 
@@ -1648,36 +1197,30 @@ function closeLogin() {
    ADMIN LOGIN
    ========================= */
 
-async function loginAdmin() {
+async function loginAdmin(){
 
   const email =
     document
-      .getElementById(
-        "adminEmail"
-      )
+      .getElementById("adminEmail")
       .value
       .trim();
 
-
   const password =
     document
-      .getElementById(
-        "adminPassword"
-      )
+      .getElementById("adminPassword")
       .value;
 
 
   const message =
-    document
-      .getElementById(
-        "loginMessage"
-      );
+    document.getElementById(
+      "loginMessage"
+    );
 
 
-  message.textContent = "";
+  message.textContent="";
 
 
-  if (!email || !password) {
+  if(!email || !password){
 
     message.textContent =
       "تکایە Email و Password بنووسە.";
@@ -1687,20 +1230,17 @@ async function loginAdmin() {
   }
 
 
-  try {
+  try{
 
-    const {
-      data,
-      error
-    } =
+    const result =
       await supabaseClient.auth
         .signInWithPassword({
-          email: email,
-          password: password
+          email:email,
+          password:password
         });
 
 
-    if (error) {
+    if(result.error){
 
       message.textContent =
         "Email یان Password هەڵەیە.";
@@ -1711,10 +1251,10 @@ async function loginAdmin() {
 
 
     const user =
-      data.user;
+      result.data.user;
 
 
-    if (!user) {
+    if(!user){
 
       message.textContent =
         "کێشەیەک ڕوویدا.";
@@ -1724,29 +1264,20 @@ async function loginAdmin() {
     }
 
 
-    /*
-      پشکنینی Admin
-    */
-
-    const {
-      data: adminUser,
-      error: adminError
-    } =
+    const adminResult =
       await supabaseClient
         .from("Admins")
-        .select("id")
-        .eq("id", user.id)
+        .select("id,email")
+        .eq("id",user.id)
         .maybeSingle();
 
 
-    if (
-      adminError ||
-      !adminUser
-    ) {
+    if(
+      adminResult.error ||
+      !adminResult.data
+    ){
 
-      await supabaseClient.auth
-        .signOut();
-
+      await supabaseClient.auth.signOut();
 
       message.textContent =
         "ئەم ئەکاونتە دەسەڵاتی Admin ـی نییە.";
@@ -1761,13 +1292,12 @@ async function loginAdmin() {
     showPage("admin");
 
   }
-
-  catch (error) {
+  catch(error){
 
     console.error(error);
 
     message.textContent =
-      "کێشەیەک ڕوویدا لە پەیوەندی بە سیستەمەکە.";
+      "کێشەیەک لە پەیوەندی بە Database ڕوویدا.";
 
   }
 
@@ -1778,10 +1308,9 @@ async function loginAdmin() {
    LOGOUT
    ========================= */
 
-async function logoutAdmin() {
+async function logoutAdmin(){
 
-  await supabaseClient.auth
-    .signOut();
+  await supabaseClient.auth.signOut();
 
   showPage("home");
 
@@ -1792,7 +1321,7 @@ async function logoutAdmin() {
    ABOUT
    ========================= */
 
-function showAbout() {
+function showAbout(){
 
   alert(
     "ZanstLab پلاتفۆرمێکە بۆ زانیاری، تەکنەلۆجیا، فیلم، کتێب، ئەپ و خزمەتگوزاری."
@@ -1805,7 +1334,7 @@ function showAbout() {
    CONTACT
    ========================= */
 
-function showContact() {
+function showContact(){
 
   alert(
     "زانیاری پەیوەندی دواتر لە Admin Panel ـەوە زیاد دەکرێت."
@@ -1820,7 +1349,7 @@ function showContact() {
 
 document.getElementById(
   "trendsList"
-).innerHTML = `
+).innerHTML=`
 
   <div class="card">
 
@@ -1833,7 +1362,7 @@ document.getElementById(
     </h3>
 
     <p>
-      ناوەڕۆک دواتر لە Admin Panel ـەوە زیاد دەکرێت.
+      لە Admin Panel ـەوە دەتوانرێت زیاد بکرێت.
     </p>
 
   </div>
@@ -1843,7 +1372,7 @@ document.getElementById(
 
 document.getElementById(
   "filmsList"
-).innerHTML = `
+).innerHTML=`
 
   <div class="card">
 
@@ -1866,7 +1395,7 @@ document.getElementById(
 
 document.getElementById(
   "booksList"
-).innerHTML = `
+).innerHTML=`
 
   <div class="card">
 
@@ -1879,7 +1408,7 @@ document.getElementById(
     </h3>
 
     <p>
-      ناوی کتێب و زانیاریی نووسەرەکان.
+      کتێب و زانیاریی نووسەرەکان.
     </p>
 
   </div>
@@ -1889,7 +1418,7 @@ document.getElementById(
 
 document.getElementById(
   "appsList"
-).innerHTML = `
+).innerHTML=`
 
   <div class="card">
 
@@ -1912,7 +1441,7 @@ document.getElementById(
 
 document.getElementById(
   "servicesList"
-).innerHTML = `
+).innerHTML=`
 
   <div class="card">
 
@@ -1931,52 +1460,6 @@ document.getElementById(
   </div>
 
 `;
-
-
-/* =========================
-   CLOSE MODAL BY OUTSIDE
-   ========================= */
-
-document
-  .getElementById("loginModal")
-  .addEventListener(
-    "click",
-    function(event) {
-
-      if (
-        event.target === this
-      ) {
-
-        closeLogin();
-
-      }
-
-    }
-  );
-
-
-/* =========================
-   ENTER TO LOGIN
-   ========================= */
-
-document
-  .getElementById(
-    "adminPassword"
-  )
-  .addEventListener(
-    "keydown",
-    function(event) {
-
-      if (
-        event.key === "Enter"
-      ) {
-
-        loginAdmin();
-
-      }
-
-    }
-  );
 
 
 /* =========================
