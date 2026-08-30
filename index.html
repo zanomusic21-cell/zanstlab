@@ -2971,6 +2971,337 @@ await loadCategoryContent(category.slug);
 
 
 </script>
+<!-- ZanstLab English Font Tool -->
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================
+   FONT BUTTON
+========================= */
+
+#englishFontButton{
+position:fixed;
+bottom:20px;
+left:20px;
+z-index:9999;
+
+width:52px;
+height:52px;
+
+border-radius:50%;
+
+border:1px solid rgba(25,211,197,.35);
+
+background:#0c2227;
+
+color:#19d3c5;
+
+font-size:22px;
+
+cursor:pointer;
+
+box-shadow:0 8px 25px rgba(0,0,0,.35);
+
+transition:.2s;
+}
+
+#englishFontButton:hover{
+transform:scale(1.08);
+border-color:#19d3c5;
+}
+
+
+/* =========================
+   FONT MENU
+========================= */
+
+#englishFontMenu{
+
+display:none;
+
+position:fixed;
+
+bottom:82px;
+left:20px;
+
+z-index:10000;
+
+width:270px;
+
+background:#0c2227;
+
+border:1px solid rgba(25,211,197,.25);
+
+border-radius:18px;
+
+padding:15px;
+
+box-shadow:0 15px 40px rgba(0,0,0,.55);
+}
+
+#englishFontMenu.show{
+display:block;
+}
+
+.english-font-title{
+
+color:#19d3c5;
+
+font-weight:bold;
+
+font-size:16px;
+
+margin-bottom:12px;
+
+text-align:left;
+}
+
+
+/* =========================
+   FONT OPTIONS
+========================= */
+
+.english-font-option{
+
+width:100%;
+
+padding:13px;
+
+margin-bottom:8px;
+
+border-radius:11px;
+
+border:1px solid rgba(25,211,197,.16);
+
+background:#102b31;
+
+color:white;
+
+cursor:pointer;
+
+text-align:left;
+
+font-size:16px;
+
+transition:.2s;
+}
+
+.english-font-option:hover{
+
+border-color:#19d3c5;
+
+background:rgba(25,211,197,.10);
+
+}
+
+
+/* FONT PREVIEWS */
+
+.font-inter{
+font-family:Inter,Arial,sans-serif !important;
+}
+
+.font-poppins{
+font-family:Poppins,Arial,sans-serif !important;
+}
+
+.font-roboto{
+font-family:Roboto,Arial,sans-serif !important;
+}
+
+.font-montserrat{
+font-family:Montserrat,Arial,sans-serif !important;
+}
+
+
+@media(max-width:600px){
+
+#englishFontMenu{
+
+left:15px;
+bottom:78px;
+width:250px;
+
+}
+
+#englishFontButton{
+
+left:15px;
+bottom:15px;
+
+}
+
+}
+
+</style>
+
+
+<!-- =========================
+     BUTTON
+========================= -->
+
+<button
+id="englishFontButton"
+onclick="toggleEnglishFontMenu()"
+title="English Fonts">
+
+🔤
+
+</button>
+
+
+<!-- =========================
+     MENU
+========================= -->
+
+<div id="englishFontMenu">
+
+<div class="english-font-title">
+
+🔤 English Fonts
+
+</div>
+
+
+<button
+class="english-font-option font-inter"
+onclick="changeEnglishFont('font-inter')">
+
+Aa — Inter
+
+</button>
+
+
+<button
+class="english-font-option font-poppins"
+onclick="changeEnglishFont('font-poppins')">
+
+Aa — Poppins
+
+</button>
+
+
+<button
+class="english-font-option font-roboto"
+onclick="changeEnglishFont('font-roboto')">
+
+Aa — Roboto
+
+</button>
+
+
+<button
+class="english-font-option font-montserrat"
+onclick="changeEnglishFont('font-montserrat')">
+
+Aa — Montserrat
+
+</button>
+
+</div>
+
+
+<script>
+
+/* =========================
+   OPEN / CLOSE MENU
+========================= */
+
+function toggleEnglishFontMenu(){
+
+const menu =
+document.getElementById("englishFontMenu");
+
+menu.classList.toggle("show");
+
+}
+
+
+/* =========================
+   CHANGE FONT
+========================= */
+
+function changeEnglishFont(font){
+
+document.body.classList.remove(
+"font-inter",
+"font-poppins",
+"font-roboto",
+"font-montserrat"
+);
+
+document.body.classList.add(font);
+
+
+/* Save selected font */
+
+localStorage.setItem(
+"zanstlab_english_font",
+font
+);
+
+
+/* Close menu */
+
+document
+.getElementById("englishFontMenu")
+.classList.remove("show");
+
+}
+
+
+/* =========================
+   LOAD SAVED FONT
+========================= */
+
+(function(){
+
+const savedFont =
+localStorage.getItem(
+"zanstlab_english_font"
+);
+
+if(savedFont){
+
+document.body.classList.add(savedFont);
+
+}
+
+})();
+
+
+/* =========================
+   CLOSE WHEN CLICK OUTSIDE
+========================= */
+
+document.addEventListener(
+"click",
+function(event){
+
+const menu =
+document.getElementById("englishFontMenu");
+
+const button =
+document.getElementById("englishFontButton");
+
+if(
+menu &&
+button &&
+!menu.contains(event.target) &&
+!button.contains(event.target)
+){
+
+menu.classList.remove("show");
+
+}
+
+});
+
+</script>
 </body>
 </html>
