@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>ZanstLab</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -17,6 +18,7 @@
       --muted:#91abad;
       --border:rgba(25,211,197,.16);
       --danger:#ff5f6d;
+      --success:#19d3c5;
     }
 
     * {
@@ -44,7 +46,7 @@
       position:sticky;
       top:0;
       z-index:50;
-      background:rgba(7,23,27,.96);
+      background:rgba(7,23,27,.97);
       backdrop-filter:blur(15px);
       border-bottom:1px solid var(--border);
     }
@@ -65,12 +67,23 @@
       font-weight:800;
       text-decoration:none;
       white-space:nowrap;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .logo img {
+      width:38px;
+      height:38px;
+      object-fit:contain;
+      border-radius:10px;
     }
 
     .nav {
       display:flex;
       gap:5px;
       align-items:center;
+      flex-wrap:wrap;
     }
 
     .nav button {
@@ -123,10 +136,27 @@
       margin-bottom:30px;
     }
 
+    .hero-logo {
+      width:90px;
+      height:90px;
+      object-fit:contain;
+      border-radius:22px;
+      margin-bottom:15px;
+      display:none;
+      margin-left:auto;
+      margin-right:auto;
+    }
+
     .hero h1 {
       color:var(--primary);
       font-size:clamp(40px,8vw,68px);
       margin-bottom:14px;
+    }
+
+    .hero .slogan {
+      color:var(--primary);
+      font-size:18px;
+      margin-bottom:10px;
     }
 
     .hero p {
@@ -156,6 +186,7 @@
       border-radius:18px;
       padding:20px;
       transition:.2s;
+      overflow:hidden;
     }
 
     .card:hover {
@@ -181,11 +212,67 @@
       line-height:1.7;
     }
 
+    .content-image {
+      width:100%;
+      height:190px;
+      object-fit:cover;
+      border-radius:13px;
+      margin-bottom:15px;
+      display:block;
+    }
+
+    .video-box {
+      width:100%;
+      margin-bottom:15px;
+    }
+
+    .video-box video,
+    .video-box iframe {
+      width:100%;
+      aspect-ratio:16/9;
+      border:0;
+      border-radius:13px;
+      display:block;
+      background:#000;
+    }
+
+    .content-meta {
+      margin-top:12px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:7px;
+    }
+
+    .tag {
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:8px;
+      background:rgba(25,211,197,.09);
+      color:var(--primary);
+      font-size:13px;
+    }
+
+    .content-link {
+      display:inline-block;
+      margin-top:14px;
+      color:var(--primary);
+      text-decoration:none;
+      font-weight:bold;
+    }
+
     .admin-box {
       background:var(--card);
       border:1px solid var(--border);
       border-radius:20px;
       padding:25px;
+    }
+
+    .admin-header {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:15px;
+      flex-wrap:wrap;
     }
 
     .admin-actions {
@@ -227,6 +314,12 @@
 
     .admin-item-info {
       flex:1;
+      min-width:0;
+    }
+
+    .admin-item-info strong {
+      display:block;
+      word-break:break-word;
     }
 
     .admin-item-info small {
@@ -238,6 +331,7 @@
     .admin-buttons {
       display:flex;
       gap:7px;
+      flex-wrap:wrap;
     }
 
     .small-btn {
@@ -258,6 +352,15 @@
       border-color:var(--danger);
     }
 
+    .small-btn.view:hover {
+      color:var(--primary);
+      border-color:var(--primary);
+    }
+
+    .category-admin {
+      margin-top:30px;
+    }
+
     .modal {
       position:fixed;
       inset:0;
@@ -276,7 +379,7 @@
 
     .modal-box {
       width:100%;
-      max-width:520px;
+      max-width:560px;
       max-height:90vh;
       overflow:auto;
       background:var(--card);
@@ -340,6 +443,11 @@
       border:1px solid var(--border);
     }
 
+    .btn.danger {
+      background:var(--danger);
+      color:white;
+    }
+
     .message {
       margin-top:12px;
       line-height:1.7;
@@ -347,7 +455,7 @@
     }
 
     .success {
-      color:var(--primary);
+      color:var(--success) !important;
     }
 
     .hidden {
@@ -361,6 +469,35 @@
       padding:30px;
       line-height:2;
       color:var(--muted);
+    }
+
+    .empty {
+      grid-column:1/-1;
+      text-align:center;
+      padding:40px 20px;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:18px;
+      color:var(--muted);
+    }
+
+    .loading {
+      grid-column:1/-1;
+      text-align:center;
+      color:var(--muted);
+      padding:30px;
+    }
+
+    .preview {
+      margin-top:10px;
+      max-width:100%;
+    }
+
+    .preview img {
+      max-width:100%;
+      max-height:180px;
+      border-radius:12px;
+      object-fit:contain;
     }
 
     footer {
@@ -392,6 +529,8 @@
         border-radius:15px;
         flex-direction:column;
         align-items:stretch;
+        max-height:80vh;
+        overflow:auto;
       }
 
       .nav.open {
@@ -411,6 +550,10 @@
       .admin-buttons {
         justify-content:flex-start;
       }
+
+      .hero {
+        padding:40px 18px;
+      }
     }
   </style>
 </head>
@@ -418,46 +561,44 @@
 <body>
 
 <header>
-
   <div class="header-inner">
 
-    <a href="#" class="logo"
-       onclick="showPage('home');return false;">
-      ZanstLab
+    <a href="#" class="logo" onclick="showPage('home');return false;">
+      <img id="headerLogo" class="hidden" alt="">
+      <span id="headerLogoText">ZanstLab</span>
     </a>
 
-    <button class="menu-btn"
-            onclick="toggleMenu()">
-      ☰
-    </button>
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
 
     <nav class="nav" id="mainNav">
 
-      <button onclick="showPage('home')">
+      <button data-page="home" onclick="showPage('home')">
         🏠 سەرەکی
       </button>
 
-      <button onclick="showPage('trends')">
+      <button data-page="trends" onclick="showPage('trends')">
         🔥 ترێند
       </button>
 
-      <button onclick="showPage('films')">
+      <button data-page="films" onclick="showPage('films')">
         🎬 فیلم
       </button>
 
-      <button onclick="showPage('books')">
+      <button data-page="books" onclick="showPage('books')">
         📚 کتێب
       </button>
 
-      <button onclick="showPage('apps')">
+      <button data-page="apps" onclick="showPage('apps')">
         📱 ئەپ
       </button>
 
-      <button onclick="showPage('services')">
+      <button data-page="services" onclick="showPage('services')">
         🛠️ خزمەتگوزاری
       </button>
 
-      <button onclick="showPage('about')">
+      <div id="dynamicNav"></div>
+
+      <button data-page="about" onclick="showPage('about')">
         ℹ️ دەربارەی ZanstLab
       </button>
 
@@ -470,9 +611,7 @@
       </button>
 
     </nav>
-
   </div>
-
 </header>
 
 
@@ -484,9 +623,11 @@
 
     <div class="hero">
 
-      <h1 id="heroTitle">
-        ZanstLab
-      </h1>
+      <img id="heroLogo" class="hero-logo" alt="ZanstLab">
+
+      <h1 id="heroTitle">ZanstLab</h1>
+
+      <div id="heroSlogan" class="slogan"></div>
 
       <p id="heroDescription">
         شوێنێکی نوێ بۆ زانیاری، تەکنەلۆجیا،
@@ -499,38 +640,33 @@
       <h2>بەشەکان</h2>
     </div>
 
-    <div class="grid">
+    <div class="grid" id="homeCategories">
 
-      <div class="card clickable"
-           onclick="showPage('trends')">
+      <div class="card clickable" onclick="showPage('trends')">
         <div class="icon">🔥</div>
         <h3>ترێند</h3>
         <p>نوێترین بابەت و ناوەڕۆک.</p>
       </div>
 
-      <div class="card clickable"
-           onclick="showPage('films')">
+      <div class="card clickable" onclick="showPage('films')">
         <div class="icon">🎬</div>
         <h3>فیلم</h3>
         <p>فیلم و زانیارییەکانی.</p>
       </div>
 
-      <div class="card clickable"
-           onclick="showPage('books')">
+      <div class="card clickable" onclick="showPage('books')">
         <div class="icon">📚</div>
         <h3>کتێب</h3>
         <p>کتێب و زانیاریی نووسەرەکان.</p>
       </div>
 
-      <div class="card clickable"
-           onclick="showPage('apps')">
+      <div class="card clickable" onclick="showPage('apps')">
         <div class="icon">📱</div>
         <h3>ئەپ</h3>
         <p>ئەپ و ڕێنمایی بەکارهێنان.</p>
       </div>
 
-      <div class="card clickable"
-           onclick="showPage('services')">
+      <div class="card clickable" onclick="showPage('services')">
         <div class="icon">🛠️</div>
         <h3>خزمەتگوزاری</h3>
         <p>خزمەتگوزارییەکانی ZanstLab.</p>
@@ -541,11 +677,11 @@
   </section>
 
 
-  <!-- CONTENT PAGES -->
+  <!-- DEFAULT CONTENT PAGES -->
 
   <section id="trendsPage" class="page">
     <div class="section-title">
-      <h2>🔥 ترێند</h2>
+      <h2 id="trendsTitle">🔥 ترێند</h2>
     </div>
     <div class="grid" id="trendsList"></div>
   </section>
@@ -553,7 +689,7 @@
 
   <section id="filmsPage" class="page">
     <div class="section-title">
-      <h2>🎬 فیلم</h2>
+      <h2 id="filmsTitle">🎬 فیلم</h2>
     </div>
     <div class="grid" id="filmsList"></div>
   </section>
@@ -561,7 +697,7 @@
 
   <section id="booksPage" class="page">
     <div class="section-title">
-      <h2>📚 کتێب</h2>
+      <h2 id="booksTitle">📚 کتێب</h2>
     </div>
     <div class="grid" id="booksList"></div>
   </section>
@@ -569,7 +705,7 @@
 
   <section id="appsPage" class="page">
     <div class="section-title">
-      <h2>📱 ئەپ</h2>
+      <h2 id="appsTitle">📱 ئەپ</h2>
     </div>
     <div class="grid" id="appsList"></div>
   </section>
@@ -577,7 +713,7 @@
 
   <section id="servicesPage" class="page">
     <div class="section-title">
-      <h2>🛠️ خزمەتگوزاری</h2>
+      <h2 id="servicesTitle">🛠️ خزمەتگوزاری</h2>
     </div>
     <div class="grid" id="servicesList"></div>
   </section>
@@ -613,61 +749,63 @@
 
     <div class="admin-box">
 
-      <h2 style="color:var(--primary);">
-        🔐 Admin Panel
-      </h2>
+      <div class="admin-header">
 
-      <p style="color:var(--muted);margin-top:10px;">
-        بەخێربێیت بۆ بەشی بەڕێوەبردنی ZanstLab.
-      </p>
+        <div>
+          <h2 style="color:var(--primary);">
+            🔐 Admin Panel
+          </h2>
+
+          <p style="color:var(--muted);margin-top:10px;">
+            بەخێربێیت بۆ بەشی بەڕێوەبردنی ZanstLab.
+          </p>
+        </div>
+
+        <button class="small-btn" onclick="refreshEverything()">
+          🔄 نوێکردنەوە
+        </button>
+
+      </div>
 
 
       <div class="admin-actions">
 
-        <button class="admin-action"
-                onclick="openContentEditor('trends')">
+        <button class="admin-action" onclick="openContentEditor('trends')">
           🔥<br><br>
           زیادکردنی ترێند
         </button>
 
-        <button class="admin-action"
-                onclick="openContentEditor('films')">
+        <button class="admin-action" onclick="openContentEditor('films')">
           🎬<br><br>
           زیادکردنی فیلم
         </button>
 
-        <button class="admin-action"
-                onclick="openContentEditor('books')">
+        <button class="admin-action" onclick="openContentEditor('books')">
           📚<br><br>
           زیادکردنی کتێب
         </button>
 
-        <button class="admin-action"
-                onclick="openContentEditor('apps')">
+        <button class="admin-action" onclick="openContentEditor('apps')">
           📱<br><br>
           زیادکردنی ئەپ
         </button>
 
-        <button class="admin-action"
-                onclick="openContentEditor('services')">
+        <button class="admin-action" onclick="openContentEditor('services')">
           🛠️<br><br>
           زیادکردنی خزمەتگوزاری
         </button>
 
-        <button class="admin-action"
-                onclick="openCategoryEditor()">
+        <button class="admin-action" onclick="openCategoryEditor()">
           ➕<br><br>
           بەشی نوێ
         </button>
 
-        <button class="admin-action"
-                onclick="openSettingsEditor()">
+        <button class="admin-action" onclick="openSettingsEditor()">
           ⚙️<br><br>
           ڕێکخستنەکانی سایت
         </button>
 
-        <button class="admin-action"
-                onclick="logoutAdmin()">
+        <button class="admin-action" onclick="logoutAdmin()">
           🚪<br><br>
           چوونەدەرەوە
         </button>
@@ -675,8 +813,23 @@
       </div>
 
 
-      <div class="admin-list"
-           id="adminContentList">
+      <div class="admin-list">
+        <h3 style="margin-bottom:15px;color:var(--primary);">
+          📝 ناوەڕۆکەکان
+        </h3>
+
+        <div id="adminContentList"></div>
+      </div>
+
+
+      <div class="category-admin">
+
+        <h3 style="margin-bottom:15px;color:var(--primary);">
+          📂 بەشەکان
+        </h3>
+
+        <div id="adminCategoryList"></div>
+
       </div>
 
     </div>
@@ -686,7 +839,7 @@
 </main>
 
 
-<!-- ADMIN LOGIN MODAL -->
+<!-- ADMIN LOGIN -->
 
 <div class="modal" id="adminModal">
 
@@ -695,47 +848,39 @@
     <h2>🔐 چوونەژوورەوەی Admin</h2>
 
     <div class="field">
-
       <label>Email</label>
 
       <input
         id="adminEmail"
         type="email"
         autocomplete="username">
-
     </div>
 
     <div class="field">
-
       <label>Password</label>
 
       <input
         id="adminPassword"
         type="password"
         autocomplete="current-password">
-
     </div>
 
-    <button class="btn"
-            onclick="loginAdmin()">
+    <button class="btn" onclick="loginAdmin()">
       چوونەژوورەوە
     </button>
 
-    <button class="btn secondary"
-            onclick="closeAdminLogin()">
+    <button class="btn secondary" onclick="closeAdminLogin()">
       داخستن
     </button>
 
-    <div class="message"
-         id="loginMessage">
-    </div>
+    <div class="message" id="loginMessage"></div>
 
   </div>
 
 </div>
 
 
-<!-- ACCOUNT MODAL -->
+<!-- ACCOUNT -->
 
 <div class="modal" id="accountModal">
 
@@ -747,48 +892,39 @@
 
       <div class="field">
         <label>Email</label>
-        <input id="accountEmail"
-               type="email">
+        <input id="accountEmail" type="email">
       </div>
 
       <div class="field">
         <label>Password</label>
-        <input id="accountPassword"
-               type="password">
+        <input id="accountPassword" type="password">
       </div>
 
-      <button class="btn"
-              onclick="loginAccount()">
+      <button class="btn" onclick="loginAccount()">
         Login
       </button>
 
-      <button class="btn secondary"
-              onclick="signupAccount()">
+      <button class="btn secondary" onclick="signupAccount()">
         دروستکردنی ئەکاونت
       </button>
 
     </div>
 
-    <div id="accountLoggedIn"
-         class="hidden">
+    <div id="accountLoggedIn" class="hidden">
 
       <p id="accountInfo"
          style="color:var(--muted);line-height:1.8;">
       </p>
 
-      <button class="btn"
-              onclick="logoutAccount()">
+      <button class="btn" onclick="logoutAccount()">
         چوونەدەرەوە
       </button>
 
     </div>
 
-    <div class="message"
-         id="accountMessage">
-    </div>
+    <div class="message" id="accountMessage"></div>
 
-    <button class="btn secondary"
-            onclick="closeAccount()">
+    <button class="btn secondary" onclick="closeAccount()">
       داخستن
     </button>
 
@@ -807,90 +943,92 @@
       زیادکردنی ناوەڕۆک
     </h2>
 
-    <input type="hidden"
-           id="contentId">
-
-    <input type="hidden"
-           id="contentCategory">
-
+    <input type="hidden" id="contentId">
+    <input type="hidden" id="contentCategory">
 
     <div class="field">
+      <label>ناونیشان *</label>
 
-      <label>ناونیشان</label>
-
-      <input id="contentTitle"
-             type="text">
-
+      <input id="contentTitle" type="text">
     </div>
 
-
     <div class="field">
-
-      <label>وەسف</label>
+      <label>وەسفی تەواو</label>
 
       <textarea id="contentDescription"></textarea>
-
     </div>
 
-
     <div class="field">
-
       <label>Image URL</label>
 
-      <input id="contentImage"
-             type="url">
+      <input
+        id="contentImage"
+        type="url"
+        placeholder="https://example.com/image.jpg"
+        oninput="previewImage()">
+
+      <div class="preview" id="imagePreview"></div>
     </div>
 
-
     <div class="field">
-
       <label>Video URL</label>
 
-      <input id="contentVideo"
-             type="url">
+      <input
+        id="contentVideo"
+        type="url"
+        placeholder="YouTube / MP4 / Vimeo...">
     </div>
 
-
     <div class="field">
-
       <label>External URL</label>
 
-      <input id="contentExternal"
-             type="url">
+      <input
+        id="contentExternal"
+        type="url"
+        placeholder="https://example.com">
     </div>
 
-
     <div class="field">
-
       <label>نووسەر</label>
 
-      <input id="contentAuthor"
-             type="text">
+      <input id="contentAuthor" type="text">
     </div>
-
 
     <div class="field">
-
       <label>ساڵ</label>
 
-      <input id="contentYear"
-             type="text">
+      <input id="contentYear" type="text">
     </div>
 
+    <div class="field">
+      <label>جۆری ناوەڕۆک</label>
 
-    <button class="btn"
-            onclick="saveContent()">
-      پاشەکەوتکردن
+      <select id="contentType">
+        <option value="article">بابەت</option>
+        <option value="app">ئەپ</option>
+        <option value="book">کتێب</option>
+        <option value="film">فیلم</option>
+        <option value="video">ڤیدیۆ</option>
+        <option value="service">خزمەتگوزاری</option>
+        <option value="tutorial">فێرکاری</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>ڕیزبەندی</label>
+
+      <input id="contentSortOrder" type="number" value="0">
+    </div>
+
+    <button class="btn" onclick="saveContent()">
+      💾 پاشەکەوتکردن
     </button>
 
-    <button class="btn secondary"
-            onclick="closeContentEditor()">
+    <button class="btn secondary" onclick="closeContentEditor()">
       داخستن
     </button>
 
-    <div class="message"
-         id="contentMessage">
-    </div>
+    <div class="message" id="contentMessage"></div>
 
   </div>
 
@@ -903,35 +1041,40 @@
 
   <div class="modal-box">
 
-    <h2>➕ بەشی نوێ</h2>
+    <h2 id="categoryModalTitle">
+      ➕ بەشی نوێ
+    </h2>
 
-    <input type="hidden"
-           id="categoryId">
+    <input type="hidden" id="categoryId">
 
     <div class="field">
 
-      <label>ناوی بەش</label>
+      <label>ناوی بەش *</label>
 
-      <input id="categoryName"
-             type="text">
+      <input id="categoryName" type="text">
+
     </div>
 
     <div class="field">
 
-      <label>Slug</label>
+      <label>Slug *</label>
 
-      <input id="categorySlug"
-             type="text"
-             placeholder="example">
+      <input
+        id="categorySlug"
+        type="text"
+        placeholder="example">
+
     </div>
 
     <div class="field">
 
       <label>ئایکۆن</label>
 
-      <input id="categoryIcon"
-             type="text"
-             placeholder="📁">
+      <input
+        id="categoryIcon"
+        type="text"
+        placeholder="📁">
+
     </div>
 
     <div class="field">
@@ -939,21 +1082,18 @@
       <label>وەسف</label>
 
       <textarea id="categoryDescription"></textarea>
+
     </div>
 
-    <button class="btn"
-            onclick="saveCategory()">
-      پاشەکەوتکردن
+    <button class="btn" onclick="saveCategory()">
+      💾 پاشەکەوتکردن
     </button>
 
-    <button class="btn secondary"
-            onclick="closeCategoryEditor()">
+    <button class="btn secondary" onclick="closeCategoryEditor()">
       داخستن
     </button>
 
-    <div class="message"
-         id="categoryMessage">
-    </div>
+    <div class="message" id="categoryMessage"></div>
 
   </div>
 
@@ -972,8 +1112,7 @@
 
       <label>ناوی سایت</label>
 
-      <input id="siteName"
-             type="text">
+      <input id="siteName" type="text">
 
     </div>
 
@@ -981,8 +1120,7 @@
 
       <label>سڵۆگان</label>
 
-      <input id="siteSlogan"
-             type="text">
+      <input id="siteSlogan" type="text">
 
     </div>
 
@@ -998,24 +1136,24 @@
 
       <label>Logo URL</label>
 
-      <input id="siteLogo"
-             type="url">
+      <input
+        id="siteLogo"
+        type="url"
+        oninput="previewLogo()">
+
+      <div class="preview" id="logoPreview"></div>
 
     </div>
 
-    <button class="btn"
-            onclick="saveSettings()">
-      پاشەکەوتکردن
+    <button class="btn" onclick="saveSettings()">
+      💾 پاشەکەوتکردن
     </button>
 
-    <button class="btn secondary"
-            onclick="closeSettingsEditor()">
+    <button class="btn secondary" onclick="closeSettingsEditor()">
       داخستن
     </button>
 
-    <div class="message"
-         id="settingsMessage">
-    </div>
+    <div class="message" id="settingsMessage"></div>
 
   </div>
 
@@ -1028,6 +1166,10 @@
 
 
 <script>
+
+/* =========================================================
+   SUPABASE
+========================================================= */
 
 const SUPABASE_URL =
   "https://iqsyujyltwwafolesfzg.supabase.co";
@@ -1045,9 +1187,47 @@ const supabaseClient =
 let currentAdmin = null;
 
 
-/* =========================
+/* =========================================================
+   DEFAULT CATEGORIES
+========================================================= */
+
+const defaultCategories = [
+  {
+    slug:"trends",
+    name:"ترێند",
+    icon:"🔥",
+    description:"نوێترین بابەت و ناوەڕۆک."
+  },
+  {
+    slug:"films",
+    name:"فیلم",
+    icon:"🎬",
+    description:"فیلم و زانیارییەکانی."
+  },
+  {
+    slug:"books",
+    name:"کتێب",
+    icon:"📚",
+    description:"کتێب و زانیاریی نووسەرەکان."
+  },
+  {
+    slug:"apps",
+    name:"ئەپ",
+    icon:"📱",
+    description:"ئەپ و ڕێنمایی بەکارهێنان."
+  },
+  {
+    slug:"services",
+    name:"خزمەتگوزاری",
+    icon:"🛠️",
+    description:"خزمەتگوزارییەکانی ZanstLab."
+  }
+];
+
+
+/* =========================================================
    NAVIGATION
-========================= */
+========================================================= */
 
 function toggleMenu() {
 
@@ -1068,9 +1248,22 @@ function showPage(page) {
   const target =
     document.getElementById(page + "Page");
 
-  if (target) {
-    target.classList.add("active");
+  if (!target) {
+    return;
   }
+
+  target.classList.add("active");
+
+  document
+    .querySelectorAll(".nav button[data-page]")
+    .forEach(btn => {
+
+      btn.classList.toggle(
+        "active",
+        btn.dataset.page === page
+      );
+
+    });
 
   document
     .getElementById("mainNav")
@@ -1081,20 +1274,22 @@ function showPage(page) {
     behavior:"smooth"
   });
 
-  if (
-    ["trends","films","books",
-     "apps","services"].includes(page)
-  ) {
-    loadCategoryContent(page);
-  }
+  loadCategoryContent(page);
 }
 
 
-/* =========================
+/* =========================================================
    ADMIN LOGIN
-========================= */
+========================================================= */
 
 function openAdminLogin() {
+
+  if (currentAdmin) {
+    showPage("admin");
+    loadAdminContent();
+    loadAdminCategories();
+    return;
+  }
 
   document
     .getElementById("adminModal")
@@ -1103,6 +1298,10 @@ function openAdminLogin() {
   document
     .getElementById("loginMessage")
     .textContent = "";
+
+  document
+    .getElementById("adminPassword")
+    .value = "";
 
   document
     .getElementById("adminEmail")
@@ -1134,6 +1333,7 @@ async function loginAdmin() {
   const message =
     document.getElementById("loginMessage");
 
+  message.classList.remove("success");
   message.textContent = "";
 
   if (!email || !password) {
@@ -1144,14 +1344,15 @@ async function loginAdmin() {
     return;
   }
 
-
-  const { data, error } =
+  const {
+    data,
+    error
+  } =
     await supabaseClient.auth
       .signInWithPassword({
         email,
         password
       });
-
 
   if (error) {
 
@@ -1163,9 +1364,7 @@ async function loginAdmin() {
     return;
   }
 
-
   const user = data.user;
-
 
   if (!user) {
 
@@ -1175,10 +1374,9 @@ async function loginAdmin() {
     return;
   }
 
-
   const {
-    data: adminUser,
-    error: adminError
+    data:adminUser,
+    error:adminError
   } =
     await supabaseClient
       .from("Admins")
@@ -1186,17 +1384,17 @@ async function loginAdmin() {
       .eq("id", user.id)
       .maybeSingle();
 
-
   if (adminError) {
 
     console.error(adminError);
+
+    await supabaseClient.auth.signOut();
 
     message.textContent =
       "کێشە لە پشکنینی Admin ڕوویدا.";
 
     return;
   }
-
 
   if (!adminUser) {
 
@@ -1208,7 +1406,6 @@ async function loginAdmin() {
     return;
   }
 
-
   currentAdmin = user;
 
   closeAdminLogin();
@@ -1216,7 +1413,7 @@ async function loginAdmin() {
   showPage("admin");
 
   await loadAdminContent();
-
+  await loadAdminCategories();
 }
 
 
@@ -1230,11 +1427,11 @@ async function logoutAdmin() {
 }
 
 
-/* =========================
+/* =========================================================
    CONTENT EDITOR
-========================= */
+========================================================= */
 
-async function openContentEditor(category) {
+async function openContentEditor(category, id = null) {
 
   if (!currentAdmin) {
 
@@ -1243,50 +1440,46 @@ async function openContentEditor(category) {
     return;
   }
 
+  const modal =
+    document.getElementById("contentModal");
 
-  document
-    .getElementById("contentModal")
-    .classList.add("show");
+  modal.classList.add("show");
 
-
-  document
-    .getElementById("contentId")
-    .value = "";
+  clearContentForm();
 
   document
     .getElementById("contentCategory")
     .value = category;
 
+  document
+    .getElementById("contentId")
+    .value = id || "";
 
   document
     .getElementById("contentModalTitle")
     .textContent =
-      "زیادکردنی " +
-      categoryName(category);
+      id
+      ? "✏️ دەستکاریکردنی ناوەڕۆک"
+      : "➕ زیادکردنی " + categoryName(category);
 
+  if (id) {
 
-  clearContentForm();
+    await loadContentForEdit(id);
 
+  }
 }
 
 
 function categoryName(slug) {
 
-  const names = {
+  const found =
+    defaultCategories.find(
+      c => c.slug === slug
+    );
 
-    trends:"ترێند",
-
-    films:"فیلم",
-
-    books:"کتێب",
-
-    apps:"ئەپ",
-
-    services:"خزمەتگوزاری"
-
-  };
-
-  return names[slug] || slug;
+  return found
+    ? found.name
+    : slug;
 }
 
 
@@ -1299,7 +1492,15 @@ function clearContentForm() {
   document.getElementById("contentExternal").value = "";
   document.getElementById("contentAuthor").value = "";
   document.getElementById("contentYear").value = "";
-  document.getElementById("contentMessage").textContent = "";
+  document.getElementById("contentType").value = "article";
+  document.getElementById("contentSortOrder").value = "0";
+  document.getElementById("imagePreview").innerHTML = "";
+
+  const message =
+    document.getElementById("contentMessage");
+
+  message.textContent = "";
+  message.classList.remove("success");
 }
 
 
@@ -1311,12 +1512,86 @@ function closeContentEditor() {
 }
 
 
+async function loadContentForEdit(id) {
+
+  const message =
+    document.getElementById("contentMessage");
+
+  message.textContent =
+    "بارکردنی ناوەڕۆک...";
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("Content")
+      .select("*")
+      .eq("id", id)
+      .maybeSingle();
+
+  if (error || !data) {
+
+    console.error(error);
+
+    message.textContent =
+      "ناوەڕۆکەکە نەدۆزرایەوە.";
+
+    return;
+  }
+
+  document.getElementById("contentTitle").value =
+    data.title || "";
+
+  document.getElementById("contentDescription").value =
+    data.description || "";
+
+  document.getElementById("contentImage").value =
+    data.image_url || "";
+
+  document.getElementById("contentVideo").value =
+    data.video_url || "";
+
+  document.getElementById("contentExternal").value =
+    data.external_url || "";
+
+  document.getElementById("contentAuthor").value =
+    data.author || "";
+
+  document.getElementById("contentYear").value =
+    data.year || "";
+
+  document.getElementById("contentType").value =
+    data.content_type || "article";
+
+  document.getElementById("contentSortOrder").value =
+    data.sort_order ?? 0;
+
+  previewImage();
+
+  message.textContent = "";
+}
+
+
 async function saveContent() {
+
+  if (!currentAdmin) {
+
+    openAdminLogin();
+
+    return;
+  }
 
   const category =
     document
       .getElementById("contentCategory")
       .value;
+
+  const id =
+    document
+      .getElementById("contentId")
+      .value
+      .trim();
 
   const title =
     document
@@ -1360,9 +1635,23 @@ async function saveContent() {
       .value
       .trim();
 
+  const content_type =
+    document
+      .getElementById("contentType")
+      .value;
+
+  const sort_order =
+    Number(
+      document
+        .getElementById("contentSortOrder")
+        .value
+    ) || 0;
+
   const message =
     document.getElementById("contentMessage");
 
+  message.classList.remove("success");
+  message.textContent = "";
 
   if (!title) {
 
@@ -1372,17 +1661,15 @@ async function saveContent() {
     return;
   }
 
-
   const {
-    data: categoryRow,
-    error: categoryError
+    data:categoryRow,
+    error:categoryError
   } =
     await supabaseClient
       .from("Categories")
       .select("id")
       .eq("slug", category)
       .maybeSingle();
-
 
   if (categoryError || !categoryRow) {
 
@@ -1394,38 +1681,95 @@ async function saveContent() {
     return;
   }
 
+  const payload = {
 
-  const {
-    error
-  } =
-    await supabaseClient
-      .from("Content")
-      .insert({
+    category_id:categoryRow.id,
 
-        category_id:categoryRow.id,
+    title,
 
-        title,
+    description,
 
-        description,
+    image_url,
 
-        image_url,
+    video_url,
 
-        video_url,
+    external_url,
 
-        external_url,
+    author,
 
-        author,
+    year,
 
-        year,
+    is_published:true,
 
-        is_published:true
+    sort_order
 
-      });
+  };
 
+  /*
+    ئەگەر content_type لە table ـەکەدا هەبێت
+    زیاد دەکرێت. ئەگەر نەبێت، لە هەنگاوی
+    خوارەوە بە payload ـی سادە fallback دەکەین.
+  */
 
-  if (error) {
+  if (content_type) {
+    payload.content_type = content_type;
+  }
 
-    console.error(error);
+  let result;
+
+  if (id) {
+
+    result =
+      await supabaseClient
+        .from("Content")
+        .update(payload)
+        .eq("id", id);
+
+  } else {
+
+    result =
+      await supabaseClient
+        .from("Content")
+        .insert(payload);
+
+  }
+
+  /*
+    ئەگەر content_type هەبوو و column ـەکە نەبوو،
+    جارێکی تر بەبێ content_type هەوڵ دەدەین.
+  */
+
+  if (
+    result.error &&
+    content_type &&
+    /content_type|column/i.test(
+      result.error.message || ""
+    )
+  ) {
+
+    delete payload.content_type;
+
+    if (id) {
+
+      result =
+        await supabaseClient
+          .from("Content")
+          .update(payload)
+          .eq("id", id);
+
+    } else {
+
+      result =
+        await supabaseClient
+          .from("Content")
+          .insert(payload);
+
+    }
+  }
+
+  if (result.error) {
+
+    console.error(result.error);
 
     message.textContent =
       "کێشە لە پاشەکەوتکردنی ناوەڕۆک.";
@@ -1433,19 +1777,28 @@ async function saveContent() {
     return;
   }
 
-
   message.classList.add("success");
 
   message.textContent =
-    "ناوەڕۆک بە سەرکەوتوویی زیادکرا. ✅";
-
-
-  clearContentForm();
+    id
+    ? "ناوەڕۆک بە سەرکەوتوویی نوێکرایەوە. ✅"
+    : "ناوەڕۆک بە سەرکەوتوویی زیادکرا. ✅";
 
   await loadAdminContent();
 
+  if (category) {
+    await loadCategoryContent(category);
+  }
+
+  setTimeout(() => {
+    closeContentEditor();
+  }, 700);
 }
 
+
+/* =========================================================
+   ADMIN CONTENT LIST
+========================================================= */
 
 async function loadAdminContent() {
 
@@ -1453,8 +1806,7 @@ async function loadAdminContent() {
     document.getElementById("adminContentList");
 
   list.innerHTML =
-    "<p style='color:var(--muted)'>بارکردن...</p>";
-
+    `<div class="loading">بارکردن...</div>`;
 
   const {
     data,
@@ -1466,8 +1818,16 @@ async function loadAdminContent() {
         id,
         title,
         description,
+        image_url,
+        video_url,
+        external_url,
+        author,
+        year,
+        sort_order,
         created_at,
+        category_id,
         Categories (
+          id,
           name,
           slug,
           icon
@@ -1477,96 +1837,84 @@ async function loadAdminContent() {
         ascending:false
       });
 
-
   if (error) {
 
     console.error(error);
 
     list.innerHTML =
-      "<p style='color:var(--danger)'>کێشە لە بارکردنی ناوەڕۆک.</p>";
+      `<div class="empty">
+        کێشە لە بارکردنی ناوەڕۆک.
+      </div>`;
 
     return;
   }
-
 
   if (!data || !data.length) {
 
     list.innerHTML =
-      "<p style='color:var(--muted)'>هێشتا هیچ ناوەڕۆکێک زیاد نەکراوە.</p>";
+      `<div class="empty">
+        هێشتا هیچ ناوەڕۆکێک زیاد نەکراوە.
+      </div>`;
 
     return;
   }
 
+  list.innerHTML =
+    data.map(item => {
 
-  list.innerHTML = data.map(item => `
+      const category =
+        item.Categories;
 
-    <div class="admin-item">
+      return `
 
-      <div class="admin-item-info">
+        <div class="admin-item">
 
-        <strong>
-          ${escapeHtml(item.title)}
-        </strong>
+          <div class="admin-item-info">
 
-        <small>
-          ${item.Categories?.icon || "📁"}
-          ${escapeHtml(item.Categories?.name || "")}
-        </small>
+            <strong>
+              ${escapeHtml(item.title)}
+            </strong>
 
-      </div>
+            <small>
+              ${category?.icon || "📁"}
+              ${escapeHtml(category?.name || "")}
+              ${item.author ? " • ✍️ " + escapeHtml(item.author) : ""}
+              ${item.year ? " • 📅 " + escapeHtml(item.year) : ""}
+            </small>
 
-      <div class="admin-buttons">
+          </div>
 
-        <button
-          class="small-btn delete"
-          onclick="deleteContent('${item.id}')">
-          🗑️ سڕینەوە
-        </button>
+          <div class="admin-buttons">
 
-      </div>
+            <button
+              class="small-btn view"
+              onclick="viewContent('${item.id}')">
+              👁️
+            </button>
 
-    </div>
+            <button
+              class="small-btn edit"
+              onclick="openContentEditor('${escapeAttribute(category?.slug || "")}','${item.id}')">
+              ✏️ دەستکاری
+            </button>
 
-  `).join("");
+            <button
+              class="small-btn delete"
+              onclick="deleteContent('${item.id}')">
+              🗑️ سڕینەوە
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
 }
 
 
 async function deleteContent(id) {
-
-  if (!confirm("دڵنیایت لە سڕینەوەی ئەم ناوەڕۆکە؟")) {
-    return;
-  }
-
-
-  const { error } =
-    await supabaseClient
-      .from("Content")
-      .delete()
-      .eq("id", id);
-
-
-  if (error) {
-
-    alert(
-      "سڕینەوە سەرکەوتوو نەبوو."
-    );
-
-    console.error(error);
-
-    return;
-  }
-
-
-  await loadAdminContent();
-
-}
-
-
-/* =========================
-   CATEGORY EDITOR
-========================= */
-
-function openCategoryEditor() {
 
   if (!currentAdmin) {
 
@@ -1575,6 +1923,96 @@ function openCategoryEditor() {
     return;
   }
 
+  if (
+    !confirm(
+      "دڵنیایت لە سڕینەوەی ئەم ناوەڕۆکە؟"
+    )
+  ) {
+    return;
+  }
+
+  const {
+    error
+  } =
+    await supabaseClient
+      .from("Content")
+      .delete()
+      .eq("id", id);
+
+  if (error) {
+
+    console.error(error);
+
+    alert(
+      "سڕینەوە سەرکەوتوو نەبوو."
+    );
+
+    return;
+  }
+
+  await loadAdminContent();
+
+  alert(
+    "ناوەڕۆکەکە سڕایەوە. ✅"
+  );
+}
+
+
+async function viewContent(id) {
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("Content")
+      .select("*")
+      .eq("id", id)
+      .maybeSingle();
+
+  if (error || !data) {
+
+    alert(
+      "ناوەڕۆکەکە نەدۆزرایەوە."
+    );
+
+    return;
+  }
+
+  const parts = [];
+
+  if (data.title) {
+    parts.push("ناونیشان: " + data.title);
+  }
+
+  if (data.description) {
+    parts.push("وەسف: " + data.description);
+  }
+
+  if (data.author) {
+    parts.push("نووسەر: " + data.author);
+  }
+
+  if (data.year) {
+    parts.push("ساڵ: " + data.year);
+  }
+
+  alert(parts.join("\n\n"));
+}
+
+
+/* =========================================================
+   CATEGORY EDITOR
+========================================================= */
+
+async function openCategoryEditor(id = null) {
+
+  if (!currentAdmin) {
+
+    openAdminLogin();
+
+    return;
+  }
 
   document
     .getElementById("categoryModal")
@@ -1582,27 +2020,86 @@ function openCategoryEditor() {
 
   document
     .getElementById("categoryId")
-    .value = "";
-
-  document
-    .getElementById("categoryName")
-    .value = "";
-
-  document
-    .getElementById("categorySlug")
-    .value = "";
-
-  document
-    .getElementById("categoryIcon")
-    .value = "📁";
-
-  document
-    .getElementById("categoryDescription")
-    .value = "";
+    .value = id || "";
 
   document
     .getElementById("categoryMessage")
     .textContent = "";
+
+  document
+    .getElementById("categoryMessage")
+    .classList.remove("success");
+
+  if (!id) {
+
+    document
+      .getElementById("categoryModalTitle")
+      .textContent =
+        "➕ بەشی نوێ";
+
+    document
+      .getElementById("categoryName")
+      .value = "";
+
+    document
+      .getElementById("categorySlug")
+      .value = "";
+
+    document
+      .getElementById("categoryIcon")
+      .value = "📁";
+
+    document
+      .getElementById("categoryDescription")
+      .value = "";
+
+    return;
+  }
+
+  document
+    .getElementById("categoryModalTitle")
+    .textContent =
+      "✏️ دەستکاریکردنی بەش";
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("Categories")
+      .select("*")
+      .eq("id", id)
+      .maybeSingle();
+
+  if (error || !data) {
+
+    document
+      .getElementById("categoryMessage")
+      .textContent =
+        "بەشەکە نەدۆزرایەوە.";
+
+    return;
+  }
+
+  document
+    .getElementById("categoryName")
+    .value =
+      data.name || "";
+
+  document
+    .getElementById("categorySlug")
+    .value =
+      data.slug || "";
+
+  document
+    .getElementById("categoryIcon")
+    .value =
+      data.icon || "📁";
+
+  document
+    .getElementById("categoryDescription")
+    .value =
+      data.description || "";
 }
 
 
@@ -1616,6 +2113,19 @@ function closeCategoryEditor() {
 
 async function saveCategory() {
 
+  if (!currentAdmin) {
+
+    openAdminLogin();
+
+    return;
+  }
+
+  const id =
+    document
+      .getElementById("categoryId")
+      .value
+      .trim();
+
   const name =
     document
       .getElementById("categoryName")
@@ -1626,7 +2136,9 @@ async function saveCategory() {
     document
       .getElementById("categorySlug")
       .value
-      .trim();
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g,"-");
 
   const icon =
     document
@@ -1641,9 +2153,10 @@ async function saveCategory() {
       .trim();
 
   const message =
-    document
-      .getElementById("categoryMessage");
+    document.getElementById("categoryMessage");
 
+  message.classList.remove("success");
+  message.textContent = "";
 
   if (!name || !slug) {
 
@@ -1653,19 +2166,435 @@ async function saveCategory() {
     return;
   }
 
+  const payload = {
+    name,
+    slug,
+    icon,
+    description
+  };
+
+  let result;
+
+  if (id) {
+
+    result =
+      await supabaseClient
+        .from("Categories")
+        .update(payload)
+        .eq("id", id);
+
+  } else {
+
+    result =
+      await supabaseClient
+        .from("Categories")
+        .insert(payload);
+
+  }
+
+  if (result.error) {
+
+    console.error(result.error);
+
+    message.textContent =
+      result.error.message ||
+      "نەتوانرا بەشەکە پاشەکەوت بکرێت.";
+
+    return;
+  }
+
+  message.classList.add("success");
+
+  message.textContent =
+    id
+    ? "بەشەکە نوێکرایەوە. ✅"
+    : "بەشەکە زیادکرا. ✅";
+
+  await loadAdminCategories();
+  await loadDynamicCategories();
+
+  setTimeout(() => {
+    closeCategoryEditor();
+  }, 700);
+}
+
+
+/* =========================================================
+   ADMIN CATEGORY LIST
+========================================================= */
+
+async function loadAdminCategories() {
+
+  const list =
+    document.getElementById("adminCategoryList");
+
+  if (!list) return;
+
+  list.innerHTML =
+    `<div class="loading">بارکردن...</div>`;
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("Categories")
+      .select("id,name,slug,icon,description")
+      .order("name");
+
+  if (error) {
+
+    console.error(error);
+
+    list.innerHTML =
+      `<div class="empty">
+        کێشە لە بارکردنی بەشەکان.
+      </div>`;
+
+    return;
+  }
+
+  if (!data || !data.length) {
+
+    list.innerHTML =
+      `<div class="empty">
+        هیچ بەشێک نییە.
+      </div>`;
+
+    return;
+  }
+
+  list.innerHTML =
+    data.map(category => `
+
+      <div class="admin-item">
+
+        <div class="admin-item-info">
+
+          <strong>
+            ${category.icon || "📁"}
+            ${escapeHtml(category.name)}
+          </strong>
+
+          <small>
+            /${escapeHtml(category.slug)}
+          </small>
+
+        </div>
+
+        <div class="admin-buttons">
+
+          <button
+            class="small-btn view"
+            onclick="showPage('${escapeAttribute(category.slug)}')">
+            👁️ بینین
+          </button>
+
+          <button
+            class="small-btn edit"
+            onclick="openCategoryEditor('${category.id}')">
+            ✏️ دەستکاری
+          </button>
+
+          <button
+            class="small-btn delete"
+            onclick="deleteCategory('${category.id}','${escapeAttribute(category.name)}')">
+            🗑️ سڕینەوە
+          </button>
+
+        </div>
+
+      </div>
+
+    `).join("");
+}
+
+
+async function deleteCategory(id,name) {
+
+  if (!currentAdmin) {
+
+    openAdminLogin();
+
+    return;
+  }
+
+  if (
+    !confirm(
+      `دڵنیایت دەتەوێت بەشی "${name}" بسڕیتەوە؟\n\nئەگەر ناوەڕۆکی پەیوەست بەو بەشە هەبێت، سڕینەوەی بەشەکە لەوانەیە ڕێگری لێبکرێت.`
+    )
+  ) {
+    return;
+  }
 
   const {
     error
   } =
     await supabaseClient
       .from("Categories")
-      .insert({
+      .delete()
+      .eq("id", id);
 
-        name,
-        slug,
-        icon,
-        description
+  if (error) {
 
+    console.error(error);
+
+    alert(
+      "نەتوانرا بەشەکە بسڕدرێتەوە.\n\n" +
+      error.message
+    );
+
+    return;
+  }
+
+  await loadAdminCategories();
+  await loadDynamicCategories();
+
+  alert(
+    "بەشەکە سڕایەوە. ✅"
+  );
+
+  showPage("home");
+}
+
+
+/* =========================================================
+   DYNAMIC CATEGORIES
+========================================================= */
+
+async function loadDynamicCategories() {
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("Categories")
+      .select("id,name,slug,icon,description")
+      .order("name");
+
+  if (error) {
+
+    console.error(error);
+
+    return;
+  }
+
+  const dynamicNav =
+    document.getElementById("dynamicNav");
+
+  const homeCategories =
+    document.getElementById("homeCategories");
+
+  if (!dynamicNav || !homeCategories) {
+    return;
+  }
+
+  dynamicNav.innerHTML = "";
+
+  homeCategories.innerHTML = `
+    ${defaultCategories.map(c => `
+      <div class="card clickable"
+           onclick="showPage('${c.slug}')">
+        <div class="icon">${c.icon}</div>
+        <h3>${escapeHtml(c.name)}</h3>
+        <p>${escapeHtml(c.description)}</p>
+      </div>
+    `).join("")}
+  `;
+
+  const defaults =
+    defaultCategories.map(
+      c => c.slug
+    );
+
+  const dynamic =
+    (data || []).filter(
+      c => !defaults.includes(c.slug)
+    );
+
+  dynamic.forEach(category => {
+
+    const button =
+      document.createElement("button");
+
+    button.dataset.page =
+      category.slug;
+
+    button.textContent =
+      `${category.icon || "📁"} ${category.name}`;
+
+    button.onclick =
+      () => showDynamicCategory(
+        category.slug
+      );
+
+    dynamicNav.appendChild(button);
+
+
+    const card =
+      document.createElement("div");
+
+    card.className =
+      "card clickable";
+
+    card.onclick =
+      () => showDynamicCategory(
+        category.slug
+      );
+
+    card.innerHTML = `
+      <div class="icon">
+        ${category.icon || "📁"}
+      </div>
+
+      <h3>
+        ${escapeHtml(category.name)}
+      </h3>
+
+      <p>
+        ${escapeHtml(category.description || "")}
+      </p>
+    `;
+
+    homeCategories.appendChild(card);
+
+  });
+
+  /*
+    دروستکردنی page ـەکانی بەشە نوێکان
+  */
+
+  dynamic.forEach(category => {
+
+    const existing =
+      document.getElementById(
+        category.slug + "Page"
+      );
+
+    if (existing) return;
+
+    const section =
+      document.createElement("section");
+
+    section.id =
+      category.slug + "Page";
+
+    section.className =
+      "page";
+
+    section.innerHTML = `
+      <div class="section-title">
+        <h2>
+          ${category.icon || "📁"}
+          ${escapeHtml(category.name)}
+        </h2>
+      </div>
+
+      <div class="grid"
+           id="${escapeAttribute(category.slug)}List">
+      </div>
+    `;
+
+    document
+      .querySelector("main")
+      .appendChild(section);
+
+  });
+}
+
+
+async function showDynamicCategory(slug) {
+
+  await loadDynamicCategories();
+
+  showPage(slug);
+
+  await loadCategoryContent(slug);
+}
+
+
+/* =========================================================
+   PUBLIC CONTENT
+========================================================= */
+
+async function loadCategoryContent(slug) {
+
+  if (
+    slug === "home" ||
+    slug === "admin" ||
+    slug === "about"
+  ) {
+    return;
+  }
+
+  const listId =
+    slug + "List";
+
+  const list =
+    document.getElementById(listId);
+
+  if (!list) {
+    return;
+  }
+
+  list.innerHTML =
+    `<div class="loading">بارکردن...</div>`;
+
+
+  const {
+    data:categoryRow,
+    error:categoryError
+  } =
+    await supabaseClient
+      .from("Categories")
+      .select("id,name,icon,description,slug")
+      .eq("slug",slug)
+      .maybeSingle();
+
+
+  if (categoryError || !categoryRow) {
+
+    list.innerHTML =
+      `<div class="empty">
+        هیچ ناوەڕۆکێک نییە.
+      </div>`;
+
+    return;
+  }
+
+
+  /*
+    ناوی بەش لە سەرەوە
+  */
+
+  const titleElement =
+    document.getElementById(
+      slug + "Title"
+    );
+
+  if (titleElement) {
+
+    titleElement.textContent =
+      `${categoryRow.icon || "📁"} ${categoryRow.name}`;
+
+  }
+
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("Content")
+      .select("*")
+      .eq("category_id",categoryRow.id)
+      .eq("is_published",true)
+      .order("sort_order",{
+        ascending:true
+      })
+      .order("created_at",{
+        ascending:false
       });
 
 
@@ -1673,24 +2602,489 @@ async function saveCategory() {
 
     console.error(error);
 
-    message.textContent =
-      "نەتوانرا بەشەکە زیاد بکرێت.";
+    list.innerHTML =
+      `<div class="empty">
+        کێشە لە بارکردنی ناوەڕۆک.
+      </div>`;
 
     return;
   }
 
 
-  message.classList.add("success");
+  if (!data || !data.length) {
 
-  message.textContent =
-    "بەشەکە زیادکرا. ✅";
+    list.innerHTML =
+      `<div class="empty">
+
+        <div class="icon">
+          ${categoryRow.icon || "📁"}
+        </div>
+
+        <h3>
+          هێشتا ناوەڕۆک نییە
+        </h3>
+
+        <p style="margin-top:8px;">
+          ${escapeHtml(
+            categoryRow.description ||
+            "لە Admin Panel ـەوە دەتوانیت ناوەڕۆک زیاد بکەیت."
+          )}
+        </p>
+
+      </div>`;
+
+    return;
+  }
+
+
+  list.innerHTML =
+    data.map(item =>
+      renderContentCard(
+        item,
+        categoryRow
+      )
+    ).join("");
+}
+
+
+function renderContentCard(item,categoryRow) {
+
+  const image =
+    item.image_url
+    ?
+    `
+      <img
+        class="content-image"
+        src="${escapeAttribute(item.image_url)}"
+        alt="${escapeAttribute(item.title)}"
+        loading="lazy"
+        onerror="this.style.display='none'">
+    `
+    :
+    "";
+
+
+  const video =
+    renderVideo(
+      item.video_url
+    );
+
+
+  const meta = [];
+
+  if (item.author) {
+
+    meta.push(
+      `<span class="tag">
+        ✍️ ${escapeHtml(item.author)}
+      </span>`
+    );
+
+  }
+
+  if (item.year) {
+
+    meta.push(
+      `<span class="tag">
+        📅 ${escapeHtml(item.year)}
+      </span>`
+    );
+
+  }
+
+
+  return `
+
+    <article class="card">
+
+      ${image}
+
+      ${video}
+
+      <h3>
+        ${escapeHtml(item.title)}
+      </h3>
+
+      ${
+        item.description
+        ?
+        `
+          <p style="margin-top:8px;">
+            ${formatDescription(item.description)}
+          </p>
+        `
+        :
+        ""
+      }
+
+      ${
+        meta.length
+        ?
+        `
+          <div class="content-meta">
+            ${meta.join("")}
+          </div>
+        `
+        :
+        ""
+      }
+
+      ${
+        item.external_url
+        ?
+        `
+          <a
+            class="content-link"
+            href="${escapeAttribute(item.external_url)}"
+            target="_blank"
+            rel="noopener noreferrer">
+            بینین →
+          </a>
+        `
+        :
+        ""
+      }
+
+    </article>
+
+  `;
+}
+
+
+function renderVideo(url) {
+
+  if (!url) {
+    return "";
+  }
+
+  const clean =
+    String(url).trim();
+
+  if (!clean) {
+    return "";
+  }
+
+
+  /*
+    YouTube
+  */
+
+  let youtubeId = null;
+
+  try {
+
+    const parsed =
+      new URL(clean);
+
+    if (
+      parsed.hostname.includes("youtube.com")
+    ) {
+
+      youtubeId =
+        parsed.searchParams.get("v");
+
+      if (
+        !youtubeId &&
+        parsed.pathname.startsWith("/shorts/")
+      ) {
+
+        youtubeId =
+          parsed.pathname
+            .split("/shorts/")[1]
+            ?.split("/")[0];
+
+      }
+
+      if (
+        !youtubeId &&
+        parsed.pathname.startsWith("/embed/")
+      ) {
+
+        youtubeId =
+          parsed.pathname
+            .split("/embed/")[1]
+            ?.split("/")[0];
+
+      }
+
+    }
+
+    if (
+      parsed.hostname === "youtu.be"
+    ) {
+
+      youtubeId =
+        parsed.pathname
+          .replace("/","")
+          .split("/")[0];
+
+    }
+
+  } catch {}
+
+  if (youtubeId) {
+
+    return `
+      <div class="video-box">
+
+        <iframe
+          src="https://www.youtube.com/embed/${escapeAttribute(youtubeId)}"
+          title="YouTube video"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen>
+        </iframe>
+
+      </div>
+    `;
+
+  }
+
+
+  /*
+    Vimeo
+  */
+
+  let vimeoId = null;
+
+  const vimeoMatch =
+    clean.match(
+      /vimeo\.com\/(?:video\/)?(\d+)/i
+    );
+
+  if (vimeoMatch) {
+
+    vimeoId =
+      vimeoMatch[1];
+
+  }
+
+  if (vimeoId) {
+
+    return `
+      <div class="video-box">
+
+        <iframe
+          src="https://player.vimeo.com/video/${escapeAttribute(vimeoId)}"
+          title="Vimeo video"
+          loading="lazy"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+
+      </div>
+    `;
+
+  }
+
+
+  /*
+    MP4 / WebM / OGG
+  */
+
+  if (
+    /\.(mp4|webm|ogg)(\?.*)?$/i.test(clean)
+  ) {
+
+    return `
+      <div class="video-box">
+
+        <video
+          controls
+          preload="metadata"
+          playsinline>
+
+          <source
+            src="${escapeAttribute(clean)}">
+
+          لە براوزەرەکەتدا ڤیدیۆ پشتگیری ناکرێت.
+
+        </video>
+
+      </div>
+    `;
+
+  }
+
+
+  /*
+    fallback
+  */
+
+  return `
+    <div style="margin-bottom:15px;">
+
+      <a
+        class="content-link"
+        href="${escapeAttribute(clean)}"
+        target="_blank"
+        rel="noopener noreferrer">
+
+        🎥 کردنەوەی ڤیدیۆ →
+
+      </a>
+
+    </div>
+  `;
+}
+
+
+function formatDescription(text) {
+
+  return escapeHtml(text)
+    .replace(/\n/g,"<br>");
+}
+
+
+/* =========================================================
+   SITE SETTINGS
+========================================================= */
+
+async function loadSiteSettings() {
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("Site_Settings")
+      .select("*")
+      .eq("id",1)
+      .maybeSingle();
+
+
+  if (error || !data) {
+
+    return;
+  }
+
+
+  const siteName =
+    data.site_name ||
+    "ZanstLab";
+
+
+  document
+    .getElementById("heroTitle")
+    .textContent =
+      siteName;
+
+
+  document.title =
+    siteName;
+
+
+  document
+    .getElementById("headerLogoText")
+    .textContent =
+      siteName;
+
+
+  if (data.slogan) {
+
+    document
+      .getElementById("heroSlogan")
+      .textContent =
+        data.slogan;
+
+  } else {
+
+    document
+      .getElementById("heroSlogan")
+      .textContent =
+        "";
+
+  }
+
+
+  if (data.description) {
+
+    document
+      .getElementById("heroDescription")
+      .textContent =
+        data.description;
+
+
+    document
+      .getElementById("aboutDescription")
+      .textContent =
+        data.description;
+
+  }
+
+
+  if (data.logo_url) {
+
+    setLogo(
+      data.logo_url
+    );
+
+  }
 
 }
 
 
-/* =========================
-   SETTINGS
-========================= */
+function setLogo(url) {
+
+  const clean =
+    String(url || "").trim();
+
+  const headerLogo =
+    document.getElementById(
+      "headerLogo"
+    );
+
+  const heroLogo =
+    document.getElementById(
+      "heroLogo"
+    );
+
+
+  if (!clean) {
+
+    headerLogo.classList.add("hidden");
+
+    heroLogo.style.display =
+      "none";
+
+    return;
+  }
+
+
+  headerLogo.src =
+    clean;
+
+  headerLogo.classList.remove(
+    "hidden"
+  );
+
+
+  heroLogo.src =
+    clean;
+
+  heroLogo.style.display =
+    "block";
+
+
+  headerLogo.onerror =
+    () => {
+      headerLogo.classList.add(
+        "hidden"
+      );
+    };
+
+
+  heroLogo.onerror =
+    () => {
+      heroLogo.style.display =
+        "none";
+    };
+}
+
+
+/* =========================================================
+   SETTINGS EDITOR
+========================================================= */
 
 async function openSettingsEditor() {
 
@@ -1717,7 +3111,9 @@ async function openSettingsEditor() {
 
     console.error(error);
 
-    alert("کێشە لە خوێندنەوەی Settings.");
+    alert(
+      "کێشە لە خوێندنەوەی Settings."
+    );
 
     return;
   }
@@ -1728,19 +3124,38 @@ async function openSettingsEditor() {
     .classList.add("show");
 
 
+  document
+    .getElementById("settingsMessage")
+    .textContent = "";
+
+
   if (data) {
 
-    document.getElementById("siteName").value =
-      data.site_name || "";
+    document
+      .getElementById("siteName")
+      .value =
+        data.site_name || "";
 
-    document.getElementById("siteSlogan").value =
-      data.slogan || "";
 
-    document.getElementById("siteDescription").value =
-      data.description || "";
+    document
+      .getElementById("siteSlogan")
+      .value =
+        data.slogan || "";
 
-    document.getElementById("siteLogo").value =
-      data.logo_url || "";
+
+    document
+      .getElementById("siteDescription")
+      .value =
+        data.description || "";
+
+
+    document
+      .getElementById("siteLogo")
+      .value =
+        data.logo_url || "";
+
+
+    previewLogo();
 
   }
 
@@ -1757,11 +3172,20 @@ function closeSettingsEditor() {
 
 async function saveSettings() {
 
+  if (!currentAdmin) {
+
+    openAdminLogin();
+
+    return;
+  }
+
+
   const site_name =
     document
       .getElementById("siteName")
       .value
       .trim();
+
 
   const slogan =
     document
@@ -1769,17 +3193,25 @@ async function saveSettings() {
       .value
       .trim();
 
+
   const description =
     document
       .getElementById("siteDescription")
       .value
       .trim();
 
+
   const logo_url =
     document
       .getElementById("siteLogo")
       .value
       .trim();
+
+
+  const message =
+    document.getElementById(
+      "settingsMessage"
+    );
 
 
   const {
@@ -1799,18 +3231,19 @@ async function saveSettings() {
 
         logo_url,
 
-        updated_at:new Date().toISOString()
+        updated_at:
+          new Date().toISOString()
 
       });
-
-
-  const message =
-    document.getElementById("settingsMessage");
 
 
   if (error) {
 
     console.error(error);
+
+    message.classList.remove(
+      "success"
+    );
 
     message.textContent =
       "نەتوانرا Settings پاشەکەوت بکرێت.";
@@ -1819,224 +3252,90 @@ async function saveSettings() {
   }
 
 
-  message.classList.add("success");
+  message.classList.add(
+    "success"
+  );
 
   message.textContent =
     "Settings پاشەکەوت کرا. ✅";
+
 
   await loadSiteSettings();
 
 }
 
 
-/* =========================
-   PUBLIC CONTENT
-========================= */
+function previewImage() {
 
-async function loadCategoryContent(slug) {
+  const url =
+    document
+      .getElementById("contentImage")
+      .value
+      .trim();
 
-  const listId =
-    slug + "List";
+  const preview =
+    document.getElementById(
+      "imagePreview"
+    );
 
-  const list =
-    document.getElementById(listId);
+  if (!url) {
 
-  if (!list) return;
-
-
-  list.innerHTML =
-    "<p style='color:var(--muted)'>بارکردن...</p>";
-
-
-  const {
-    data:categoryRow,
-    error:categoryError
-  } =
-    await supabaseClient
-      .from("Categories")
-      .select("id,name,icon")
-      .eq("slug",slug)
-      .maybeSingle();
-
-
-  if (categoryError || !categoryRow) {
-
-    list.innerHTML =
-      "<p style='color:var(--muted)'>هیچ ناوەڕۆکێک نییە.</p>";
+    preview.innerHTML = "";
 
     return;
   }
 
-
-  const {
-    data,
-    error
-  } =
-    await supabaseClient
-      .from("Content")
-      .select("*")
-      .eq("category_id",categoryRow.id)
-      .eq("is_published",true)
-      .order("sort_order")
-      .order("created_at", {
-        ascending:false
-      });
-
-
-  if (error) {
-
-    console.error(error);
-
-    list.innerHTML =
-      "<p style='color:var(--danger)'>کێشە لە بارکردنی ناوەڕۆک.</p>";
-
-    return;
-  }
-
-
-  if (!data || !data.length) {
-
-    list.innerHTML =
-      `<div class="card">
-        <div class="icon">${categoryRow.icon || "📁"}</div>
-        <h3>هێشتا ناوەڕۆک نییە</h3>
-        <p>لە Admin Panel ـەوە دەتوانیت ناوەڕۆک زیاد بکەیت.</p>
-      </div>`;
-
-    return;
-  }
-
-
-  list.innerHTML = data.map(item => `
-
-    <div class="card">
-
-      ${
-        item.image_url
-        ?
-        `<img
-          src="${escapeAttribute(item.image_url)}"
-          style="width:100%;height:170px;object-fit:cover;border-radius:12px;margin-bottom:15px;"
-          alt="">`
-        :
-        `<div class="icon">${categoryRow.icon || "📁"}</div>`
-      }
-
-      <h3>
-        ${escapeHtml(item.title)}
-      </h3>
-
-      ${
-        item.description
-        ?
-        `<p>${escapeHtml(item.description)}</p>`
-        :
-        ""
-      }
-
-      ${
-        item.author
-        ?
-        `<p style="margin-top:8px;">
-          ✍️ ${escapeHtml(item.author)}
-        </p>`
-        :
-        ""
-      }
-
-      ${
-        item.year
-        ?
-        `<p>📅 ${escapeHtml(item.year)}</p>`
-        :
-        ""
-      }
-
-      ${
-        item.external_url
-        ?
-        `<a
-          href="${escapeAttribute(item.external_url)}"
-          target="_blank"
-          rel="noopener"
-          style="display:inline-block;margin-top:12px;color:var(--primary);">
-          بینین →
-        </a>`
-        :
-        ""
-      }
-
-    </div>
-
-  `).join("");
-
+  preview.innerHTML = `
+    <img
+      src="${escapeAttribute(url)}"
+      alt="Preview"
+      onerror="this.parentElement.innerHTML=''">
+  `;
 }
 
 
-/* =========================
-   SITE SETTINGS
-========================= */
+function previewLogo() {
 
-async function loadSiteSettings() {
+  const url =
+    document
+      .getElementById("siteLogo")
+      .value
+      .trim();
 
-  const {
-    data,
-    error
-  } =
-    await supabaseClient
-      .from("Site_Settings")
-      .select("*")
-      .eq("id",1)
-      .maybeSingle();
+  const preview =
+    document.getElementById(
+      "logoPreview"
+    );
 
+  if (!url) {
 
-  if (error || !data) {
+    preview.innerHTML = "";
+
     return;
   }
 
-
-  if (data.site_name) {
-
-    document
-      .getElementById("heroTitle")
-      .textContent =
-        data.site_name;
-
-    document.title =
-      data.site_name;
-
-    document
-      .querySelector(".logo")
-      .textContent =
-        data.site_name;
-  }
-
-
-  if (data.description) {
-
-    document
-      .getElementById("heroDescription")
-      .textContent =
-        data.description;
-
-    document
-      .getElementById("aboutDescription")
-      .textContent =
-        data.description;
-  }
-
+  preview.innerHTML = `
+    <img
+      src="${escapeAttribute(url)}"
+      alt="Logo Preview"
+      onerror="this.parentElement.innerHTML=''">
+  `;
 }
 
 
-/* =========================
+/* =========================================================
    ACCOUNT
-========================= */
+========================================================= */
 
 async function openAccount() {
 
   document
     .getElementById("accountModal")
     .classList.add("show");
+
+  document
+    .getElementById("accountMessage")
+    .textContent = "";
 
   await refreshAccountState();
 }
@@ -2062,20 +3361,30 @@ async function refreshAccountState() {
 
 
   const loggedOut =
-    document.getElementById("accountLoggedOut");
+    document.getElementById(
+      "accountLoggedOut"
+    );
 
   const loggedIn =
-    document.getElementById("accountLoggedIn");
+    document.getElementById(
+      "accountLoggedIn"
+    );
 
   const info =
-    document.getElementById("accountInfo");
+    document.getElementById(
+      "accountInfo"
+    );
 
 
   if (user) {
 
-    loggedOut.classList.add("hidden");
+    loggedOut.classList.add(
+      "hidden"
+    );
 
-    loggedIn.classList.remove("hidden");
+    loggedIn.classList.remove(
+      "hidden"
+    );
 
     info.textContent =
       "بەخێربێیت 👋🏻 " +
@@ -2083,12 +3392,15 @@ async function refreshAccountState() {
 
   } else {
 
-    loggedOut.classList.remove("hidden");
+    loggedOut.classList.remove(
+      "hidden"
+    );
 
-    loggedIn.classList.add("hidden");
+    loggedIn.classList.add(
+      "hidden"
+    );
 
   }
-
 }
 
 
@@ -2105,10 +3417,10 @@ async function loginAccount() {
       .getElementById("accountPassword")
       .value;
 
-
   const message =
-    document
-      .getElementById("accountMessage");
+    document.getElementById(
+      "accountMessage"
+    );
 
 
   const {
@@ -2123,6 +3435,10 @@ async function loginAccount() {
 
   if (error) {
 
+    message.classList.remove(
+      "success"
+    );
+
     message.textContent =
       "Email یان Password هەڵەیە.";
 
@@ -2130,7 +3446,9 @@ async function loginAccount() {
   }
 
 
-  message.classList.add("success");
+  message.classList.add(
+    "success"
+  );
 
   message.textContent =
     "بە سەرکەوتوویی چوویتە ژوورەوە. ✅";
@@ -2154,13 +3472,17 @@ async function signupAccount() {
       .getElementById("accountPassword")
       .value;
 
-
   const message =
-    document
-      .getElementById("accountMessage");
+    document.getElementById(
+      "accountMessage"
+    );
 
 
   if (!email || !password) {
+
+    message.classList.remove(
+      "success"
+    );
 
     message.textContent =
       "Email و Password پێویستن.";
@@ -2181,6 +3503,10 @@ async function signupAccount() {
 
   if (error) {
 
+    message.classList.remove(
+      "success"
+    );
+
     message.textContent =
       error.message;
 
@@ -2188,10 +3514,13 @@ async function signupAccount() {
   }
 
 
-  message.classList.add("success");
+  message.classList.add(
+    "success"
+  );
 
   message.textContent =
     "ئەکاونتەکە دروستکرا. ✅";
+
 
 }
 
@@ -2207,9 +3536,29 @@ async function logoutAccount() {
 }
 
 
-/* =========================
+/* =========================================================
+   REFRESH
+========================================================= */
+
+async function refreshEverything() {
+
+  await loadSiteSettings();
+
+  await loadDynamicCategories();
+
+  await loadAdminContent();
+
+  await loadAdminCategories();
+
+  alert(
+    "هەموو شتەکان نوێکرانەوە. ✅"
+  );
+}
+
+
+/* =========================================================
    HELPERS
-========================= */
+========================================================= */
 
 function escapeHtml(value) {
 
@@ -2228,34 +3577,138 @@ function escapeAttribute(value) {
 }
 
 
-/* =========================
+/* =========================================================
+   MODAL CLOSE ON BACKDROP
+========================================================= */
+
+document
+  .querySelectorAll(".modal")
+  .forEach(modal => {
+
+    modal.addEventListener(
+      "click",
+      event => {
+
+        if (
+          event.target === modal
+        ) {
+
+          modal.classList.remove(
+            "show"
+          );
+
+        }
+
+      }
+    );
+
+  });
+
+
+/* =========================================================
    START
-========================= */
+========================================================= */
 
-loadSiteSettings();
+async function startSite() {
 
-loadCategoryContent("trends");
-loadCategoryContent("films");
-loadCategoryContent("books");
-loadCategoryContent("apps");
-loadCategoryContent("services");
+  await loadSiteSettings();
+
+  await loadDynamicCategories();
+
+  await Promise.all([
+    loadCategoryContent("trends"),
+    loadCategoryContent("films"),
+    loadCategoryContent("books"),
+    loadCategoryContent("apps"),
+    loadCategoryContent("services")
+  ]);
+
+
+  /*
+    هەوڵی گەڕاندنەوەی Admin session
+  */
+
+  try {
+
+    const {
+      data
+    } =
+      await supabaseClient.auth
+        .getSession();
+
+    if (data?.session?.user) {
+
+      const user =
+        data.session.user;
+
+      const {
+        data:adminUser
+      } =
+        await supabaseClient
+          .from("Admins")
+          .select('id, "Email"')
+          .eq("id",user.id)
+          .maybeSingle();
+
+      if (adminUser) {
+
+        currentAdmin = user;
+
+      }
+
+    }
+
+  } catch(error) {
+
+    console.error(error);
+
+  }
+
+}
 
 
 supabaseClient.auth.onAuthStateChange(
-  async (event, session) => {
+  async (event,session) => {
 
     if (!session) {
+
       currentAdmin = null;
+
       return;
     }
 
     /*
-      تەنها Auth ـەکە بەس نییە؛
-      Admin بودن بە UID لە Admins پشکنین دەکرێت.
+      Auth session هەیە؛
+      Admin بودن تەنها بە Admins پشکنین دەکرێت.
     */
+
+    try {
+
+      const {
+        data:adminUser
+      } =
+        await supabaseClient
+          .from("Admins")
+          .select('id, "Email"')
+          .eq("id",session.user.id)
+          .maybeSingle();
+
+      currentAdmin =
+        adminUser
+        ? session.user
+        : null;
+
+    } catch(error) {
+
+      console.error(error);
+
+    }
 
   }
 );
+
+
+startSite();
 
 </script>
 
