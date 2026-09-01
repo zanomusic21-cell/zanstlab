@@ -3124,7 +3124,7 @@ error:adminError
 await supabaseClient
 .from("Admins")
 .select('id,"Email"')
-.eq("Email",user.id)
+.eq("Email",user.email)
 .maybeSingle();
 
 if(adminError){
