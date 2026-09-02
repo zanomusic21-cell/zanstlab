@@ -3558,6 +3558,51 @@ message.textContent =
 "لینکی گۆڕینی Password بۆ Email ـەکەت نێردرا. 📧✅";
 
 }
+async function updatePassword(){
+
+const password =
+document.getElementById("newPassword")
+.value;
+
+const message =
+document.getElementById("resetPasswordMessage");
+
+if(!password || password.length < 6){
+
+message.classList.remove("success");
+
+message.textContent =
+"Password دەبێت لانیکەم 6 پیت بێت.";
+
+return;
+
+}
+
+const {
+error
+} =
+await supabaseClient.auth
+.updateUser({
+password: password
+});
+
+if(error){
+
+message.classList.remove("success");
+
+message.textContent =
+"گۆڕینی Password سەرکەوتوو نەبوو.";
+
+return;
+
+}
+
+message.classList.add("success");
+
+message.textContent =
+"Password بە سەرکەوتوویی گۆڕدرا. ✅";
+
+}
 /* =========================================
    REFRESH
 ========================================= */
