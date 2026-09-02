@@ -3300,6 +3300,8 @@ document.getElementById("accountMessage");
 
 if(!email || !password){
 
+message.classList.remove("success");
+
 message.textContent =
 "Email و Password پێویستن.";
 
@@ -3307,7 +3309,19 @@ return;
 
 }
 
+if(password.length < 6){
+
+message.classList.remove("success");
+
+message.textContent =
+"Password دەبێت لانیکەم 6 پیت بێت.";
+
+return;
+
+}
+
 const {
+data,
 error
 } =
 await supabaseClient.auth
@@ -3318,6 +3332,8 @@ password
 
 if(error){
 
+message.classList.remove("success");
+
 message.textContent =
 error.message;
 
@@ -3327,8 +3343,19 @@ return;
 
 message.classList.add("success");
 
+if(data?.session){
+
 message.textContent =
-"ئەکاونتەکە دروستکرا. ✅";
+"ئەکاونتەکە بە سەرکەوتوویی دروستکرا و چوویتە ژوورەوە. ✅";
+
+await refreshAccountState();
+
+}else{
+
+message.textContent =
+"ئەکاونتەکە دروستکرا. تکایە Email ـەکەت پشتڕاست بکەرەوە. ✅";
+
+}
 
 }
 
