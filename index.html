@@ -3510,7 +3510,52 @@ message.textContent =
 await refreshAccountState();
 
 }
+async function forgotPassword(){
 
+const email =
+document.getElementById("accountEmail")
+.value.trim();
+
+const message =
+document.getElementById("accountMessage");
+
+if(!email){
+
+message.classList.remove("success");
+
+message.textContent =
+"تکایە سەرەتا Email ـەکەت بنووسە.";
+
+return;
+
+}
+
+const {
+error
+} =
+await supabaseClient.auth
+.resetPasswordForEmail(email,{
+redirectTo:
+window.location.origin
+});
+
+if(error){
+
+message.classList.remove("success");
+
+message.textContent =
+"ناردنی لینکی گۆڕینی Password سەرکەوتوو نەبوو.";
+
+return;
+
+}
+
+message.classList.add("success");
+
+message.textContent =
+"لینکی گۆڕینی Password بۆ Email ـەکەت نێردرا. 📧✅";
+
+}
 /* =========================================
    REFRESH
 ========================================= */
