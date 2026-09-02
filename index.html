@@ -3200,6 +3200,7 @@ document
 }
 
 
+
 async function refreshAccountState(){
 
 const {
@@ -3225,8 +3226,36 @@ loggedOut.classList.add("hidden");
 
 loggedIn.classList.remove("hidden");
 
-info.textContent =
-"بەخێربێیت 👋🏻 " + user.email;
+let profileName = "";
+let avatarUrl = "";
+
+const {
+data:profile
+} =
+await supabaseClient
+.from("profiles")
+.select("display_name,avatar_url")
+.eq("id",user.id)
+.maybeSingle();
+
+if(profile){
+
+profileName =
+profile.display_name || "";
+
+avatarUrl =
+profile.avatar_url || "";
+
+}
+
+info.innerHTML =
+(profileName
+? "👤 " + profileName + "<br>"
+: "") +
+"📧 " + user.email +
+(avatarUrl
+? '<br><img src="' + avatarUrl + '" style="width:80px;height:80px;border-radius:50%;object-fit:cover;margin-top:10px;">'
+: "");
 
 }
 else{
@@ -3238,7 +3267,6 @@ loggedIn.classList.add("hidden");
 }
 
 }
-
 
 async function loginAccount(){
 
