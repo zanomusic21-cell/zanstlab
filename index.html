@@ -3397,7 +3397,113 @@ currentAdmin=null;
 await refreshAccountState();
 
 }
+async function saveProfile(){
 
+const {
+data
+} =
+await supabaseClient.auth.getUser();
+
+const user =
+data?.user;
+
+const message =
+document.getElementById("accountMessage");
+
+if(!user){
+
+message.classList.remove("success");
+message.textContent =
+"تکایە سەرەتا بچۆ ژوورەوە.";
+
+return;
+
+}
+
+const name =
+document.getElementById("profileName")
+.value.trim();
+
+const imageInput =
+document.getElementById("profileImage");
+
+let avatarUrl = null;
+
+if(imageInput.files.length){
+
+const file =
+imageInput.files[0];
+
+const filePath =
+"user/" + user.id + "/" + Date.now() + "-" + file.name;
+
+const {
+error:uploadError
+} =
+await supabaseClient
+.storage
+.from("zanstlab-media")
+.upload(filePath,file,{
+upsert:true
+});
+
+if(uploadError){
+
+message.classList.remove("success");
+message.textContent =
+"کێشەیەک لە Upload ـی وێنە ڕوویدا.";
+
+return;
+
+}
+
+const {
+data:publicData
+} =
+supabaseClient
+.storage
+.from("zanstlab-media")
+.getPublicUrl(filePath);
+
+avatarUrl =
+publicData.publicUrl;
+
+}
+
+const updateData = {
+display_name:name
+};
+
+if(avatarUrl){
+updateData.avatar_url =
+avatarUrl;
+}
+
+const {
+error
+} =
+await supabaseClient
+.from("profiles")
+.update(updateData)
+.eq("id",user.id);
+
+if(error){
+
+message.classList.remove("success");
+message.textContent =
+"کێشەیەک لە پاشەکەوتکردنی Profile ڕوویدا.";
+
+return;
+
+}
+
+message.classList.add("success");
+message.textContent =
+"Profile بە سەرکەوتوویی نوێکرایەوە. ✅";
+
+await refreshAccountState();
+
+}
 
 /* =========================================
    REFRESH
