@@ -3641,6 +3641,32 @@ await loadCategoryContent(category.slug);
 })();
 
 </script>
+<div class="modal" id="resetPasswordModal">
 
+<div class="modal-box">
+
+<h2>🔐 گۆڕینی Password</h2>
+
+<div class="field">
+<label>Password ـی نوێ</label>
+
+<input
+id="newPassword"
+type="password"
+placeholder="Password ـی نوێ بنووسە">
+</div>
+
+<button class="btn"
+onclick="updatePassword()">
+گۆڕینی Password
+</button>
+
+<div class="message"
+id="resetPasswordMessage">
+</div>
+
+</div>
+
+</div>
 </body>
 </html>
